@@ -13,13 +13,13 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="642833a8-7a04-4dca-ac17-8e901933b095">
-      <console name="Spa Database" type="STANDARD" schema="spa" session="Main"><![CDATA[-- Drop the tables if they exist
+      <console name="Spa Database" type="STANDARD" schema="spa" session="Main">-- Drop the tables if they exist
 DROP TABLE IF EXISTS TherapistAttendance;
 DROP TABLE IF EXISTS Appointment;
 DROP TABLE IF EXISTS Client;
 DROP TABLE IF EXISTS Service;
 DROP TABLE IF EXISTS Therapist;
-DROP TABLE IF EXISTS UserLogin;]]></console>
+DROP TABLE IF EXISTS UserLogin;</console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -27,6 +27,13 @@ DROP TABLE IF EXISTS UserLogin;]]></console>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="642833a8-7a04-4dca-ac17-8e901933b095" dataset="spa.appointment" active-filter-id="" />
+    <filter-actions connection-id="642833a8-7a04-4dca-ac17-8e901933b095" dataset="spa.userlogin" active-filter-id="" />
+  </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.ObjectQuickFilterManager">
     <last-used-operator value="EQUAL" />
