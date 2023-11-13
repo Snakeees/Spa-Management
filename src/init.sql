@@ -70,8 +70,8 @@ CREATE TABLE TherapistAttendance (
 );
 -- Insert an admin entry into the UserLogin table
 INSERT INTO UserLogin (ID, LoginName, Password, IsAdmin, IsActive) VALUES
-(1, 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', TRUE, TRUE),
-(2, 'nonadmin', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', FALSE, TRUE);
+(1, 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', TRUE, TRUE), --pass=admin
+(2, 'nonadmin', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', FALSE, TRUE); --pass=password
 
 INSERT INTO Client (ID, FirstName, LastName, PhoneNumber, Address) VALUES
 (101, 'Alice', 'Brown', '555-1234', '123 Elm Street'),

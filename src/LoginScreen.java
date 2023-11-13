@@ -2,6 +2,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.sql.*;
+import java.util.Objects;
 
 public class LoginScreen extends JFrame {
 
@@ -93,7 +94,7 @@ public class LoginScreen extends JFrame {
         submitButton.addActionListener(action -> {
             String username = userField.getText();
             String password = new String(passField.getPassword());
-            if(username != "" && password != "") {
+            if(!Objects.equals(username, "") && !password.isEmpty()) {
                 String role = validateCredentials(username, password);
 
                 if ("admin".equals(role)) {
@@ -124,10 +125,10 @@ public class LoginScreen extends JFrame {
     private String validateCredentials(String username, String password) {
         Database db = new Database();
         try {
-            String hashedPassword = new HashPassword().hashPassword(password);
-            ResultSet rs = db.executeQuery("SELECT IsAdmin, IsActive FROM UserLogin WHERE LoginName = ? AND Password = ?", username, hashedPassword);
+            String hashedPassword = HashPassword.hashPassword(password);
+            ResultSet rs = db.executeQuery("SELECT IsAdmin, IsActive FROM UserLogin WHERE LoginName = ? AND Password = ? AND IsActive = ?", username, hashedPassword, true);
 
-            if (rs.next() && rs.getBoolean("IsActive")) {
+            if (rs.next()) {
                 boolean isAdmin = rs.getBoolean("IsAdmin");
                 db.disconnect();
                 return isAdmin ? "admin" : "nonadmin";
