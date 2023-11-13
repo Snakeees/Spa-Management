@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS Therapist;
 DROP TABLE IF EXISTS UserLogin;
 
 -- Create the UserLogin table
-CREATE TABLE UserLogin (
+CREATE TABLE UserLogin(
     ID int PRIMARY KEY,
     LoginName VARCHAR(255),
     Password VARCHAR(255),
