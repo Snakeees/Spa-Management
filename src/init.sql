@@ -9,8 +9,8 @@ DROP TABLE IF EXISTS UserLogin;
 -- Create the UserLogin table
 CREATE TABLE UserLogin (
     ID int PRIMARY KEY,
-    LoginName string,
-    Password string,
+    LoginName VARCHAR(255),
+    Password VARCHAR(255),
     IsAdmin boolean,
     IsActive boolean
 );
@@ -18,8 +18,8 @@ CREATE TABLE UserLogin (
 -- Create the Service table
 CREATE TABLE Service (
     ID int PRIMARY KEY,
-    ServiceName string,
-    duration int,
+    ServiceName VARCHAR(255),
+    Duration int,
     Cost int,
     IsActive boolean,
     ServiceLastDate date
@@ -28,9 +28,9 @@ CREATE TABLE Service (
 -- Create the Therapist table
 CREATE TABLE Therapist (
     ID int PRIMARY KEY,
-    FirstName string,
-    PhoneNumber string,
-    Address string,
+    FirstName VARCHAR(255),
+    PhoneNumber VARCHAR(255),
+    Address VARCHAR(255),
     IsActive boolean,
     ResignationDate date
 );
@@ -38,10 +38,10 @@ CREATE TABLE Therapist (
 -- Create the Client table
 CREATE TABLE Client (
     ID int PRIMARY KEY,
-    FirstName string,
-    LastName string,
-    PhoneNumber string,
-    Address string
+    FirstName VARCHAR(255),
+    LastName VARCHAR(255),
+    PhoneNumber VARCHAR(255),
+    Address VARCHAR(255)
 );
 
 -- Create the Appointment table
@@ -68,7 +68,6 @@ CREATE TABLE TherapistAttendance (
     CheckoutTime time,
     FOREIGN KEY (TherapistID) REFERENCES Therapist(ID)
 );
-
 -- Insert an admin entry into the UserLogin table
 INSERT INTO UserLogin (ID, LoginName, Password, IsAdmin, IsActive) VALUES
 (1, 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', TRUE, TRUE),
