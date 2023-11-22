@@ -14,6 +14,7 @@
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="79ca09af-a7c3-493f-a567-d9c2e4fe770f">
       <console name="Connection" type="STANDARD" schema="" session="Main" />
+      <console name="db" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -30,11 +31,11 @@
     <connections>
       <connection id="79ca09af-a7c3-493f-a567-d9c2e4fe770f" active="true" signed="true">
         <database>
-          <name value="Connection" />
+          <name value="db" />
           <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />
-          <database-version value="9999.0" />
+          <database-version value="8.0" />
           <driver-source value="BUNDLED" />
           <driver-library value="" />
           <driver value="" />
