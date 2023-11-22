@@ -98,9 +98,12 @@ public class LoginScreen extends JFrame {
                 String role = validateCredentials(username, password);
 
                 if ("admin".equals(role)) {
-                    JOptionPane.showMessageDialog(LoginScreen.this,
-                            "Logged in as admin", "ADMIN",
-                            JOptionPane.PLAIN_MESSAGE);
+//                    JOptionPane.showMessageDialog(LoginScreen.this,
+//                            "Logged in as admin", "ADMIN",
+//                            JOptionPane.PLAIN_MESSAGE);
+                    AdminDashboardScreen adminDashboardScreen=new AdminDashboardScreen();
+                    adminDashboardScreen.setVisible(true);
+                    dispose();
                 } else if ("nonadmin".equals(role)) {
                     AppointmentScreen appointmentScreen = new AppointmentScreen();
                     appointmentScreen.setVisible(true);

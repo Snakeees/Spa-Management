@@ -13,6 +13,10 @@ public class UserLogin {
         this.isActive = isActive;
     }
 
+    public UserLogin() {
+
+    }
+
     public int getId() { return id; }
     public String getLoginName() { return loginName; }
     public String getPassword() { return password; }
