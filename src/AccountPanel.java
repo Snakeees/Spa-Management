@@ -121,6 +121,7 @@ private void initComponents(UserLogin userLogin,boolean isEditable) {
                 isAdmin.setSelected(userLogin.isAdmin());
                 confirmPasswordTxt.setText("");
                 submit.setText("UPDATE");
+                addAccountLabel.setText("UPDATE ACCOUNT");
 
                 content.setLayout(contentLayout);
                 contentLayout.setHorizontalGroup(
@@ -319,7 +320,7 @@ private void initComponents(UserLogin userLogin,boolean isEditable) {
 
         Database db=new Database();
         if(userLogin==null){
-                if(userNameTxt.getText()!=null && !userNameTxt.getText().equals("") && passwordTxt.getPassword()!=null && confirmPasswordTxt.getPassword()!=null &&  !passwordTxt.getText().equals("")) {
+                if(userNameTxt.getText()!=null && !userNameTxt.getText().trim().equals("") && passwordTxt.getPassword()!=null && confirmPasswordTxt.getPassword()!=null &&  !passwordTxt.getText().trim().equals("")) {
                         if(passwordTxt.getText().equals(confirmPasswordTxt.getText())){
                                 passwordTxt.setText(HashPassword.hashPassword(passwordTxt.getText()));
                                 db.executeUpdate("INSERT INTO UserLogin ( LoginName, Password, IsAdmin, IsActive) VALUES(?,?,?,?)", userNameTxt.getText(), passwordTxt.getText(), isAdmin.isSelected(), true);
@@ -341,7 +342,7 @@ private void initComponents(UserLogin userLogin,boolean isEditable) {
                 }
         }
         else{
-                if(userNameTxt.getText()!=null && !userNameTxt.getText().equals("")) {
+                if(userNameTxt.getText()!=null && !userNameTxt.getText().trim().equals("")) {
                         userLogin.setLoginName(userNameTxt.getText());
                         userLogin.setAdmin(isAdmin.isSelected());
                         db.executeUpdate("update UserLogin set LoginName=? , IsAdmin=? where ID=? ;", userLogin.getLoginName(), userLogin.isAdmin(), userLogin.getId());

@@ -3,7 +3,7 @@ public class TherapistPanel extends javax.swing.JPanel {
     /**
      * Creates new form TherapistPanel
      */
-    public TherapistPanel() {
+    public TherapistPanel(Integer therapistId,boolean isEditable) {
         initComponents();
     }
 

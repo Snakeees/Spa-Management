@@ -168,7 +168,6 @@ public class ServicesPanel extends javax.swing.JPanel {
         }
 
         @Override public void actionPerformed(ActionEvent e) {
-            // Object o = table.getModel().getValueAt(table.getSelectedRow(), 0);
             int row = table.convertRowIndexToModel(table.getEditingRow());
             Object o = table.getModel().getValueAt(row, 0);
             Container container = getParent();
@@ -188,7 +187,6 @@ public class ServicesPanel extends javax.swing.JPanel {
         }
 
         @Override public void actionPerformed(ActionEvent e) {
-            // Object o = table.getModel().getValueAt(table.getSelectedRow(), 0);
             int row = table.convertRowIndexToModel(table.getEditingRow());
             Object o = table.getModel().getValueAt(row, 0);
             Container container = getParent();
@@ -265,11 +263,13 @@ public class ServicesPanel extends javax.swing.JPanel {
             ArrayList<String> options=new ArrayList<>();
             options.add("View");
             options.add("update");
-            options.add("Delete");
+            //removing delete option
+//            options.add("Delete");
             this.panel=new SingleItem(options);
             this.table = table;
             List<JButton> list = panel.getButtons();
-            list.get(2).setAction(new ServicesPanel.DeleteAction(table));
+            //removing delete option
+//            list.get(2).setAction(new ServicesPanel.DeleteAction(table));
             list.get(1).setAction(new ServicesPanel.EditAction(table));
             list.get(0).setAction(new ServicesPanel.ViewAction(table));
 
@@ -291,7 +291,9 @@ public class ServicesPanel extends javax.swing.JPanel {
         }
     }
     static class ButtonsRenderer implements TableCellRenderer {
-        List<String> options = Arrays.asList("view","update","delete");
+        //removing delete option
+//        List<String> options = Arrays.asList("view","update","delete");
+List<String> options = Arrays.asList("view","update");
 
         private final SingleItem panel = new SingleItem(options) {
             @Override public void updateUI() {
