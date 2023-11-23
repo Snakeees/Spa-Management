@@ -7,6 +7,9 @@ public class TherapistAttendance {
     private Date checkinTime;
     private Date checkoutTime;
 
+    public TherapistAttendance() {
+    }
+
     public TherapistAttendance(int id, int therapistId, Date date, Date checkinTime, Date checkoutTime) {
         this.id = id;
         this.therapistId = therapistId;

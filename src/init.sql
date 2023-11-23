@@ -79,6 +79,9 @@ INSERT INTO Client (ID, FirstName, LastName, PhoneNumber, Address) VALUES
 (102, 'Bob', 'Davis', '555-5678', '456 Oak Street'),
 (103, 'Carol', 'Evans', '555-9012', '789 Pine Street');
 
+INSERT INTO TherapistAttendance(ID,TherapistID,Date,CheckinTime,checkOutTime) VALUES
+(1,1,'2023-11-23',NULL,NULL),(2,1,'2023-11-20',NULL,NULL),(3,1,'2023-11-19',NULL,NULL),(4,1,'2023-11-17',NULL,NULL);
+
 INSERT INTO Service (ID, ServiceName, Duration, Cost, IsActive, ServiceLastDate) VALUES
 (201, 'Massage Therapy', 60, 100, TRUE, '2023-12-31'),
 (202, 'Facial Treatment', 30, 50, TRUE, '2023-12-31'),

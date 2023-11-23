@@ -8,6 +8,9 @@ public class Therapist {
     private boolean isActive;
     private Date resignationDate;
 
+    public Therapist() {
+    }
+
     public Therapist(int id, String firstName, String phoneNumber, String address, boolean isActive, Date resignationDate) {
         this.id = id;
         this.firstName = firstName;
