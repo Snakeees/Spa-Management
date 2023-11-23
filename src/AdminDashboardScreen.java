@@ -3,14 +3,22 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.PasswordAuthentication;
 
 public class AdminDashboardScreen extends JFrame implements ActionListener {
     JButton reports;
     JButton therapists;
     JButton services;
     JButton accounts;
+    JButton changePassword;
     JPanel content;
-    public AdminDashboardScreen()  {
+    int userId;
+    public int getUserId() {
+        return userId;
+    }
+
+    public AdminDashboardScreen(int userId)  {
+        this.userId = userId;
         setTitle("Serenity SPA");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -48,6 +56,13 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         accounts.setBackground(new Color(53, 183, 234));
         accounts.addActionListener(this);
         headerPanel.add(accounts);
+
+        changePassword = new JButton("Change Password");
+        changePassword.setFont(new Font("Play", Font.BOLD, 20));
+        changePassword.setBackground(new Color(53, 183, 234));
+        changePassword.addActionListener(this);
+        headerPanel.add(changePassword);
+
         headerPanel.setLocation(0,0);
         headerPanel.setSize(MAXIMIZED_HORIZ,40);
         headerPanel.setBackground(new Color(53, 183, 234));
@@ -88,6 +103,15 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             getContentPane().add(content,BorderLayout.CENTER, 1);
             validate();
 //            repaint();
+        }
+        else if(e.getSource()==changePassword){
+            content.invalidate();
+            getContentPane().remove(1);
+            content=new ChangePassword(getUserId());
+            content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
+            getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
+            getContentPane().add(content,BorderLayout.CENTER, 1);
+            validate();
         }
         else {
 

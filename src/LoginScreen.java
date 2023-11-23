@@ -96,12 +96,9 @@ public class LoginScreen extends JFrame {
             String password = new String(passField.getPassword());
             if(!Objects.equals(username, "") && !password.isEmpty()) {
                 String role = validateCredentials(username, password);
-
+                int userId = getUserId(username);
                 if ("admin".equals(role)) {
-//                    JOptionPane.showMessageDialog(LoginScreen.this,
-//                            "Logged in as admin", "ADMIN",
-//                            JOptionPane.PLAIN_MESSAGE);
-                    AdminDashboardScreen adminDashboardScreen=new AdminDashboardScreen();
+                    AdminDashboardScreen adminDashboardScreen=new AdminDashboardScreen(userId);
                     adminDashboardScreen.setVisible(true);
                     dispose();
                 } else if ("nonadmin".equals(role)) {
@@ -123,6 +120,25 @@ public class LoginScreen extends JFrame {
         submitPanel.add(submitButton);
         getRootPane().setDefaultButton(submitButton);
         return submitPanel;
+    }
+
+    public int getUserId(String username) {
+        Database db = new Database();
+        try {
+            ResultSet rs = db.executeQuery("SELECT ID FROM UserLogin WHERE LoginName = ? AND IsActive = ?", username, true);
+
+            if (rs.next()) {
+                int userId = rs.getInt("ID");
+                db.disconnect();
+                return userId;
+            } else {
+                db.disconnect();
+                return 0;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     private String validateCredentials(String username, String password) {
