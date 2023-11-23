@@ -8,7 +8,9 @@ public class Therapist {
     private boolean isActive;
     private Date resignationDate;
 
-    public Therapist() {
+    @Override
+    public String toString() {
+        return firstName;
     }
 
     public Therapist(int id, String firstName, String phoneNumber, String address, boolean isActive, Date resignationDate) {
@@ -19,6 +21,13 @@ public class Therapist {
         this.isActive = isActive;
         this.resignationDate = resignationDate;
     }
+
+    public Therapist(int id, String firstName) {
+        this.id = id;
+        this.firstName = firstName;
+    }
+
+    public Therapist(){}
 
     // Getters
     public int getId() { return id; }

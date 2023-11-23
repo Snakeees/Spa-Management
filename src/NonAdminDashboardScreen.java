@@ -5,19 +5,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.PasswordAuthentication;
 
-public class AdminDashboardScreen extends JFrame implements ActionListener {
-    JButton reports;
-    JButton therapists;
-    JButton services;
-    JButton accounts;
+public class NonAdminDashboardScreen extends JFrame implements ActionListener {
+    JButton appointments;
     JButton changePassword;
+    JButton attendance;
     JPanel content;
     int userId;
     public int getUserId() {
         return userId;
     }
 
-    public AdminDashboardScreen(int userId)  {
+    public NonAdminDashboardScreen(int userId)  {
         this.userId = userId;
         setTitle("Serenity SPA");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,43 +34,30 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         headerPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
         headerPanel.setOpaque(false);
 
-        reports = new JButton("Reports");
-        reports.setFont(new Font("Play", Font.BOLD, 20));
-        reports.setBackground(new Color(53, 183, 234));
-        reports.addActionListener(this);
-        headerPanel.add(reports);
-        therapists = new JButton("Therapists");
-        therapists.setFont(new Font("Play", Font.BOLD, 20));
-        therapists.setBackground(new Color(53, 183, 234));
-        therapists.addActionListener(this);
-        headerPanel.add(therapists);
-        services = new JButton("Services");
-        services.setFont(new Font("Play", Font.BOLD, 20));
-        services.setBackground(new Color(53, 183, 234));
-        services.addActionListener(this);
-        headerPanel.add(services);
-        accounts = new JButton("Accounts");
-        accounts.setFont(new Font("Play", Font.BOLD, 20));
-        accounts.setBackground(new Color(53, 183, 234));
-        accounts.addActionListener(this);
-        headerPanel.add(accounts);
-
-        changePassword = new JButton("Change Password");
+        appointments = new JButton("Appointments");
+        appointments.setFont(new Font("Play", Font.BOLD, 20));
+        appointments.setBackground(new Color(53, 183, 234));
+        appointments.addActionListener(this);
+        headerPanel.add(appointments);
+        attendance = new JButton("Attendance");
+        attendance.setFont(new Font("Play", Font.BOLD, 20));
+        attendance.setBackground(new Color(53, 183, 234));
+        attendance.addActionListener(this);
+        headerPanel.add(attendance);
+        changePassword = new JButton("Services");
         changePassword.setFont(new Font("Play", Font.BOLD, 20));
         changePassword.setBackground(new Color(53, 183, 234));
         changePassword.addActionListener(this);
         headerPanel.add(changePassword);
-
         headerPanel.setLocation(0,0);
         headerPanel.setSize(MAXIMIZED_HORIZ,40);
         headerPanel.setBackground(new Color(53, 183, 234));
-
         return headerPanel;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==reports){
+        if(e.getSource()==appointments){
             System.out.println("call the reports");
             content.invalidate();
             getContentPane().remove(1);
@@ -82,17 +67,17 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             getContentPane().add(content,BorderLayout.CENTER, 1);
             validate();
         }
-        if(e.getSource()==therapists){
+        if(e.getSource()==attendance){
             System.out.println("call the therapists");
             content.invalidate();
             getContentPane().remove(1);
-            content=new TherapistsPanel();
+            content=new TherapistsAttendance();
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             getContentPane().add(content,BorderLayout.CENTER, 1);
             validate();
         }
-        else if(e.getSource()==accounts){
+        else if(e.getSource()==changePassword){
             System.out.println("call the accounts");
             content.invalidate();
             getContentPane().remove(1);
@@ -102,26 +87,6 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             getContentPane().add(content,BorderLayout.CENTER, 1);
             validate();
 //            repaint();
-        }
-        else if(e.getSource()==services){
-            System.out.println("call the services");
-            getContentPane().remove(1);
-            setLayout(new BorderLayout());
-            content=new ServicesPanel();
-            content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
-            getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            getContentPane().add(content,BorderLayout.CENTER, 1);
-            validate();
-//            repaint();
-        }
-        else if(e.getSource()==changePassword){
-            content.invalidate();
-            getContentPane().remove(1);
-            content=new ChangePassword(getUserId());
-            content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
-            getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            getContentPane().add(content,BorderLayout.CENTER, 1);
-            validate();
         }
         else {
 
