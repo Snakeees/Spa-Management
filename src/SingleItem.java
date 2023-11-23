@@ -13,7 +13,7 @@ public class SingleItem  extends JPanel {
         super();
         setOpaque(true);
         for (String str : items) {
-            JButton b=new JButton(str);
+            JButton b=new JButton(str.toUpperCase());
             b.setFocusable(false);
             b.setRolloverEnabled(false);
             buttons.add(b);

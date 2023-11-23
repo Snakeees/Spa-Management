@@ -18,8 +18,6 @@ public class AccountsPanel extends javax.swing.JPanel {
     private javax.swing.JButton addAccount;
     private javax.swing.JScrollPane accountListTablePane;
     private javax.swing.JTable accountListTable;
-    private ImageIcon editIcon;
-    private ImageIcon deleteIcon;
 
     /**
      * Creates new form AccountsPanel
@@ -37,15 +35,14 @@ public class AccountsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
-        editIcon = (ImageIcon) UIManager.getIcon("OptionPane.warningIcon");
-        deleteIcon = (ImageIcon) UIManager.getIcon("OptionPane.informationIcon");
+
         addAccount = new javax.swing.JButton();
 
         Object[][] data = getUserAccounts();
         javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
                 data,
                 new String[]{
-                        "ACCOUNT ID","ACCOUNT", "ADMIN", "OPTION"
+                        "ID","USER NAME", "ADMIN", "OPTIONS"
                 }
 
         ) {
@@ -82,7 +79,7 @@ public class AccountsPanel extends javax.swing.JPanel {
         setBackground(new java.awt.Color(216, 235, 243));
 
         addAccount.setBackground(new java.awt.Color(53, 183, 234));
-        addAccount.setText("ADD");
+        addAccount.setText("CREATE");
         addAccount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addAccountActionPerformed(evt);
@@ -168,7 +165,7 @@ public class AccountsPanel extends javax.swing.JPanel {
         private final JTable table;
 
         protected EditAction(JTable table) {
-            super("edit");
+            super("UPDATE");
             this.table = table;
         }
 
@@ -188,20 +185,36 @@ public class AccountsPanel extends javax.swing.JPanel {
         private final JTable table;
 
         protected DeleteAction(JTable table) {
-            super("delete");
+            super("DELETE");
             this.table = table;
         }
 
         @Override public void actionPerformed(ActionEvent e) {
             int row = table.convertRowIndexToModel(table.getEditingRow());
             int o =(int) table.getModel().getValueAt(row, 0);
-            Database db=new Database();
-            db.executeUpdate("Delete from UserLogin where ID=?",o);
-            Container container = getParent();
-            getParent().remove(1);
-            container.add(new AccountsPanel(), BorderLayout.CENTER, 1);
-            container.validate();
-            container.repaint();
+            int result = JOptionPane.showOptionDialog(
+                    getParent(),
+                    "Do you want to delete "+((String)table.getModel().getValueAt(row, 1)+"'s account?"),
+                    "Delete Waring",
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"OK", "Close"},
+                    "OK");
+
+            // Check which button was clicked
+            if (result == JOptionPane.OK_OPTION) {
+                Database db=new Database();
+                db.executeUpdate("Delete from UserLogin where ID=?",o);
+                Container container = getParent();
+                getParent().remove(1);
+                container.add(new AccountsPanel(), BorderLayout.CENTER, 1);
+                container.validate();
+                container.repaint();
+            } else if (result == JOptionPane.CANCEL_OPTION) {
+                System.out.println("Close button clicked");
+            }
+
         }
     }
 
@@ -232,8 +245,8 @@ public class AccountsPanel extends javax.swing.JPanel {
         protected ButtonsEditor(JTable table) {
             super();
             ArrayList<String> options=new ArrayList<>();
-            options.add("edit");
-            options.add("delete");
+            options.add("Update");
+            options.add("Delete");
             this.panel=new SingleItem(options);
             this.table = table;
             List<JButton> list = panel.getButtons();
@@ -258,12 +271,7 @@ public class AccountsPanel extends javax.swing.JPanel {
         }
     }
     static class ButtonsRenderer implements TableCellRenderer {
-        List<String> options = Arrays.asList("edit","delete");
-//        public ButtonsRenderer() {
-//            this.options=new ArrayList<>();
-//            options.add("edit");
-//            options.add("delete");
-//        }
+        List<String> options = Arrays.asList("update","delete");
 
         private final SingleItem panel = new SingleItem(options) {
             @Override public void updateUI() {

@@ -8,6 +8,9 @@ public class Service {
     private boolean isActive;
     private Date serviceLastDate;
 
+    public Service() {
+    }
+
     public Service(int id, String serviceName, int duration, int cost, boolean isActive, Date serviceLastDate) {
         this.id = id;
         this.serviceName = serviceName;

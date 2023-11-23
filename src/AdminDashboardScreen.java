@@ -11,7 +11,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
     JButton accounts;
     JPanel content;
     public AdminDashboardScreen()  {
-        setTitle("AdminDashboardScreen");
+        setTitle("Serenity SPA");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         getContentPane().setBackground(Color.decode("#d8ebf3"));

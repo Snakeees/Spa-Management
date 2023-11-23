@@ -1,7 +1,15 @@
 import javax.swing.*;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ServicesPanel extends javax.swing.JPanel {
@@ -9,6 +17,9 @@ public class ServicesPanel extends javax.swing.JPanel {
     /**
      * Creates new form servicesPanel
      */
+    private javax.swing.JButton addService;
+    private javax.swing.JScrollPane serviceTableListPane;
+    private javax.swing.JTable serviceTableList;
     public ServicesPanel() {
         initComponents();
     }
@@ -22,55 +33,78 @@ public class ServicesPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
+
         addService = new javax.swing.JButton();
-        serviceListScrollPane = new javax.swing.JScrollPane();
-        serviceListPanel = new javax.swing.JPanel();
+
+        Object[][] data = getUserServices();
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
+                data,
+                new String[]{
+                        "ID","SERVICE NAME", "ACTIVE", "OPTIONS"
+                }
+
+        ) {
+            @Override
+            public Class<?> getColumnClass(int column) {
+                return getValueAt(0, column).getClass();
+            }
+        };
+
+        serviceTableListPane = new javax.swing.JScrollPane();
+        serviceTableList = new JTable(model) {
+            @Override
+            public void updateUI() {
+                super.updateUI();
+                setRowHeight(36);
+                setAutoCreateRowSorter(true);
+                TableColumn column = getColumnModel().getColumn(3);
+                System.out.println(column.getHeaderValue());
+                column.setCellRenderer(new ServicesPanel.ButtonsRenderer());
+                column.setCellEditor(new ServicesPanel.ButtonsEditor(this));
+            }
+            @Override
+            public boolean isCellEditable(int row, int col) {
+                switch (col) {
+                    case 3:
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        };
+
 
         setBackground(new java.awt.Color(216, 235, 243));
 
         addService.setBackground(new java.awt.Color(53, 183, 234));
-        addService.setText("ADD");
+        addService.setText("CREATE");
         addService.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addserviceActionPerformed(evt);
+                addServiceActionPerformed(evt);
             }
         });
 
-        serviceListPanel.setBackground(new java.awt.Color(216, 235, 243));
+        serviceTableListPane.setBackground(new java.awt.Color(216, 235, 243));
+        serviceTableListPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        serviceTableListPane.setInheritsPopupMenu(true);
 
-        javax.swing.GroupLayout serviceListPanelLayout = new javax.swing.GroupLayout(serviceListPanel);
-        serviceListPanel.setLayout(serviceListPanelLayout);
-        serviceListPanelLayout.setHorizontalGroup(
-                serviceListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 748, Short.MAX_VALUE)
-        );
-        serviceListPanelLayout.setVerticalGroup(
-                serviceListPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGap(0, 518, Short.MAX_VALUE)
-        );
+        serviceTableList.setBackground(new java.awt.Color(216, 235, 243));
+        serviceTableList.setPreferredScrollableViewportSize(serviceTableList.getPreferredSize());
 
-        serviceListScrollPane.setViewportView(serviceListPanel);
-        serviceListScrollPane.setBorder(null);
-        serviceListPanel.setLayout(new BoxLayout(serviceListPanel, BoxLayout.Y_AXIS));
-//        FlowLayout flowLayout=new FlowLayout(FlowLayout.RIGHT,0,0);
-//        flowLayout.setAlignment(FlowLayout.RIGHT);
-//        serviceListPanel.setLayout(flowLayout);
-        List<JPanel> services=getUserservices();
-        for(int i=0;i<services.size();i++){
-            serviceListPanel.add(services.get(i));
-        }
+
+        serviceTableListPane.setViewportView(serviceTableList);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup( layout.createSequentialGroup()
+                        .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(addService)
                                 .addGap(45, 45, 45))
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(119, 119, 119)
-                                .addComponent(serviceListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(serviceTableListPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(459, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -79,41 +113,197 @@ public class ServicesPanel extends javax.swing.JPanel {
                                 .addGap(27, 27, 27)
                                 .addComponent(addService)
                                 .addGap(58, 58, 58)
-                                .addComponent(serviceListScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(serviceTableListPane, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(55, Short.MAX_VALUE))
         );
     }// </editor-fold>
 
-
-    private ArrayList<JPanel> getUserservices() {
-        Database db=new Database();
-        ArrayList<JPanel> services=new ArrayList<>();
+    private Object[][] getUserServices() {
+        Database db = new Database();
+        List<List<Object>> cells = new ArrayList<>();
         try {
             ResultSet rs = db.executeQuery("select * from Service");
             while (rs.next()) {
-                String loginName=rs.getString("ServiceName");
-//                services.add(new SingleItem());
+                int id=rs.getInt("ID");
+                String serviceName = rs.getString("ServiceName");
+                boolean isActive = rs.getBoolean("IsActive");
+                ArrayList<Object> arr = new ArrayList<>();
+                arr.add(id);
+                arr.add(serviceName);
+                arr.add(isActive);
+                arr.add("");
+                cells.add(arr);
             }
-        }catch (Exception e){
+            Object[][] obj = new Object[cells.size()][4];
+            for (int i = 0; i < cells.size(); i++) {
+                obj[i][0] = cells.get(i).get(0);
+                obj[i][1] = cells.get(i).get(1);
+                obj[i][2] = cells.get(i).get(2);
+                obj[i][3] = cells.get(i).get(3);
+            }
+            return obj;
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return services;
+        return null;
 
     }
 
-    private void addserviceActionPerformed(java.awt.event.ActionEvent evt) {
+    private void addServiceActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        Container container=getParent();
+        Container container = getParent();
         getParent().remove(1);
-        container.add(new ServicePanel(),BorderLayout.CENTER,1);
+        container.add(new ServicePanel(null,true), BorderLayout.CENTER, 1);
         container.validate();
         container.repaint();
     }
 
+    class EditAction extends AbstractAction {
+        private final JTable table;
 
-    // Variables declaration - do not modify
-    private javax.swing.JPanel serviceListPanel;
-    private javax.swing.JScrollPane serviceListScrollPane;
-    private javax.swing.JButton addService;
+        protected EditAction(JTable table) {
+            super("UPDATE");
+            this.table = table;
+        }
+
+        @Override public void actionPerformed(ActionEvent e) {
+            // Object o = table.getModel().getValueAt(table.getSelectedRow(), 0);
+            int row = table.convertRowIndexToModel(table.getEditingRow());
+            Object o = table.getModel().getValueAt(row, 0);
+            Container container = getParent();
+            getParent().remove(1);
+            container.add(new ServicePanel((int) o,true), BorderLayout.CENTER, 1);
+            container.validate();
+            container.repaint();
+
+        }
+    }
+    class ViewAction extends AbstractAction {
+        private final JTable table;
+
+        protected ViewAction(JTable table) {
+            super("VIEW");
+            this.table = table;
+        }
+
+        @Override public void actionPerformed(ActionEvent e) {
+            // Object o = table.getModel().getValueAt(table.getSelectedRow(), 0);
+            int row = table.convertRowIndexToModel(table.getEditingRow());
+            Object o = table.getModel().getValueAt(row, 0);
+            Container container = getParent();
+            getParent().remove(1);
+            container.add(new ServicePanel((int) o,false), BorderLayout.CENTER, 1);
+            container.validate();
+            container.repaint();
+
+        }
+    }
+    class DeleteAction extends AbstractAction {
+        private final JTable table;
+
+        protected DeleteAction(JTable table) {
+            super("DELETE");
+            this.table = table;
+        }
+
+        @Override public void actionPerformed(ActionEvent e) {
+            int row = table.convertRowIndexToModel(table.getEditingRow());
+            int o =(int) table.getModel().getValueAt(row, 0);
+            int result = JOptionPane.showOptionDialog(
+                    getParent(),
+                    "Do you want to delete "+((String)table.getModel().getValueAt(row, 1)+"'s service?"),
+                    "Delete Waring",
+                    JOptionPane.OK_CANCEL_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    new Object[]{"OK", "Close"},
+                    "OK");
+
+            // Check which button was clicked
+            if (result == JOptionPane.OK_OPTION) {
+                Database db=new Database();
+                db.executeUpdate("Delete from Service where ID=?",o);
+                Container container = getParent();
+                getParent().remove(1);
+                container.add(new ServicesPanel(), BorderLayout.CENTER, 1);
+                container.validate();
+                container.repaint();
+            } else if (result == JOptionPane.CANCEL_OPTION) {
+                System.out.println("Close button clicked");
+            }
+
+        }
+    }
+
+    class ButtonsEditor extends AbstractCellEditor implements TableCellEditor {
+        protected final SingleItem panel ;
+        protected final JTable table;
+
+
+
+        private class EditingStopHandler extends MouseAdapter implements ActionListener {
+            @Override public void mousePressed(MouseEvent e) {
+                Object o = e.getSource();
+                if (o instanceof TableCellEditor) {
+                    actionPerformed(new ActionEvent(o, ActionEvent.ACTION_PERFORMED, ""));
+                } else if (o instanceof JButton) {
+                    ButtonModel m = ((JButton) e.getComponent()).getModel();
+                    if (m.isPressed() && table.isRowSelected(table.getEditingRow()) && e.isControlDown()) {
+                        panel.setBackground(table.getBackground());
+                    }
+                }
+            }
+
+            @Override public void actionPerformed(ActionEvent e) {
+                EventQueue.invokeLater(ServicesPanel.ButtonsEditor.this::fireEditingStopped);
+            }
+        }
+
+        protected ButtonsEditor(JTable table) {
+            super();
+            ArrayList<String> options=new ArrayList<>();
+            options.add("View");
+            options.add("update");
+            options.add("Delete");
+            this.panel=new SingleItem(options);
+            this.table = table;
+            List<JButton> list = panel.getButtons();
+            list.get(2).setAction(new ServicesPanel.DeleteAction(table));
+            list.get(1).setAction(new ServicesPanel.EditAction(table));
+            list.get(0).setAction(new ServicesPanel.ViewAction(table));
+
+            ServicesPanel.ButtonsEditor.EditingStopHandler handler = new ServicesPanel.ButtonsEditor.EditingStopHandler();
+            for (JButton b : list) {
+                b.addMouseListener(handler);
+                b.addActionListener(handler);
+            }
+            panel.addMouseListener(handler);
+        }
+
+        @Override public Component getTableCellEditorComponent(JTable tbl, Object value, boolean isSelected, int row, int column) {
+            panel.setBackground(tbl.getSelectionBackground());
+            return panel;
+        }
+
+        @Override public Object getCellEditorValue() {
+            return "";
+        }
+    }
+    static class ButtonsRenderer implements TableCellRenderer {
+        List<String> options = Arrays.asList("view","update","delete");
+
+        private final SingleItem panel = new SingleItem(options) {
+            @Override public void updateUI() {
+                super.updateUI();
+                setName("Table.cellRenderer");
+            }
+        };
+
+        @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            panel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
+            return panel;
+        }
+    }
     // End of variables declaration
 }
