@@ -44,8 +44,6 @@ public AppointmentPanel(Integer appointmentId,boolean isEditable) {
                 catch (Exception e){
                         e.printStackTrace();
                 }
-
-
         }
 
         private Appointment getAppointmentDetails(Integer appointmentId) {
