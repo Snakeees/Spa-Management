@@ -378,12 +378,14 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
 
     private void serviceListItemStateChanged(java.awt.event.ItemEvent evt) {
         // TODO add your handling code here:
-        searchTherapistId=((Service)serviceList.getSelectedItem()).getId();
+        if(serviceList.getSelectedItem()!=null)
+            searchTherapistId=((Service)serviceList.getSelectedItem()).getId();
     }
 
     private void therapistNameListItemStateChanged(java.awt.event.ItemEvent evt) {
         // TODO add your handling code here:
-        searchTherapistId=((Therapist)therapistNameList.getSelectedItem()).getId();
+        if(therapistNameList.getSelectedItem()!=null)
+            searchTherapistId=((Therapist)therapistNameList.getSelectedItem()).getId();
     }
 
     private void dateSelectorTxtFocusLost(java.awt.event.FocusEvent evt) {
