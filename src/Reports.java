@@ -41,7 +41,7 @@ public class Reports extends javax.swing.JPanel {
         incomePanel.setLayout(incomePanelLayout);
         incomePanelLayout.setHorizontalGroup(
             incomePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, incomePanelLayout.createSequentialGroup()
+            .addGroup( incomePanelLayout.createSequentialGroup()
                 .addContainerGap(134, Short.MAX_VALUE)
                 .addComponent(incomeValue)
                 .addGap(128, 128, 128))
@@ -61,7 +61,7 @@ public class Reports extends javax.swing.JPanel {
         visitPanel.setLayout(visitPanelLayout);
         visitPanelLayout.setHorizontalGroup(
             visitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, visitPanelLayout.createSequentialGroup()
+            .addGroup( visitPanelLayout.createSequentialGroup()
                 .addContainerGap(158, Short.MAX_VALUE)
                 .addComponent(visitValue)
                 .addGap(137, 137, 137))
@@ -93,10 +93,10 @@ public class Reports extends javax.swing.JPanel {
                         .addComponent(incomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 299, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup( layout.createSequentialGroup()
                         .addComponent(visitLabel)
                         .addGap(333, 333, 333))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup( layout.createSequentialGroup()
                         .addComponent(visitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(259, 259, 259))))
         );
@@ -105,8 +105,8 @@ public class Reports extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(168, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(incomeLabel, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(visitLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(incomeLabel)
+                    .addComponent(visitLabel))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(incomePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)

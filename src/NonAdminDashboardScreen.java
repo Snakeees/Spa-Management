@@ -23,7 +23,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
         getContentPane().setBackground(Color.decode("#d8ebf3"));
         createHeaderPanel().setLocation(0,0);
         getContentPane().add(createHeaderPanel(), BorderLayout.NORTH, 0);
-        content= new ServicesPanel();
+        content= new AppointmentsPanel();
         content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
         getContentPane().add(content,BorderLayout.CENTER, 1);
     }
@@ -44,7 +44,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
         attendance.setBackground(new Color(53, 183, 234));
         attendance.addActionListener(this);
         headerPanel.add(attendance);
-        changePassword = new JButton("Services");
+        changePassword = new JButton("Reset Password");
         changePassword.setFont(new Font("Play", Font.BOLD, 20));
         changePassword.setBackground(new Color(53, 183, 234));
         changePassword.addActionListener(this);
@@ -58,17 +58,17 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==appointments){
-            System.out.println("call the reports");
+            System.out.println("call the appoints");
             content.invalidate();
             getContentPane().remove(1);
-            content=new Reports();
+            content=new AppointmentsPanel();
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             getContentPane().add(content,BorderLayout.CENTER, 1);
             validate();
         }
         if(e.getSource()==attendance){
-            System.out.println("call the therapists");
+            System.out.println("call the attendance");
             content.invalidate();
             getContentPane().remove(1);
             content=new TherapistsAttendance();
@@ -78,19 +78,17 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             validate();
         }
         else if(e.getSource()==changePassword){
-            System.out.println("call the accounts");
+            System.out.println("call the change password");
             content.invalidate();
             getContentPane().remove(1);
-            content=new AccountsPanel();
+            content=new ChangePassword(userId);
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             getContentPane().add(content,BorderLayout.CENTER, 1);
             validate();
 //            repaint();
         }
-        else {
 
-        }
     }
     public JPanel getContentPanel(String subPage){
         JPanel content=new JPanel();

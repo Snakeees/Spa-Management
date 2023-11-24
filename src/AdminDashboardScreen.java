@@ -25,7 +25,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         getContentPane().setBackground(Color.decode("#d8ebf3"));
         createHeaderPanel().setLocation(0,0);
         getContentPane().add(createHeaderPanel(), BorderLayout.NORTH, 0);
-        content= new ServicesPanel();
+        content= new Reports();
         content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
         getContentPane().add(content,BorderLayout.CENTER, 1);
     }

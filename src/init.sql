@@ -45,16 +45,33 @@ CREATE TABLE Client (
 );
 
 -- Create the Appointment table
+--CREATE TABLE Appointment (
+--    ID int AUTO_INCREMENT PRIMARY KEY,
+--    ClientID int,
+--    AppointmentDate date,
+--    AppointmentTime time,
+--    TherapistID int,
+--    ServiceID int,
+--    IsDone boolean,
+--    IsPaid boolean,
+--    IsActive boolean,
+--    FOREIGN KEY (ClientID) REFERENCES Client(ID),
+--    FOREIGN KEY (TherapistID) REFERENCES Therapist(ID),
+--    FOREIGN KEY (ServiceID) REFERENCES Service(ID)
+--);
+
+
 CREATE TABLE Appointment (
     ID int AUTO_INCREMENT PRIMARY KEY,
-    ClientID int,
+    ClientName VARCHAR(255),
+    ClientPhoneNumber VARCHAR(255),
     AppointmentDate date,
     AppointmentTime time,
     TherapistID int,
     ServiceID int,
     IsDone boolean,
     IsPaid boolean,
-    FOREIGN KEY (ClientID) REFERENCES Client(ID),
+    IsActive boolean,
     FOREIGN KEY (TherapistID) REFERENCES Therapist(ID),
     FOREIGN KEY (ServiceID) REFERENCES Service(ID)
 );
@@ -92,7 +109,7 @@ INSERT INTO Therapist (ID, FirstName, PhoneNumber, Address, IsActive, Resignatio
 (2, 'Jane Smith', '234-567-8901', '5678 Oak Ave', TRUE, NULL),
 (3, 'Emily Johnson', '345-678-9012', '9101 Pine Blvd', FALSE, '2023-12-31');
 
-INSERT INTO Appointment (ID, ClientID, AppointmentDate, AppointmentTime, TherapistID, ServiceID, IsDone, IsPaid) VALUES
-(1, 101, '2023-11-15', '09:00:00', 1, 201, TRUE, TRUE),
-(2, 102, '2023-11-16', '10:30:00', 2, 202, FALSE, FALSE),
-(3, 103, '2023-11-17', '14:00:00', 1, 203, FALSE, TRUE);
+INSERT INTO Appointment (ID, ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime, TherapistID, ServiceID, IsDone, IsPaid,IsActive) VALUES
+(1, 'Alice','555-1234', '2023-11-15', '09:00:00', 1, 201, TRUE, TRUE,true),
+(2, 'ice','555-5678', '2023-11-16', '10:30:00', 2, 202, FALSE, FALSE,true),
+(3, 'Bob','555-9012', '2023-11-17', '14:00:00', 1, 203, FALSE, TRUE,true);

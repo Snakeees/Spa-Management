@@ -102,8 +102,8 @@ public class LoginScreen extends JFrame {
                     adminDashboardScreen.setVisible(true);
                     dispose();
                 } else if ("nonadmin".equals(role)) {
-                    AppointmentScreen appointmentScreen = new AppointmentScreen();
-                    appointmentScreen.setVisible(true);
+                    NonAdminDashboardScreen nonAdminDashboardScreen=new NonAdminDashboardScreen(userId);
+                    nonAdminDashboardScreen.setVisible(true);
                     dispose();
                 } else {
                     JOptionPane.showMessageDialog(LoginScreen.this,

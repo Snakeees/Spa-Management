@@ -14,7 +14,7 @@ public class TherapistPanel extends javax.swing.JPanel {
      */
     Therapist therapist;
     ArrayList<TherapistAttendance> therapistAttendances;
-    SimpleDateFormat requiredDateFormate=new java.text.SimpleDateFormat("dd/MM/yyyy");
+    SimpleDateFormat requiredDateFormate=new java.text.SimpleDateFormat("yyyy-MM-dd");
     public TherapistPanel(Integer therapistId,boolean isEditable) {
         therapist=getTherapist(therapistId);
         therapistAttendances=getTherapistAttendance(therapistId);
@@ -86,6 +86,7 @@ public class TherapistPanel extends javax.swing.JPanel {
         attendanceLabel = new javax.swing.JLabel();
         isActive = new javax.swing.JCheckBox();
         attendanceShowPanel = new javax.swing.JPanel();
+
         att3 = new javax.swing.JTextField();
         att1 = new javax.swing.JTextField();
         att2 = new javax.swing.JTextField();
@@ -171,6 +172,13 @@ public class TherapistPanel extends javax.swing.JPanel {
                 backLabelActionPerformed(evt);
             }
         });
+        addTherapistLabel.setFont(new Font("Play", Font.BOLD, 20));
+        phoneNumberLabel.setFont(new Font("Play", Font.BOLD, 15));
+        therapistNameLabel.setFont(new Font("Play", Font.BOLD, 15));
+        addressLabel.setFont(new Font("Play", Font.BOLD, 15));
+        currentActiveLabel.setFont(new Font("Play", Font.BOLD, 15));
+        attendanceLabel.setFont(new Font("Play", Font.BOLD, 15));
+        resignationDateLabel.setFont(new Font("Play", Font.BOLD, 15));
 
         javax.swing.GroupLayout attendanceShowPanelLayout = new javax.swing.GroupLayout(attendanceShowPanel);
         attendanceShowPanel.setLayout(attendanceShowPanelLayout);
@@ -242,9 +250,9 @@ public class TherapistPanel extends javax.swing.JPanel {
                                 .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addGroup(layout.createSequentialGroup()
-                                                        .addGap(546, 546, 546)
+                                                        .addGap(650, 650, 650)
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addComponent(addTherapistLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(addTherapistLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(28, 28, 28)
@@ -320,7 +328,7 @@ public class TherapistPanel extends javax.swing.JPanel {
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(546, 546, 546)
                                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addComponent(addTherapistLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                .addComponent(addTherapistLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                 ))
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(28, 28, 28)
@@ -426,7 +434,7 @@ public class TherapistPanel extends javax.swing.JPanel {
                                                     .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(layout.createSequentialGroup()
                                                     .addGap(571, 571, 571)
-                                                    .addComponent(addTherapistLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                    .addComponent(addTherapistLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
             layout.setVerticalGroup(
@@ -494,34 +502,39 @@ public class TherapistPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
 
         Database db=new Database();
-//        if(Therapist==null){
-//            if(TherapistNameTxt.getText()!=null && !TherapistNameTxt.getText().trim().equals("") && TherapistDurationTxt.getText()!=null && costPerClientTxt.getText()!=null &&  !costPerClientTxt.getText().trim().equals("") && !TherapistDurationTxt.getText().trim().equals("")) {
-//                db.executeUpdate("INSERT INTO Therapist ( TherapistName, Duration, Cost,IsActive) VALUES(?,?,?,?)", TherapistNameTxt.getText(), TherapistDurationTxt.getText(),costPerClientTxt.getText(), true);
-//                Container container = getParent();
-//                getParent().remove(1);
-//                container.add(new TherapistsPanel(), BorderLayout.CENTER, 1);
-//                container.validate();
-//                container.repaint();
-//                JOptionPane.showMessageDialog(this, "Therapist created successfully!" );
-//            }
-//            else{
-//                JOptionPane.showMessageDialog(this, "Required fields can not be empty. " );
-//            }
-//        }
-//        else{
-//            if(TherapistNameTxt.getText()!=null && !TherapistNameTxt.getText().trim().equals("") && TherapistDurationTxt.getText()!=null && costPerClientTxt.getText()!=null &&  !costPerClientTxt.getText().trim().equals("") && !TherapistDurationTxt.getText().trim().equals("")) {
-//                db.executeUpdate("update Therapist set TherapistName=?, Duration=?, Cost=?, IsActive=? where ID=? ;", TherapistNameTxt.getText(),TherapistDurationTxt.getText(),costPerClientTxt.getText(),isActive.isSelected() , Therapist.getId());
-//                Container container = getParent();
-//                getParent().remove(1);
-//                container.add(new TherapistsPanel(), BorderLayout.CENTER, 1);
-//                container.validate();
-//                container.repaint();
-//                JOptionPane.showMessageDialog(this, "Therapist details updated successfully!" );
-//            }
-//            else{
-//                JOptionPane.showMessageDialog(this, "Required details can not be empty.");
-//            }
-//        }
+        if(therapist==null){
+            if(therapistNameTxt.getText()!=null && !therapistNameTxt.getText().trim().equals("") && phoneNumberTxt.getText()!=null && addressTxt.getText()!=null &&  !phoneNumberTxt.getText().trim().equals("") && !addressTxt.getText().trim().equals("")) {
+                db.executeUpdate("INSERT INTO Therapist ( FirstName, PhoneNumber, Address, IsActive) VALUES(?,?,?,?)", therapistNameTxt.getText(), phoneNumberTxt.getText(),addressTxt.getText(), true);
+                Container container = getParent();
+                getParent().remove(1);
+                container.add(new TherapistsPanel(), BorderLayout.CENTER, 1);
+                container.validate();
+                container.repaint();
+                JOptionPane.showMessageDialog(this, "Therapist created successfully!" );
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Required fields can not be empty. " );
+            }
+        }
+        else{
+            if(therapistNameTxt.getText()!=null && !therapistNameTxt.getText().trim().equals("") && phoneNumberTxt.getText()!=null && addressTxt.getText()!=null &&  !phoneNumberTxt.getText().trim().equals("") && !addressTxt.getText().trim().equals("")) {
+                if(resignationDateTxt.getText().trim().equals("")){
+                    db.executeUpdate("update Therapist set FirstName=?, PhoneNumber=?, Address=?, IsActive=? where ID=? ;", therapistNameTxt.getText(), phoneNumberTxt.getText(),addressTxt.getText(),isActive.isSelected() , therapist.getId());
+                }
+                else{
+                    db.executeUpdate("update Therapist set FirstName=?, PhoneNumber=?, Address=?, IsActive=?, ResignationDate=? where ID=? ;", therapistNameTxt.getText(), phoneNumberTxt.getText(),addressTxt.getText(),isActive.isSelected() , resignationDateTxt.getText(), therapist.getId());
+                }
+                Container container = getParent();
+                getParent().remove(1);
+                container.add(new TherapistsPanel(), BorderLayout.CENTER, 1);
+                container.validate();
+                container.repaint();
+                JOptionPane.showMessageDialog(this, "Therapist details updated successfully!" );
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Required details can not be empty.");
+            }
+        }
 
     }
 
@@ -550,5 +563,6 @@ public class TherapistPanel extends javax.swing.JPanel {
     private javax.swing.JButton submit;
     private javax.swing.JLabel therapistNameLabel;
     private javax.swing.JTextField therapistNameTxt;
+    String sqlDateFormate;
     // End of variables declaration
 }
