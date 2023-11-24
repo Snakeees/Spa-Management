@@ -300,8 +300,8 @@ class EditAction extends AbstractAction {
             int o =(int) table.getModel().getValueAt(row, 0);
             int result = JOptionPane.showOptionDialog(
                     getParent(),
-                    "Do you want to delete "+((String)table.getModel().getValueAt(row, 1)+"'s service?"),
-                    "Delete Waring",
+                    "Do you want to CANCEL "+((String)table.getModel().getValueAt(row, 1)+" the APPOINTMENT?"),
+                    "Cancel Waring",
                     JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
@@ -311,10 +311,10 @@ class EditAction extends AbstractAction {
             // Check which button was clicked
             if (result == JOptionPane.OK_OPTION) {
                 Database db=new Database();
-                db.executeUpdate("Delete from Service where ID=?",o);
+                db.executeUpdate("Update Appointment set IsActive=false where ID=?",o);
                 Container container = getParent();
                 getParent().remove(1);
-                container.add(new ServicesPanel(), BorderLayout.CENTER, 1);
+                container.add(new AppointmentsPanel(), BorderLayout.CENTER, 1);
                 container.validate();
                 container.repaint();
             } else if (result == JOptionPane.CANCEL_OPTION) {

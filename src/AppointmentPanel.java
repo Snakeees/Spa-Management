@@ -1,6 +1,12 @@
+import com.toedter.calendar.JDateChooser;
+
+import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class AppointmentPanel extends javax.swing.JPanel {
 
@@ -13,6 +19,8 @@ Therapist selectedTherapist;
 int selectedServiceIndex=0, selectedTherapistIndex=0;
 ArrayList<Service> allServices;
 ArrayList<Therapist> allTherapist;
+SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
 public AppointmentPanel(Integer appointmentId,boolean isEditable) {
         appointment=getAppointmentDetails(appointmentId);
         updateDropdownDetails();
@@ -88,9 +96,13 @@ private void initComponents(boolean isEditable) {
         phoneNumberTxt = new javax.swing.JTextField();
         serviceListSelector = new javax.swing.JComboBox<>();
         therapistListSelector = new javax.swing.JComboBox<>();
-        appointmentDateTxt = new javax.swing.JFormattedTextField();
-        appointmentTimeTxt = new javax.swing.JFormattedTextField();
+        appointmentDateTxt = new JDateChooser();
+        Date date = new Date();
+        SpinnerDateModel sm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
+        appointmentTimeTxt = new javax.swing.JSpinner(sm);
 
+        JSpinner.DateEditor de = new JSpinner.DateEditor(appointmentTimeTxt, "HH:mm");
+        appointmentTimeTxt.setEditor(de);
 
         setBackground(new java.awt.Color(216, 235, 243));
 
@@ -152,14 +164,12 @@ private void initComponents(boolean isEditable) {
                         selectedServiceIndex=i;
                 }
         }
-        appointmentDateTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("yyyy-MM-dd"))));
 
-        appointmentTimeTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getTimeInstance(java.text.DateFormat.SHORT))));
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         if(appointment!=null){
-                appointmentTimeTxt.setText(appointment.getAppointmentTime().toString());
-                appointmentDateTxt.setText(appointment.getAppointmentDate().toString());
+                appointmentTimeTxt.setValue(appointment.getAppointmentTime());
+                appointmentDateTxt.setDate(appointment.getAppointmentDate());
                 clientNameTxt.setText(appointment.getClientName());
                 phoneNumberTxt.setText(appointment.getClientPhoneNumber());
                 serviceListSelector.setSelectedIndex(selectedServiceIndex);
@@ -399,15 +409,46 @@ private void initComponents(boolean isEditable) {
 
         private void submitLabelActionPerformed(java.awt.event.ActionEvent evt) {
                 // TODO add your handling code here:
+                Database db=new Database();
+                if(appointment==null){
+                        if(clientNameTxt.getText()!=null && !clientNameTxt.getText().trim().equals("") && phoneNumberTxt.getText()!=null && appointmentDateTxt.getDate()!=null &&  !phoneNumberTxt.getText().trim().equals("")) {
+                                String modifiedDate=dateFormat.format(appointmentDateTxt.getDate().getTime());
+                                db.executeUpdate("INSERT INTO Appointment ( ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime,TherapistID, ServiceID, IsDone, IsPaid, IsActive) VALUES(?,?,?,?,?,?,?,?,?)", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate,appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(),((Service) serviceListSelector.getSelectedItem()).getId(), false, false, true);
+                                Container container = getParent();
+                                getParent().remove(1);
+                                container.add(new AppointmentsPanel(), BorderLayout.CENTER, 1);
+                                container.validate();
+                                container.repaint();
+                                JOptionPane.showMessageDialog(this, "Appointment created successfully!" );
+                        }
+                        else{
+                                JOptionPane.showMessageDialog(this, "Required fields can not be empty. " );
+                        }
+                }
+                else{
+                        if(clientNameTxt.getText()!=null && !clientNameTxt.getText().trim().equals("") && phoneNumberTxt.getText()!=null && appointmentDateTxt.getDate()!=null &&  !phoneNumberTxt.getText().trim().equals("")) {
+                                String modifiedDate=dateFormat.format(appointmentDateTxt.getDate().getTime());
+                                db.executeUpdate("update Appointment set ClientName=?, ClientPhoneNumber=?, AppointmentDate=?, AppointmentTime=?,TherapistID=?, ServiceID=? where ID=? ;", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate,appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(),((Service) serviceListSelector.getSelectedItem()).getId(),appointment.getId());
+                                Container container = getParent();
+                                getParent().remove(1);
+                                container.add(new AppointmentsPanel(), BorderLayout.CENTER, 1);
+                                container.validate();
+                                container.repaint();
+                                JOptionPane.showMessageDialog(this, "Appointmentno details updated successfully!" );
+                        }
+                        else{
+                                JOptionPane.showMessageDialog(this, "Required details can not be empty.");
+                        }
+                }
         }
 
 
         // Variables declaration - do not modify
 private javax.swing.JLabel addAppointmentLabel;
 private javax.swing.JLabel appointmentDateLabel;
-private javax.swing.JFormattedTextField appointmentDateTxt;
+private com.toedter.calendar.JDateChooser appointmentDateTxt;
 private javax.swing.JLabel appointmentTimeLabel;
-private javax.swing.JFormattedTextField appointmentTimeTxt;
+private javax.swing.JSpinner appointmentTimeTxt;
 private javax.swing.JButton backLabel;
 private javax.swing.JLabel clientNameLabel;
 private javax.swing.JTextField clientNameTxt;

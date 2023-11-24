@@ -1,3 +1,5 @@
+import com.toedter.calendar.JDateChooser;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;
@@ -15,6 +17,7 @@ public class TherapistPanel extends javax.swing.JPanel {
     Therapist therapist;
     ArrayList<TherapistAttendance> therapistAttendances;
     SimpleDateFormat requiredDateFormate=new java.text.SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public TherapistPanel(Integer therapistId,boolean isEditable) {
         therapist=getTherapist(therapistId);
         therapistAttendances=getTherapistAttendance(therapistId);
@@ -111,7 +114,7 @@ public class TherapistPanel extends javax.swing.JPanel {
         attendanceList.add(att6);
         attendanceList.add(att7);
 
-        resignationDateTxt = new javax.swing.JFormattedTextField();
+        resignationDateTxt = new JDateChooser();
 
         setBackground(new java.awt.Color(216, 235, 243));
 
@@ -213,7 +216,7 @@ public class TherapistPanel extends javax.swing.JPanel {
                                 .addComponent(att7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        resignationDateTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
+//        resignationDateTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/yyyy"))));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -223,6 +226,7 @@ public class TherapistPanel extends javax.swing.JPanel {
             addressTxt.setText(therapist.getAddress());
             isActive.setSelected(therapist.isActive());
             submit.setText("UPDATE");
+            resignationDateTxt.setDate(therapist.getResignationDate());
             //should check resignationDate
 //            resignationDateTxt.
             if(isEditable){
@@ -518,11 +522,12 @@ public class TherapistPanel extends javax.swing.JPanel {
         }
         else{
             if(therapistNameTxt.getText()!=null && !therapistNameTxt.getText().trim().equals("") && phoneNumberTxt.getText()!=null && addressTxt.getText()!=null &&  !phoneNumberTxt.getText().trim().equals("") && !addressTxt.getText().trim().equals("")) {
-                if(resignationDateTxt.getText().trim().equals("")){
+                if(resignationDateTxt.getDate()==null){
                     db.executeUpdate("update Therapist set FirstName=?, PhoneNumber=?, Address=?, IsActive=? where ID=? ;", therapistNameTxt.getText(), phoneNumberTxt.getText(),addressTxt.getText(),isActive.isSelected() , therapist.getId());
                 }
                 else{
-                    db.executeUpdate("update Therapist set FirstName=?, PhoneNumber=?, Address=?, IsActive=?, ResignationDate=? where ID=? ;", therapistNameTxt.getText(), phoneNumberTxt.getText(),addressTxt.getText(),isActive.isSelected() , resignationDateTxt.getText(), therapist.getId());
+                    String modifiedDate=dateFormat.format(resignationDateTxt.getDate().getTime());
+                    db.executeUpdate("update Therapist set FirstName=?, PhoneNumber=?, Address=?, IsActive=?, ResignationDate=? where ID=? ;", therapistNameTxt.getText(), phoneNumberTxt.getText(),addressTxt.getText(),isActive.isSelected() , modifiedDate, therapist.getId());
                 }
                 Container container = getParent();
                 getParent().remove(1);
@@ -559,7 +564,7 @@ public class TherapistPanel extends javax.swing.JPanel {
     private javax.swing.JLabel phoneNumberLabel;
     private javax.swing.JTextField phoneNumberTxt;
     private javax.swing.JLabel resignationDateLabel;
-    private javax.swing.JFormattedTextField resignationDateTxt;
+    private com.toedter.calendar.JDateChooser resignationDateTxt;
     private javax.swing.JButton submit;
     private javax.swing.JLabel therapistNameLabel;
     private javax.swing.JTextField therapistNameTxt;
