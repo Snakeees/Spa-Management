@@ -11,6 +11,11 @@ public class Service {
     public Service() {
     }
 
+    public Service(int id, String serviceName) {
+        this.id = id;
+        this.serviceName = serviceName;
+    }
+
     public Service(int id, String serviceName, int duration, int cost, boolean isActive, Date serviceLastDate) {
         this.id = id;
         this.serviceName = serviceName;
@@ -35,4 +40,8 @@ public class Service {
     public void setCost(int cost) { this.cost = cost; }
     public void setActive(boolean active) { isActive = active; }
     public void setServiceLastDate(Date serviceLastDate) { this.serviceLastDate = serviceLastDate; }
+    @Override
+    public String toString() {
+        return serviceName;
+    }
 }

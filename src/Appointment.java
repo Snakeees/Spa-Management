@@ -2,27 +2,35 @@ import java.util.Date;
 
 public class Appointment {
     private int id;
-    private int clientId;
+//    private int clientId;
+    private String clientName;
+    private  String clientPhoneNumber;
     private Date appointmentDate;
     private Date appointmentTime;
     private int therapistId;
     private int serviceId;
     private boolean isDone;
     private boolean isPaid;
+    private boolean isActive;
 
-    public Appointment(int id, int clientId, Date appointmentDate, Date appointmentTime, int therapistId, int serviceId, boolean isDone, boolean isPaid) {
+    public Appointment() {
+    }
+
+    public Appointment(int id, String clientName, String clientPhoneNumber, Date appointmentDate, Date appointmentTime, int therapistId, int serviceId, boolean isDone, boolean isPaid,boolean isActive) {
         this.id = id;
-        this.clientId = clientId;
+        this.clientName=clientName;
+        this.clientPhoneNumber=clientPhoneNumber;
         this.appointmentDate = appointmentDate;
         this.appointmentTime = appointmentTime;
         this.therapistId = therapistId;
         this.serviceId = serviceId;
         this.isDone = isDone;
         this.isPaid = isPaid;
+        this.isActive=isActive;
     }
 
     public int getId() { return id; }
-    public int getClientId() { return clientId; }
+
     public Date getAppointmentDate() { return appointmentDate; }
     public Date getAppointmentTime() { return appointmentTime; }
     public int getTherapistId() { return therapistId; }
@@ -31,7 +39,31 @@ public class Appointment {
     public boolean isPaid() { return isPaid; }
 
     public void setId(int id) { this.id = id; }
-    public void setClientId(int clientId) { this.clientId = clientId; }
+
+    public String getClientName() {
+        return clientName;
+    }
+
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    public String getClientPhoneNumber() {
+        return clientPhoneNumber;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public void setClientPhoneNumber(String clientPhoneNumber) {
+        this.clientPhoneNumber = clientPhoneNumber;
+    }
+
     public void setAppointmentDate(Date appointmentDate) { this.appointmentDate = appointmentDate; }
     public void setAppointmentTime(Date appointmentTime) { this.appointmentTime = appointmentTime; }
     public void setTherapistId(int therapistId) { this.therapistId = therapistId; }
