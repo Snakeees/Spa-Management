@@ -4,8 +4,13 @@
  */
 
 import javax.swing.*;
+import java.awt.*;
 import java.lang.reflect.Array;
+import java.sql.Date;
 import java.sql.ResultSet;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +19,10 @@ import java.util.List;
  * @author satyanarayana.y
  */
 public class TherapistsAttendance extends javax.swing.JPanel {
+
+    private List<Therapist> therapists = new ArrayList<>();
+
+    private Integer selectedTherapistAttendanceId = null;
 
     /**
      * Creates new form TherapistsAttendance
@@ -45,25 +54,14 @@ public class TherapistsAttendance extends javax.swing.JPanel {
         therpaistNameLabel.setText("THERAPIST NAME");
 
         therapistNameList.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-//        Therapist therapist = new Therapist();
-//        therapist.setId(1);
-//        therapist.setFirstName("satya");
-//        Therapist therapist1 = new Therapist();
-//        therapist1.setId(2);
-//        therapist1.setFirstName("pavani");
-//
-////        list.add(therapist);
-////        list.add(therapist1);
-////
-////
-////        for (each item in the ArrayList)
-////        comboBox.addItem( theItem );
-//
-//        therapistNameList.addItem(therapist);
-//        therapistNameList.addItem(therapist1);
+        List<Therapist> therapistList = getTherapists(true);
+        this.therapists = therapistList;
+        for (Therapist therapist : therapistList) {
+            therapistNameList.addItem(therapist);
+        }
 
-//        therapistNameList.setModel(new javax.swing.DefaultComboBoxModel<>(Therapist[]);
-        getTherapists(true, therapistNameList);
+        updateTherapistAttendanceForm(null);
+
         therapistNameList.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 therapistNameListActionPerformed(evt);
@@ -143,8 +141,52 @@ public class TherapistsAttendance extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void therapistNameListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_therapistNameListActionPerformed
-        System.out.println("selected value");
+        Therapist therapist = (Therapist) therapistNameList.getSelectedItem();
+        if(therapist != null){
+            updateTherapistAttendanceForm(therapist.getId());
+        }
+
     }//GEN-LAST:event_therapistNameListActionPerformed
+
+    private void updateTherapistAttendanceForm(Integer therapistId){
+        Therapist therapist = null;
+        if(this.therapists != null && this.therapists.size() > 0){
+            if(therapistId != null){
+                for(Therapist therapistLoc : therapists) {
+                    if(therapistLoc.getId() == therapistId) {
+                        therapist = therapistLoc;
+                    }
+                }
+            } else{
+                therapist = (Therapist) therapistNameList.getSelectedItem();
+                if(therapist != null){
+                    therapistId = therapist.getId();
+                }
+            }
+        }
+        if(therapist != null){
+            TherapistAttendance therapistAttendance = getTherapistAttendanceByCurrentDate(therapistId);
+            if(therapistAttendance != null){
+                this.selectedTherapistAttendanceId  = therapistAttendance.getId();
+                if(therapistAttendance.getCheckinTime() != null){
+                    checkInTime.setSelected(true);
+                } else{
+                    checkInTime.setSelected(false);
+                }
+                if(therapistAttendance.getCheckoutTime() != null){
+                    checkOutTime.setSelected(true);
+                }else{
+                    checkOutTime.setSelected(false);
+                }
+                therapistNameList.setSelectedItem(therapist);
+            } else{
+                this.selectedTherapistAttendanceId  = null;
+                checkInTime.setSelected(false);
+                checkOutTime.setSelected(false);
+                therapistNameList.setSelectedItem(therapist);
+            }
+        }
+    }
 
     private void checkInTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkInTimeActionPerformed
         // TODO add your handling code here:
@@ -155,10 +197,51 @@ public class TherapistsAttendance extends javax.swing.JPanel {
     }//GEN-LAST:event_checkOutTimeActionPerformed
 
     private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
-        System.out.println("selected value = " + therapistNameList.getSelectedItem());
         Therapist therapist = (Therapist) therapistNameList.getSelectedItem();
-        System.out.println("selected value = " + therapist.getId());
-    }//GEN-LAST:event_submitActionPerformed
+        LocalTime now = LocalTime.now();
+        Time currentTime = Time.valueOf(now);
+        LocalDate localDate = LocalDate.now();
+        Date currentDate = Date.valueOf(localDate);
+        try {
+            Database database = new Database();
+            if (this.selectedTherapistAttendanceId != null) {
+                TherapistAttendance therapistsAttendance = getTherapistAttendanceByCurrentDate(therapist.getId());
+                if(therapistsAttendance != null) {
+                    if (checkInTime.isSelected() && therapistsAttendance.getCheckinTime() == null) {
+                        therapistsAttendance.setCheckinTime(currentTime);
+                    } else if (!checkInTime.isSelected()) {
+                        therapistsAttendance.setCheckinTime(null);
+                    }
+                    if (checkOutTime.isSelected() && therapistsAttendance.getCheckoutTime() == null) {
+                        therapistsAttendance.setCheckoutTime(currentTime);
+                    } else if (!checkOutTime.isSelected()) {
+                        therapistsAttendance.setCheckoutTime(null);
+                    }
+                    database.executeUpdate("update TherapistAttendance set checkIntime=? , checkouttime=?, date=? where ID=? ;", therapistsAttendance.getCheckinTime(), therapistsAttendance.getCheckoutTime(), therapistsAttendance.getDate(), this.selectedTherapistAttendanceId);
+                    JOptionPane.showMessageDialog(this, "Updated attendance details successfully");
+                }
+            } else {
+                TherapistAttendance therapistAttendance = new TherapistAttendance();
+                therapistAttendance.setTherapistId(therapist.getId());
+                if (checkInTime.isSelected()) {
+                    therapistAttendance.setCheckinTime(currentTime);
+                } else {
+                    therapistAttendance.setCheckinTime(null);
+                }
+                if (checkOutTime.isSelected()) {
+                    therapistAttendance.setCheckoutTime(currentTime);
+                } else {
+                    therapistAttendance.setCheckoutTime(null);
+                }
+                therapistAttendance.setDate(currentDate);
+                database.executeUpdate("INSERT INTO TherapistAttendance ( therapistid, checkintime, checkouttime, date) VALUES(?,?,?,?)", therapistAttendance.getTherapistId(), therapistAttendance.getCheckinTime(), therapistAttendance.getCheckoutTime(), therapistAttendance.getDate());
+                JOptionPane.showMessageDialog(this, "Added attendance details successfully");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -171,18 +254,36 @@ public class TherapistsAttendance extends javax.swing.JPanel {
     private javax.swing.JLabel therpaistNameLabel;
     // End of variables declaration//GEN-END:variables
 
-    private List<Therapist> getTherapists(boolean isActive, JComboBox<Therapist> therapistNameList) {
+    private TherapistAttendance getTherapistAttendanceByCurrentDate(int therapistId) {
+        Database db = new Database();
+        List<TherapistAttendance> therapists = new ArrayList<>();
+        try {
+            ResultSet rs = db.executeQuery("select * from TherapistAttendance where therapistID= ? and date = CURDATE() ", therapistId);
+            while (rs.next()) {
+                return new TherapistAttendance(rs.getInt("ID"),
+                        rs.getInt("TherapistID"),
+                        rs.getDate("date"),
+                        rs.getTime("CheckinTime"),
+                        rs.getTime("CheckoutTime")
+                        );
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private List<Therapist> getTherapists(boolean isActive) {
         Database db = new Database();
         List<Therapist> therapists = new ArrayList<>();
         try {
             ResultSet rs = db.executeQuery("select * from Therapist where isActive = ?", isActive);
             while (rs.next()) {
-                therapistNameList.addItem(new Therapist(rs.getInt("ID"),rs.getString("firstName")));
+                therapists.add(new Therapist(rs.getInt("ID"),rs.getString("firstName")));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return therapists;
-
     }
 }
