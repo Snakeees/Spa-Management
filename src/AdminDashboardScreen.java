@@ -3,7 +3,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.PasswordAuthentication;
+import java.util.ArrayList;
 
 public class AdminDashboardScreen extends JFrame implements ActionListener {
     JButton reports;
@@ -12,12 +12,14 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
     JButton accounts;
     JButton changePassword;
     JPanel content;
+    ArrayList<JButton> navButtons;
     int userId;
     public int getUserId() {
         return userId;
     }
 
     public AdminDashboardScreen(int userId)  {
+        navButtons=new ArrayList<>();
         this.userId = userId;
         setTitle("Serenity SPA");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,8 +28,16 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         createHeaderPanel().setLocation(0,0);
         getContentPane().add(createHeaderPanel(), BorderLayout.NORTH, 0);
         content= new Reports();
+        makeActive(reports);
         content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
         getContentPane().add(content,BorderLayout.CENTER, 1);
+    }
+    public void makeActive(JButton button){
+        button.setFont(new Font("Play", Font.BOLD, 25));
+    }
+    public void makeInActive(JButton button){
+
+        button.setFont(new Font("Play", Font.PLAIN, 20));
     }
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel();
@@ -36,32 +46,22 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         headerPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
         headerPanel.setOpaque(false);
 
-        reports = new JButton("Reports");
-        reports.setFont(new Font("Play", Font.BOLD, 20));
-        reports.setBackground(new Color(53, 183, 234));
-        reports.addActionListener(this);
+        reports = getButton("Reports");
         headerPanel.add(reports);
-        therapists = new JButton("Therapists");
-        therapists.setFont(new Font("Play", Font.BOLD, 20));
-        therapists.setBackground(new Color(53, 183, 234));
-        therapists.addActionListener(this);
+        therapists = getButton("Therapist");
         headerPanel.add(therapists);
-        services = new JButton("Services");
-        services.setFont(new Font("Play", Font.BOLD, 20));
-        services.setBackground(new Color(53, 183, 234));
-        services.addActionListener(this);
+        services =getButton("Service");
         headerPanel.add(services);
-        accounts = new JButton("Accounts");
-        accounts.setFont(new Font("Play", Font.BOLD, 20));
-        accounts.setBackground(new Color(53, 183, 234));
-        accounts.addActionListener(this);
+        accounts =getButton("Account");
         headerPanel.add(accounts);
 
-        changePassword = new JButton("Change Password");
-        changePassword.setFont(new Font("Play", Font.BOLD, 20));
-        changePassword.setBackground(new Color(53, 183, 234));
-        changePassword.addActionListener(this);
+        changePassword = getButton("Reset Password");
         headerPanel.add(changePassword);
+        navButtons.add(reports);
+        navButtons.add(therapists);
+        navButtons.add(services);
+        navButtons.add(accounts);
+        navButtons.add(changePassword);
 
         headerPanel.setLocation(0,0);
         headerPanel.setSize(MAXIMIZED_HORIZ,40);
@@ -69,70 +69,81 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
 
         return headerPanel;
     }
+    public JButton getButton(String label){
+        JButton button;
+        button = new JButton(label);
+        button.setFont(new Font("Play", Font.PLAIN, 20));
+        button.setBackground(new Color(53, 183, 234));
+        button.addActionListener(this);
+        return button;
+    }
+
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==reports){
-            System.out.println("call the reports");
+            updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
             content=new Reports();
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             getContentPane().add(content,BorderLayout.CENTER, 1);
-            validate();
+            makeActive(reports);
         }
         if(e.getSource()==therapists){
-            System.out.println("call the therapists");
+            updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
             content=new TherapistsPanel();
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             getContentPane().add(content,BorderLayout.CENTER, 1);
-            validate();
+            makeActive(therapists);
         }
         else if(e.getSource()==accounts){
-            System.out.println("call the accounts");
+            updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
             content=new AccountsPanel();
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             getContentPane().add(content,BorderLayout.CENTER, 1);
-            validate();
-//            repaint();
+            makeActive(accounts);
         }
         else if(e.getSource()==services){
-            System.out.println("call the services");
+            updateOtherButtons();
             getContentPane().remove(1);
             setLayout(new BorderLayout());
             content=new ServicesPanel();
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             getContentPane().add(content,BorderLayout.CENTER, 1);
-            validate();
-//            repaint();
+            makeActive(services);
+
         }
         else if(e.getSource()==changePassword){
+            updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
             content=new ChangePassword(getUserId());
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             getContentPane().add(content,BorderLayout.CENTER, 1);
-            validate();
+            makeActive(changePassword);
         }
-        else {
+        validate();
+    }
 
+    private void updateOtherButtons() {
+        for(JButton button:navButtons){
+            makeInActive(button);
         }
     }
+
     public JPanel getContentPanel(String subPage){
         JPanel content=new JPanel();
         content.setBounds(10,10,MAXIMIZED_HORIZ,MAXIMIZED_VERT);
-
-
-
         return content;
     }
 

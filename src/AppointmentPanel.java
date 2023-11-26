@@ -150,17 +150,29 @@ private void initComponents(boolean isEditable) {
         appointmentTimeLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         appointmentTimeLabel.setText("APPOINTMENT TIME");
 
+        boolean foundTherapist=false;
         for (int i=0;i<allTherapist.size();i++) {
                 therapistListSelector.addItem(allTherapist.get(i));
                 if(selectedTherapist!=null && allTherapist.get(i).getId()==selectedTherapist.getId()){
                         selectedTherapistIndex=i;
+                        foundTherapist=true;
                 }
         }
-        for (int i=0;i<allServices.size();i++) {
+        if (!foundTherapist) {
+                therapistListSelector.addItem(selectedTherapist);
+                selectedTherapistIndex=allTherapist.size();
+        }
+        boolean foundService = false;
+        for (int i = 0; i < allServices.size(); i++) {
                 serviceListSelector.addItem(allServices.get(i));
-                if(selectedService!=null && allServices.get(i).getId()==selectedService.getId()){
-                        selectedServiceIndex=i;
+                if (selectedService != null && allServices.get(i).getId() == selectedService.getId()) {
+                        selectedServiceIndex = i;
+                        foundService = true;
                 }
+        }
+        if (!foundService) {
+                serviceListSelector.addItem(selectedService);
+                selectedServiceIndex=allServices.size();
         }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -172,6 +184,7 @@ private void initComponents(boolean isEditable) {
                 phoneNumberTxt.setText(appointment.getClientPhoneNumber());
                 serviceListSelector.setSelectedIndex(selectedServiceIndex);
                 therapistListSelector.setSelectedIndex(selectedTherapistIndex);
+
                if(isEditable){
                         submitLabel.setText("UPDATE");
                         addAppointmentLabel.setText("UPDATE APPOINTMENT DETAILS");
@@ -183,7 +196,7 @@ private void initComponents(boolean isEditable) {
                                                                .addGap(29, 29, 29)
                                                                .addComponent(backLabel)
                                                                .addGap(351, 351, 351)
-                                                               .addComponent(addAppointmentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                               .addComponent(addAppointmentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                .addGap(0, 28, Short.MAX_VALUE))
                                                        .addGroup(layout.createSequentialGroup()
                                                                .addGap(414, 414, 414)

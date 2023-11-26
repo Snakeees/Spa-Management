@@ -17,9 +17,6 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
      */
     ArrayList<Service> allServices;
     ArrayList<Therapist> allTherapist;
-    int searchServiceId,searchTherapistId;
-    Object searchTime;
-    Date searchDate;
 
     public AppointmentsPanel() {
         updateDropdownDetails();
@@ -56,27 +53,30 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         List<List<Object>> cells = new ArrayList<>();
         java.util.Date d=new java.util.Date();
         try {
-            ResultSet rs = db.executeQuery("select a.ID, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t,Service s where AppointmentDate=? and a.IsActive=? and t.ID=a.TherapistID and a.ServiceID=s.ID",new java.sql.Date(d.getYear(),d.getMonth(),d.getDate()),true);
+            ResultSet rs = db.executeQuery("select a.ID, a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t,Service s where AppointmentDate=? and a.IsActive=? and t.ID=a.TherapistID and a.ServiceID=s.ID",new java.sql.Date(d.getYear(),d.getMonth(),d.getDate()),true);
             while (rs.next()) {
                 int id=rs.getInt("ID");
+                String clientName=rs.getString("clientName");
                 String service = rs.getString("service");
                 String therapist = rs.getString("therapist");
                 String time=rs.getTime("time").toString();
 
                 ArrayList<Object> arr = new ArrayList<>();
                 arr.add(id);
+                arr.add(clientName);
                 arr.add(service);
                 arr.add(therapist);
                 arr.add(time);
                 arr.add("");
                 cells.add(arr);
             }
-            Object[][] obj = new Object[cells.size()][4];
+            Object[][] obj = new Object[cells.size()][5];
             for (int i = 0; i < cells.size(); i++) {
                 obj[i][0] = cells.get(i).get(0);
                 obj[i][1] = cells.get(i).get(1);
                 obj[i][2] = cells.get(i).get(2);
                 obj[i][3] = cells.get(i).get(3);
+                obj[i][4] = cells.get(i).get(4);
             }
             return obj;
 
@@ -91,66 +91,59 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         List<List<Object>> cells = new ArrayList<>();
         ResultSet rs;
         List<Object> parameters=new ArrayList<>();
-        StringBuilder query=new StringBuilder("select a.ID, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t,Service s where a.IsActive=true and t.ID=a.TherapistID and a.ServiceID=s.ID  ");
-        if(searchDate!=null){
-            parameters.add(new java.sql.Date(searchDate.getYear(),searchDate.getMonth(),searchDate.getDate()));
+        StringBuilder query=new StringBuilder("select a.ID,a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t,Service s where a.IsActive=true and t.ID=a.TherapistID and a.ServiceID=s.ID  ");
+        Date date=dateSelectorTxt.getDate();
+        if(date!=null){
+            parameters.add(new java.sql.Date(date.getYear(),date.getMonth(),date.getDate()));
             query.append("and a.AppointmentDate=? ");
         }
-       if(searchTime!=null){
-           parameters.add(searchTime);
-           query.append("and a.AppointmentTime=? ");
-       }
-       if(searchTherapistId>0){
-           parameters.add(searchTherapistId);
+        Therapist therapist=(Therapist)therapistNameList.getSelectedItem();
+       if(therapist!=null && !(therapist).getFirstName().equals("select")){
+           parameters.add(therapist.getId());
            query.append("and a.TherapistID=? ");
        }
-       if(searchServiceId>0){
-           parameters.add(searchServiceId);
+       Service service=(Service)serviceList.getSelectedItem();
+       if(service!=null && !(service).getServiceName().equals("select")){
+           parameters.add(service.getId());
            query.append("and a.ServiceID=? ");
+       }
+       if(clientNameTxt.getText()!=null && !clientNameTxt.getText().equals("")){
+           parameters.add(clientNameTxt.getText()+"%");
+           query.append("and a.ClientName LIKE ?");
        }
 
         try {
             rs = db.executeQuery(query.toString(),parameters.toArray());
             while (rs.next()) {
                 int id=rs.getInt("ID");
-                String service = rs.getString("service");
+                String serviceName = rs.getString("service");
+                String clientName=rs.getString("clientName");
                 String therapistName = rs.getString("therapist");
                 String time=rs.getTime("time").toString();
 
                 ArrayList<Object> arr = new ArrayList<>();
                 arr.add(id);
-                arr.add(service);
+                arr.add(clientName);
+                arr.add(serviceName);
                 arr.add(therapistName);
                 arr.add(time);
                 arr.add("");
                 cells.add(arr);
             }
-            Object[][] obj = new Object[cells.size()][4];
+            Object[][] obj = new Object[cells.size()][5];
             for (int i = 0; i < cells.size(); i++) {
                 obj[i][0] = cells.get(i).get(0);
                 obj[i][1] = cells.get(i).get(1);
                 obj[i][2] = cells.get(i).get(2);
                 obj[i][3] = cells.get(i).get(3);
+                obj[i][4] = cells.get(i).get(4);
             }
-            searchServiceId=0;
-            searchTherapistId=0;
-            searchTime=null;
-            searchDate=null;
-            therapistNameList.setSelectedItem(null);
-            serviceList.setSelectedItem(null);
-            dateSelectorTxt.setDate(null);
+
             return obj;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        searchServiceId=0;
-        searchTherapistId=0;
-        searchTime=null;
-        searchDate=null;
-        therapistNameList.setSelectedItem(null);
-        serviceList.setSelectedItem(null);
-        dateSelectorTxt.setDate(null);
         return null;
 
     }
@@ -160,7 +153,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
                 data,
                 new String[]{
-                        "ID","SERVICE", "THERAPIST","TIME", "OPTIONS"
+                        "APPOINTMENT ID","CLIENT NAME","SERVICE", "THERAPIST","TIME", "OPTIONS"
                 }
 
         ) ;
@@ -170,15 +163,14 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                 super.updateUI();
                 setRowHeight(36);
                 setAutoCreateRowSorter(true);
-                TableColumn column = getColumnModel().getColumn(4);
-                System.out.println(column.getHeaderValue());
+                TableColumn column = getColumnModel().getColumn(5);
                 column.setCellRenderer(new AppointmentsPanel.ButtonsRenderer());
                 column.setCellEditor(new AppointmentsPanel.ButtonsEditor(this));
             }
             @Override
             public boolean isCellEditable(int row, int col) {
                 switch (col) {
-                    case 4:
+                    case 5:
                         return true;
                     default:
                         return false;
@@ -188,7 +180,6 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
 
         addAppointment = new javax.swing.JButton();
         appointmentListTablePane = new javax.swing.JScrollPane();
-        searchButton = new javax.swing.JButton();
         appointmentsDetailLabel = new javax.swing.JLabel();
         therapistNameList = new javax.swing.JComboBox<>();
         serviceList = new javax.swing.JComboBox<>();
@@ -198,18 +189,12 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         dateSelectorTxt = new com.toedter.calendar.JDateChooser();
         dateLabel.setBackground(new java.awt.Color(216, 235, 243));
         dateLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        dateLabel.setText("DATE / TIME");
+        dateLabel.setText("DATE");
+        clientNameLabel = new javax.swing.JLabel();
+        clientNameTxt = new javax.swing.JTextField();
+        clientNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        clientNameLabel.setText("CLIENT NAME");
 
-        dateSelectorTxt.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                dateSelectorTxtFocusLost(evt);
-            }
-        });
-//        timeSelectorTxt.addFocusListener(new java.awt.event.FocusAdapter() {
-//            public void focusLost(java.awt.event.FocusEvent evt) {
-//                timeSelectorTxtFocusLost(evt);
-//            }
-//        });
 
         therapistLabel.setBackground(new java.awt.Color(216, 235, 243));
         therapistLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -238,14 +223,6 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         appointmentsListTable.setBackground(new java.awt.Color(216, 235, 243));
         appointmentListTablePane.setViewportView(appointmentsListTable);
 
-        searchButton.setBackground(new java.awt.Color(53, 183, 234));
-        searchButton.setText("SEARCH");
-//        searchButton.addActionListener(new java.awt.event.ActionListener() {
-//            public void actionPerformed(java.awt.event.ActionEvent evt) {
-//                searchButtonActionPerformed(evt);
-//            }
-//        });
-
         appointmentsDetailLabel.setBackground(new java.awt.Color(216, 235, 243));
         appointmentsDetailLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         appointmentsDetailLabel.setText("TODAY'S APPOINTMENT LIST");
@@ -255,17 +232,15 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                 therapistNameListItemStateChanged(evt);
             }
         });
+        therapistNameList.addItem(new Therapist(0,"select"));
+        serviceList.addItem(new Service(0,"select"));
         for (int i=0;i<allTherapist.size();i++) {
             therapistNameList.addItem(allTherapist.get(i));
-//            if(selectedTherapist!=null && allTherapist.get(i).getId()==selectedTherapist.getId()){
-//                selectedTherapistIndex=i;
-//            }
+
         }
         for (int i=0;i<allServices.size();i++) {
             serviceList.addItem(allServices.get(i));
-//            if(selectedService!=null && allServices.get(i).getId()==selectedService.getId()){
-//                selectedServiceIndex=i;
-//            }
+
         }
 
         serviceList.addItemListener(new java.awt.event.ItemListener() {
@@ -281,17 +256,10 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         serviceLabel.setBackground(new java.awt.Color(216, 235, 243));
         serviceLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         serviceLabel.setText("SERVICE");
-        timeLabel=new JLabel();
-        timeLabel.setBackground(new java.awt.Color(216, 235, 243));
-        timeLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        timeLabel.setText("TIME");
-        timeLabel = new javax.swing.JLabel();
-        Date date = new Date(); SpinnerDateModel sm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
-        timeSelectorTxt = new javax.swing.JSpinner(sm);
+
         searchLable = new javax.swing.JButton();
 
-        JSpinner.DateEditor de = new JSpinner.DateEditor(timeSelectorTxt, "HH:mm");
-        timeSelectorTxt.setEditor(de);
+
 
         searchLable.setBackground(new java.awt.Color(53, 183, 234));
         searchLable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -301,38 +269,40 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                 searchLableActionPerformed(evt);
             }
         });
+        serviceList.setSelectedItem(null);
+        therapistNameList.setSelectedItem(null);
+        dateSelectorTxt.setDate(new Date());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup( layout.createSequentialGroup()
-                                .addGap(0, 32, Short.MAX_VALUE)
-                                .addComponent(appointmentListTablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 1264, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(32, 32, 32))
-                        .addGroup( layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(535, 535, 535)
-                                                .addComponent(appointmentsDetailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(504, 504, 504)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(timeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(dateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(therapistLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(serviceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                                .addGap(67, 67, 67)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(serviceList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(therapistNameList, 0, 197, Short.MAX_VALUE)
-                                                        .addComponent(dateSelectorTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(timeSelectorTxt))
-                                                .addGap(35, 35, 35)
-                                                .addComponent(searchLable, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(535, 535, 535)
+                                .addComponent(appointmentsDetailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(addAppointment, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(70, 70, 70))
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(453, 453, 453)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(therapistLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(dateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(serviceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(clientNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(clientNameTxt, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(serviceList, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(therapistNameList, 0, 197, Short.MAX_VALUE)
+                                        .addComponent(dateSelectorTxt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(35, 35, 35)
+                                .addComponent(searchLable, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(135, 135, 135))
+                        .addGroup( layout.createSequentialGroup()
+                                .addContainerGap(47, Short.MAX_VALUE)
+                                .addComponent(appointmentListTablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 1217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(60, 60, 60))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -344,53 +314,51 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                                                 .addGap(17, 17, 17)
                                                 .addComponent(addAppointment, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(9, 9, 9)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(therapistNameList, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(layout.createSequentialGroup()
+                                                .addGap(4, 4, 4)
+                                                .addComponent(therapistLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(searchLable, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                        .addComponent(therapistLabel)
-                                                        .addComponent(therapistNameList, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                        .addComponent(serviceList, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
+                                                        .addComponent(serviceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                        .addComponent(clientNameTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+                                                        .addComponent(clientNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(serviceList, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(serviceLabel))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(dateSelectorTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                                        .addComponent(timeSelectorTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                                        .addComponent(timeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                        .addComponent(dateLabel))
-                                                .addGap(18, 18, 18))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(searchLable, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)))
-                                .addComponent(appointmentListTablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(43, Short.MAX_VALUE))
+                                                        .addComponent(dateSelectorTxt, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(appointmentListTablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(36, Short.MAX_VALUE))
         );
     }// </editor-fold>
-
-    private void timeSelectorTxtFocusLost(FocusEvent evt) {
-        searchTime=timeSelectorTxt.getValue();
-    }
 
 
     private void serviceListItemStateChanged(java.awt.event.ItemEvent evt) {
         // TODO add your handling code here:
-        if(serviceList.getSelectedItem()!=null)
-            searchTherapistId=((Service)serviceList.getSelectedItem()).getId();
+        if(serviceList.getSelectedItem()!=null && ((Service)serviceList.getSelectedItem()).getServiceName().equals("select")){
+            serviceList.setSelectedItem(null);
+        }
     }
 
     private void therapistNameListItemStateChanged(java.awt.event.ItemEvent evt) {
         // TODO add your handling code here:
-        if(therapistNameList.getSelectedItem()!=null)
-            searchTherapistId=((Therapist)therapistNameList.getSelectedItem()).getId();
+        if(therapistNameList.getSelectedItem()!=null && ((Therapist)therapistNameList.getSelectedItem()).getFirstName().equals("select")){
+            therapistNameList.setSelectedItem(null);
+        }
+
     }
 
-    private void dateSelectorTxtFocusLost(java.awt.event.FocusEvent evt) {
+
+    private void clientNameTxtItemStateChanged(java.awt.event.ItemEvent evt) {
         // TODO add your handling code here:
-        searchDate=dateSelectorTxt.getDate();
     }
 
     private void searchLableActionPerformed(java.awt.event.ActionEvent evt) {
@@ -398,7 +366,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         appointmentsListTable= new javax.swing.JTable(new javax.swing.table.DefaultTableModel(
                 getAppointmentsWithRestriction(),
                 new String[]{
-                        "ID","SERVICE", "THERAPIST","TIME", "OPTIONS"
+                        "APPOINTMENT ID","CLIENT NAME","SERVICE", "THERAPIST","TIME", "OPTIONS"
                 }
 
         )) {
@@ -407,7 +375,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                 super.updateUI();
                 setRowHeight(36);
                 setAutoCreateRowSorter(true);
-                TableColumn column = getColumnModel().getColumn(4);
+                TableColumn column = getColumnModel().getColumn(5);
                 System.out.println(column.getHeaderValue());
                 column.setCellRenderer(new AppointmentsPanel.ButtonsRenderer());
                 column.setCellEditor(new AppointmentsPanel.ButtonsEditor(this));
@@ -415,7 +383,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
             @Override
             public boolean isCellEditable(int row, int col) {
                 switch (col) {
-                    case 4:
+                    case 5:
                         return true;
                     default:
                         return false;
@@ -446,14 +414,13 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
     private javax.swing.JLabel appointmentsDetailLabel;
     private javax.swing.JTable appointmentsListTable;
     private javax.swing.JLabel serviceLabel;
-    private JButton searchButton;
     private javax.swing.JComboBox<Service> serviceList;
     private javax.swing.JLabel therapistLabel;
     private javax.swing.JComboBox<Therapist> therapistNameList;
     private javax.swing.JLabel dateLabel;
     private com.toedter.calendar.JDateChooser dateSelectorTxt;
-    private javax.swing.JLabel timeLabel;
-    private javax.swing.JSpinner timeSelectorTxt;
+    private javax.swing.JLabel clientNameLabel;
+    private javax.swing.JTextField clientNameTxt;
     private javax.swing.JButton searchLable;
 
     // End of variables declaration
