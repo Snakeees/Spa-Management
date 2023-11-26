@@ -108,20 +108,18 @@ public class ServicesPanel extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(addService)
-                                .addGap(45, 45, 45))
+                                .addGap(30, 30, 30))
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(119, 119, 119)
-                                .addComponent(serviceTableListPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(459, Short.MAX_VALUE))
+                                .addGap(30, 30, 30)
+                                .addComponent(serviceTableListPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1280, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
+                                .addGap(25, 25, 25)
                                 .addComponent(addService)
-                                .addGap(58, 58, 58)
-                                .addComponent(serviceTableListPane, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(55, Short.MAX_VALUE))
+                                .addGap(25, 25, 25)
+                                .addComponent(serviceTableListPane, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>
 
@@ -159,13 +157,9 @@ public class ServicesPanel extends javax.swing.JPanel {
 
     private void addServiceActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        Container container = getParent();
-        getParent().remove(1);
-        JScrollPane body=new JScrollPane();
-        body.setViewportView(new ServicePanel(null,true));
-        container.add(body, BorderLayout.CENTER, 1);
+        JViewport container = (JViewport)getParent();
+        container.setView(new ServicePanel(null,true));
         container.validate();
-        container.repaint();
     }
 
     class EditAction extends AbstractAction {
@@ -179,11 +173,8 @@ public class ServicesPanel extends javax.swing.JPanel {
         @Override public void actionPerformed(ActionEvent e) {
             int row = table.convertRowIndexToModel(table.getEditingRow());
             Object o = table.getModel().getValueAt(row, 0);
-            Container container = getParent();
-            getParent().remove(1);
-            JScrollPane body=new JScrollPane();
-            body.setViewportView(new ServicePanel((int) o,true));
-            container.add(body, BorderLayout.CENTER, 1);
+            JViewport container = (JViewport)getParent();
+            container.setView(new ServicePanel((int) o,true));
             container.validate();
             container.repaint();
 
@@ -200,11 +191,8 @@ public class ServicesPanel extends javax.swing.JPanel {
         @Override public void actionPerformed(ActionEvent e) {
             int row = table.convertRowIndexToModel(table.getEditingRow());
             Object o = table.getModel().getValueAt(row, 0);
-            Container container = getParent();
-            getParent().remove(1);
-            JScrollPane body=new JScrollPane();
-            body.setViewportView(new ServicePanel((int) o,false));
-            container.add(body, BorderLayout.CENTER, 1);
+            JViewport container = (JViewport)getParent();
+            container.setView(new ServicePanel((int) o,false));
             container.validate();
             container.repaint();
 
@@ -235,11 +223,8 @@ public class ServicesPanel extends javax.swing.JPanel {
             if (result == JOptionPane.OK_OPTION) {
                 Database db=new Database();
                 db.executeUpdate("Delete from Service where ID=?",o);
-                Container container = getParent();
-                getParent().remove(1);
-                JScrollPane body=new JScrollPane();
-                body.setViewportView(new ServicesPanel());
-                container.add(body, BorderLayout.CENTER, 1);
+                JViewport container = (JViewport)getParent();
+                container.setView(new ServicesPanel());
                 container.validate();
                 container.repaint();
             } else if (result == JOptionPane.CANCEL_OPTION) {

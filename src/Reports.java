@@ -63,7 +63,7 @@ public class Reports extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(216, 235, 243));
 
-        incomeValue.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        incomeValue.setFont(new java.awt.Font("Play", 1, 24)); // NOI18N
         incomeValue.setText("₹ "+getIncome());
 
         javax.swing.GroupLayout incomePanelLayout = new javax.swing.GroupLayout(incomePanel);
@@ -83,7 +83,7 @@ public class Reports extends javax.swing.JPanel {
                 .addContainerGap(90, Short.MAX_VALUE))
         );
 
-        visitValue.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        visitValue.setFont(new java.awt.Font("Play", 1, 24)); // NOI18N
         visitValue.setText(Integer.toString(getVisits()));
 
         javax.swing.GroupLayout visitPanelLayout = new javax.swing.GroupLayout(visitPanel);
@@ -93,7 +93,7 @@ public class Reports extends javax.swing.JPanel {
             .addGroup( visitPanelLayout.createSequentialGroup()
                 .addContainerGap(158, Short.MAX_VALUE)
                 .addComponent(visitValue)
-                .addGap(137, 137, 137))
+                .addGap(140, 140, 140))
         );
         visitPanelLayout.setVerticalGroup(
             visitPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,10 +103,10 @@ public class Reports extends javax.swing.JPanel {
                 .addContainerGap(90, Short.MAX_VALUE))
         );
 
-        incomeLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        incomeLabel.setFont(new java.awt.Font("Play", 1, 18)); // NOI18N
         incomeLabel.setText("Current Month Income");
 
-        visitLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        visitLabel.setFont(new java.awt.Font("Play", 1, 18)); // NOI18N
         visitLabel.setText("Current month Visits");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -114,7 +114,7 @@ public class Reports extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(246, 246, 246)
+                .addGap(130, 130, 130)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(incomePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -126,8 +126,7 @@ public class Reports extends javax.swing.JPanel {
                         .addComponent(visitLabel)
                         .addGap(333, 333, 333))
                     .addGroup( layout.createSequentialGroup()
-                        .addComponent(visitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(259, 259, 259))))
+                        .addComponent(visitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

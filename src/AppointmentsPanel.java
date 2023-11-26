@@ -183,6 +183,9 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
 
         for (int i = 0; i < appointmentsListTable.getColumnCount()-1; i++) {
             appointmentsListTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            appointmentsListTable.getColumnModel().getColumn(i).setMaxWidth(200);
+            appointmentsListTable.getColumnModel().getColumn(i).setWidth(180);
+            appointmentsListTable.getColumnModel().getColumn(i).setPreferredWidth(180);
         }
         addAppointment = new javax.swing.JButton();
         appointmentListTablePane = new javax.swing.JScrollPane();
@@ -194,20 +197,20 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         dateLabel = new javax.swing.JLabel();
         dateSelectorTxt = new com.toedter.calendar.JDateChooser();
         dateLabel.setBackground(new java.awt.Color(216, 235, 243));
-        dateLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        dateLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
         dateLabel.setText("DATE");
         clientNameLabel = new javax.swing.JLabel();
         clientNameTxt = new javax.swing.JTextField();
-        clientNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        clientNameLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
         clientNameLabel.setText("CLIENT NAME");
 
 
         therapistLabel.setBackground(new java.awt.Color(216, 235, 243));
-        therapistLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        therapistLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
         therapistLabel.setText("THERAPIST");
 
         serviceLabel.setBackground(new java.awt.Color(216, 235, 243));
-        serviceLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        serviceLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
         serviceLabel.setText("SERVICE");
 
         setBackground(new java.awt.Color(216, 235, 243));
@@ -230,7 +233,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         appointmentListTablePane.setViewportView(appointmentsListTable);
 
         appointmentsDetailLabel.setBackground(new java.awt.Color(216, 235, 243));
-        appointmentsDetailLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        appointmentsDetailLabel.setFont(new java.awt.Font("Play", 1, 18)); // NOI18N
         appointmentsDetailLabel.setText("TODAY'S APPOINTMENT LIST");
 
         therapistNameList.addItemListener(new java.awt.event.ItemListener() {
@@ -256,11 +259,11 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         });
 
         therapistLabel.setBackground(new java.awt.Color(216, 235, 243));
-        therapistLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        therapistLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
         therapistLabel.setText("THERAPIST");
 
         serviceLabel.setBackground(new java.awt.Color(216, 235, 243));
-        serviceLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        serviceLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
         serviceLabel.setText("SERVICE");
 
         searchLable = new javax.swing.JButton();
@@ -268,7 +271,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
 
 
         searchLable.setBackground(new java.awt.Color(53, 183, 234));
-        searchLable.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        searchLable.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
         searchLable.setText("SEARCH");
         searchLable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -284,13 +287,13 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup( layout.createSequentialGroup()
-                                .addGap(535, 535, 535)
+                                .addGap(525, 525, 525)
                                 .addComponent(appointmentsDetailLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(addAppointment, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(70, 70, 70))
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(453, 453, 453)
+                                .addGap(443, 443, 443)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(therapistLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(dateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -306,9 +309,10 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                                 .addComponent(searchLable, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(135, 135, 135))
                         .addGroup( layout.createSequentialGroup()
-                                .addContainerGap(47, Short.MAX_VALUE)
-                                .addComponent(appointmentListTablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 1217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(60, 60, 60))
+                                .addContainerGap(4, Short.MAX_VALUE)
+                                .addComponent(appointmentListTablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 1300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(4, 4, 4)
+                        )
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,7 +346,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                                                         .addComponent(dateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(appointmentListTablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(36, Short.MAX_VALUE))
+                                .addContainerGap(0, Short.MAX_VALUE))
         );
     }// </editor-fold>
 
@@ -401,6 +405,9 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
 
         for (int i = 0; i < appointmentsListTable.getColumnCount()-1; i++) {
             appointmentsListTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            appointmentsListTable.getColumnModel().getColumn(i).setMaxWidth(200);
+            appointmentsListTable.getColumnModel().getColumn(i).setWidth(180);
+            appointmentsListTable.getColumnModel().getColumn(i).setPreferredWidth(180);
         }
         appointmentsListTable.setBackground(new java.awt.Color(216, 235, 243));
         appointmentListTablePane.setViewportView(appointmentsListTable);
@@ -410,11 +417,8 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
     }
     private void addAppointmentActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        Container container = getParent();
-        getParent().remove(1);
-        JScrollPane body = new JScrollPane();
-        body.setViewportView(new AppointmentPanel(null,true));
-        container.add(body, BorderLayout.CENTER, 1);
+        JViewport container = (JViewport)getParent();
+        container.setView(new AppointmentPanel(null,true));
         container.validate();
         container.repaint();
     }
@@ -452,11 +456,8 @@ class EditAction extends AbstractAction {
         @Override public void actionPerformed(ActionEvent e) {
             int row = table.convertRowIndexToModel(table.getEditingRow());
             Object o = table.getModel().getValueAt(row, 0);
-            Container container = getParent();
-            getParent().remove(1);
-            JScrollPane body = new JScrollPane();
-            body.setViewportView(new AppointmentPanel((int) o,true));
-            container.add(body, BorderLayout.CENTER, 1);
+            JViewport container = (JViewport)getParent();
+            container.setView(new AppointmentPanel((int) o,true));
             container.validate();
             container.repaint();
 
@@ -473,11 +474,8 @@ class EditAction extends AbstractAction {
         @Override public void actionPerformed(ActionEvent e) {
             int row = table.convertRowIndexToModel(table.getEditingRow());
             Object o = table.getModel().getValueAt(row, 0);
-            Container container = getParent();
-            getParent().remove(1);
-            JScrollPane body = new JScrollPane();
-            body.setViewportView(new AppointmentPanel((int) o,false));
-            container.add(body, BorderLayout.CENTER, 1);
+            JViewport container = (JViewport)getParent();
+            container.setView(new AppointmentPanel((int) o,false));
             container.validate();
             container.repaint();
 
@@ -508,11 +506,8 @@ class EditAction extends AbstractAction {
             if (result == JOptionPane.OK_OPTION) {
                 Database db=new Database();
                 db.executeUpdate("Update Appointment set IsActive=false where ID=?",o);
-                Container container = getParent();
-                getParent().remove(1);
-                JScrollPane body=new JScrollPane();
-                body.setViewportView(new AppointmentsPanel());
-                container.add(body, BorderLayout.CENTER, 1);
+                JViewport container = (JViewport)getParent();
+                container.setView(new AppointmentsPanel());
                 container.validate();
                 container.repaint();
             } else if (result == JOptionPane.CANCEL_OPTION) {

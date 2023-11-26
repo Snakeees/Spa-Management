@@ -108,20 +108,18 @@ public class TherapistsPanel extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(addTherapist)
-                                .addGap(45, 45, 45))
+                                .addGap(30, 30,30))
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(119, 119, 119)
-                                .addComponent(therapistTableListPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1000, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(459, Short.MAX_VALUE))
+                                .addGap(30, 30, 30)
+                                .addComponent(therapistTableListPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1280, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
+                                .addGap(25, 25, 25)
                                 .addComponent(addTherapist)
-                                .addGap(58, 58, 58)
-                                .addComponent(therapistTableListPane, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(55, Short.MAX_VALUE))
+                                .addGap(25, 25, 25)
+                                .addComponent(therapistTableListPane, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>
 
@@ -159,11 +157,8 @@ public class TherapistsPanel extends javax.swing.JPanel {
 
     private void addTherapistActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        Container container = getParent();
-        getParent().remove(1);
-        JScrollPane body=new JScrollPane();
-        body.setViewportView(new TherapistPanel(null,true));
-        container.add(body, BorderLayout.CENTER, 1);
+        JViewport container = (JViewport)getParent();
+        container.setView(new TherapistPanel(null,true));
         container.validate();
         container.repaint();
     }
@@ -179,11 +174,8 @@ public class TherapistsPanel extends javax.swing.JPanel {
         @Override public void actionPerformed(ActionEvent e) {
             int row = table.convertRowIndexToModel(table.getEditingRow());
             Object o = table.getModel().getValueAt(row, 0);
-            Container container = getParent();
-            getParent().remove(1);
-            JScrollPane body = new JScrollPane();
-            body.setViewportView(new TherapistPanel((int) o,true));
-            container.add(body, BorderLayout.CENTER, 1);
+            JViewport container = (JViewport)getParent();
+            container.setView(new TherapistPanel((int) o,true));
             container.validate();
             container.repaint();
 
@@ -200,11 +192,8 @@ public class TherapistsPanel extends javax.swing.JPanel {
         @Override public void actionPerformed(ActionEvent e) {
             int row = table.convertRowIndexToModel(table.getEditingRow());
             Object o = table.getModel().getValueAt(row, 0);
-            Container container = getParent();
-            getParent().remove(1);
-            JScrollPane body = new JScrollPane();
-            body.setViewportView(new TherapistPanel((int) o,false));
-            container.add(body, BorderLayout.CENTER, 1);
+            JViewport container = (JViewport)getParent();
+            container.setView(new TherapistPanel((int) o,false));
             container.validate();
             container.repaint();
 
@@ -235,11 +224,8 @@ public class TherapistsPanel extends javax.swing.JPanel {
             if (result == JOptionPane.OK_OPTION) {
                 Database db=new Database();
                 db.executeUpdate("Delete from Therapist where ID=?",o);
-                Container container = getParent();
-                getParent().remove(1);
-                JScrollPane body = new JScrollPane();
-                body.setViewportView(new TherapistsPanel());
-                container.add(body, BorderLayout.CENTER, 1);
+                JViewport container = (JViewport)getParent();
+                container.setView(new TherapistsPanel());
                 container.validate();
                 container.repaint();
             } else if (result == JOptionPane.CANCEL_OPTION) {

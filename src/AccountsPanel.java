@@ -108,20 +108,18 @@ public class AccountsPanel extends javax.swing.JPanel {
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(addAccount)
-                                .addGap(45, 45, 45))
+                                .addGap(30, 30, 30))
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(119, 119, 119)
-                                .addComponent(accountListTablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(459, Short.MAX_VALUE))
+                                .addGap(30, 30, 30)
+                                .addComponent(accountListTablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 1280, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(27, 27, 27)
+                                .addGap(25, 25, 25)
                                 .addComponent(addAccount)
-                                .addGap(58, 58, 58)
-                                .addComponent(accountListTablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 502, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(55, Short.MAX_VALUE))
+                                .addGap(25, 25, 25)
+                                .addComponent(accountListTablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>
 
@@ -159,11 +157,8 @@ public class AccountsPanel extends javax.swing.JPanel {
 
     private void addAccountActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
-        Container container = getParent();
-        getParent().remove(1);
-        JScrollPane body = new JScrollPane();
-        body.setViewportView(new AccountPanel(null,true));
-        container.add(body, BorderLayout.CENTER, 1);
+        JViewport container = (JViewport)getParent();
+        container.setView(new AccountPanel(null,true));
         container.validate();
         container.repaint();
     }
@@ -180,11 +175,8 @@ public class AccountsPanel extends javax.swing.JPanel {
             // Object o = table.getModel().getValueAt(table.getSelectedRow(), 0);
             int row = table.convertRowIndexToModel(table.getEditingRow());
             Object o = table.getModel().getValueAt(row, 0);
-            Container container = getParent();
-            getParent().remove(1);
-            JScrollPane body = new JScrollPane();
-            body.setViewportView(new AccountPanel((int) o,true));
-            container.add(body, BorderLayout.CENTER, 1);
+            JViewport container = (JViewport)getParent();
+            container.setView(new AccountPanel((int) o,true));
             container.validate();
             container.repaint();
 
@@ -215,11 +207,8 @@ public class AccountsPanel extends javax.swing.JPanel {
             if (result == JOptionPane.OK_OPTION) {
                 Database db=new Database();
                 db.executeUpdate("Delete from UserLogin where ID=?",o);
-                Container container = getParent();
-                getParent().remove(1);
-                JScrollPane body = new JScrollPane();
-                body.setViewportView(new AccountsPanel());
-                container.add(body, BorderLayout.CENTER, 1);
+                JViewport container = (JViewport)getParent();
+                container.setView(new AccountsPanel());
                 container.validate();
                 container.repaint();
             } else if (result == JOptionPane.CANCEL_OPTION) {

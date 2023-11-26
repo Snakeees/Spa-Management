@@ -195,7 +195,7 @@ private void initComponents(boolean isEditable) {
                                                        .addGroup(layout.createSequentialGroup()
                                                                .addGap(29, 29, 29)
                                                                .addComponent(backLabel)
-                                                               .addGap(351, 351, 351)
+                                                               .addGap(370, 370, 370)
                                                                .addComponent(addAppointmentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                .addGap(0, 28, Short.MAX_VALUE))
                                                        .addGroup(layout.createSequentialGroup()
@@ -215,18 +215,20 @@ private void initComponents(boolean isEditable) {
                                                                        .addComponent(therapistListSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                        .addComponent(clientNameTxt)
                                                                        .addComponent(phoneNumberTxt))))
-                                               .addGap(435, 435, 435))
+                                               .addGap(300, 300, 300))
                                        .addGroup(layout.createSequentialGroup()
-                                               .addGap(534, 534, 534)
+                                               .addGap(600, 600, 600)
                                                .addComponent(submitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                               .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                               )
                        );
                        layout.setVerticalGroup(
                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                        .addGroup(layout.createSequentialGroup()
-                                               .addGap(35, 35, 35)
+                                               .addGap(15, 15, 15)
                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                       .addComponent(backLabel)
+                                                       .addComponent(backLabel))
+                                               .addGap(10, 10, 10)
+                                               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                        .addComponent(addAppointmentLabel))
                                                .addGap(33, 33, 33)
                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -254,7 +256,7 @@ private void initComponents(boolean isEditable) {
                                                        .addComponent(appointmentTimeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                .addGap(33, 33, 33)
                                                .addComponent(submitLabel)
-                                               .addContainerGap(163, Short.MAX_VALUE))
+                                               )
                        );
                }
                else{
@@ -274,7 +276,7 @@ private void initComponents(boolean isEditable) {
                                                        .addGroup(layout.createSequentialGroup()
                                                                .addGap(29, 29, 29)
                                                                .addComponent(backLabel)
-                                                               .addGap(351, 351, 351)
+                                                               .addGap(370, 370, 370)
                                                                .addComponent(addAppointmentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                                .addGap(0, 28, Short.MAX_VALUE))
                                                        .addGroup(layout.createSequentialGroup()
@@ -301,9 +303,11 @@ private void initComponents(boolean isEditable) {
                        layout.setVerticalGroup(
                                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                        .addGroup(layout.createSequentialGroup()
-                                               .addGap(35, 35, 35)
+                                               .addGap(15, 15, 15)
                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                       .addComponent(backLabel)
+                                                       .addComponent(backLabel))
+                                               .addGap(10, 10, 10)
+                                               .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                        .addComponent(addAppointmentLabel))
                                                .addGap(33, 33, 33)
                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -342,7 +346,7 @@ private void initComponents(boolean isEditable) {
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(29, 29, 29)
                                                         .addComponent(backLabel)
-                                                        .addGap(351, 351, 351)
+                                                        .addGap(451, 451, 451)
                                                         .addComponent(addAppointmentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addGap(0, 28, Short.MAX_VALUE))
                                                 .addGroup(layout.createSequentialGroup()
@@ -362,18 +366,19 @@ private void initComponents(boolean isEditable) {
                                                                 .addComponent(therapistListSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(clientNameTxt)
                                                                 .addComponent(phoneNumberTxt))))
-                                        .addGap(435, 435, 435))
+                                        .addGap(300, 300, 300))
                                 .addGroup(layout.createSequentialGroup()
-                                        .addGap(534, 534, 534)
-                                        .addComponent(submitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(600, 600, 600)
+                                        .addComponent(submitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
                 );
                 layout.setVerticalGroup(
                         layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                        .addGap(35, 35, 35)
+                                        .addGap(15, 15, 15)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                                .addComponent(backLabel)
+                                                .addComponent(backLabel))
+                                        .addGap(10, 10, 10)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                                 .addComponent(addAppointmentLabel))
                                         .addGap(33, 33, 33)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -400,8 +405,7 @@ private void initComponents(boolean isEditable) {
                                                 .addComponent(appointmentTimeLabel)
                                                 .addComponent(appointmentTimeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(33, 33, 33)
-                                        .addComponent(submitLabel)
-                                        .addContainerGap(163, Short.MAX_VALUE))
+                                        .addComponent(submitLabel))
                 );
         }
 
@@ -411,11 +415,8 @@ private void initComponents(boolean isEditable) {
 
         private void backLabelActionPerformed(java.awt.event.ActionEvent evt) {
                 // TODO add your handling code here:
-                Container container = getParent();
-                getParent().remove(1);
-                JScrollPane body = new JScrollPane();
-                body.setViewportView(new AppointmentsPanel());
-                container.add(body, BorderLayout.CENTER, 1);
+                JViewport container = (JViewport)getParent();
+                container.setView(new AppointmentsPanel());
                 container.validate();
                 container.repaint();
         }
@@ -427,11 +428,8 @@ private void initComponents(boolean isEditable) {
                         if(clientNameTxt.getText()!=null && !clientNameTxt.getText().trim().equals("") && phoneNumberTxt.getText()!=null && appointmentDateTxt.getDate()!=null &&  !phoneNumberTxt.getText().trim().equals("")) {
                                 String modifiedDate=dateFormat.format(appointmentDateTxt.getDate().getTime());
                                 db.executeUpdate("INSERT INTO Appointment ( ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime,TherapistID, ServiceID, IsDone, IsPaid, IsActive) VALUES(?,?,?,?,?,?,?,?,?)", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate,appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(),((Service) serviceListSelector.getSelectedItem()).getId(), false, false, true);
-                                Container container = getParent();
-                                getParent().remove(1);
-                                JScrollPane body=new JScrollPane();
-                                body.setViewportView(new AppointmentsPanel());
-                                container.add(body, BorderLayout.CENTER, 1);
+                                JViewport container = (JViewport)getParent();
+                                container.setView(new AppointmentsPanel());
                                 container.validate();
                                 container.repaint();
                                 JOptionPane.showMessageDialog(this, "Appointment created successfully!" );
@@ -444,11 +442,8 @@ private void initComponents(boolean isEditable) {
                         if(clientNameTxt.getText()!=null && !clientNameTxt.getText().trim().equals("") && phoneNumberTxt.getText()!=null && appointmentDateTxt.getDate()!=null &&  !phoneNumberTxt.getText().trim().equals("")) {
                                 String modifiedDate=dateFormat.format(appointmentDateTxt.getDate().getTime());
                                 db.executeUpdate("update Appointment set ClientName=?, ClientPhoneNumber=?, AppointmentDate=?, AppointmentTime=?,TherapistID=?, ServiceID=? where ID=? ;", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate,appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(),((Service) serviceListSelector.getSelectedItem()).getId(),appointment.getId());
-                                Container container = getParent();
-                                getParent().remove(1);
-                                JScrollPane body=new JScrollPane();
-                                body.setViewportView(new AppointmentsPanel());
-                                container.add(body, BorderLayout.CENTER, 1);
+                                JViewport container = (JViewport)getParent();
+                                container.setView(new AppointmentsPanel());
                                 container.validate();
                                 container.repaint();
                                 JOptionPane.showMessageDialog(this, "Appointmentno details updated successfully!" );

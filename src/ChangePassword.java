@@ -59,7 +59,7 @@ public class ChangePassword extends javax.swing.JPanel {
                         .addGroup(contentLayout.createSequentialGroup()
                                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(contentLayout.createSequentialGroup()
-                                                .addGap(566, 566, 566)
+                                                .addGap(466, 466, 466)
                                                 .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(oldPasswordLabel)
                                                         .addComponent(newPasswordLabel)
@@ -102,14 +102,13 @@ public class ChangePassword extends javax.swing.JPanel {
         containerLayout.setHorizontalGroup(
                 containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(containerLayout.createSequentialGroup()
-                                .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, 1340, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         containerLayout.setVerticalGroup(
                 containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(containerLayout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
         );
 
@@ -153,7 +152,6 @@ public class ChangePassword extends javax.swing.JPanel {
                 String newHashedPassword = HashPassword.hashPassword(newPasswordTxt.getText());
                 db.executeUpdate("update UserLogin set password=? where ID=? ;", newHashedPassword, getUserId());
 //                Container container = getParent();
-//                getParent().remove(1);
 //                JScrollPane body=new JScrollPane();
 //                body.setViewportView(new AccountsPanel());
 //                container.add(body, BorderLayout.CENTER, 1);
