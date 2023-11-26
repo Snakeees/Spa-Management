@@ -26,11 +26,14 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         getContentPane().setBackground(Color.decode("#d8ebf3"));
         createHeaderPanel().setLocation(0,0);
+        setSize(500, 400);
         getContentPane().add(createHeaderPanel(), BorderLayout.NORTH, 0);
+        JScrollPane body=new JScrollPane();
         content= new AppointmentsPanel();
         makeActive(appointments);
         content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
-        getContentPane().add(content,BorderLayout.CENTER, 1);
+        body.setViewportView(content);
+        getContentPane().add(body,BorderLayout.CENTER, 1);
     }
     public void makeActive(JButton button){
         button.setFont(new Font("Play", Font.BOLD, 25));
@@ -75,6 +78,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        JScrollPane body=new JScrollPane();
         if(e.getSource()==appointments){
             updateOtherButtons();
             content.invalidate();
@@ -82,7 +86,8 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             content=new AppointmentsPanel();
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            getContentPane().add(content,BorderLayout.CENTER, 1);
+            body.setViewportView(content);
+            getContentPane().add(body,BorderLayout.CENTER, 1);
             makeActive(appointments);
         }
         if(e.getSource()==attendance){
@@ -92,7 +97,8 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             content=new TherapistsAttendance();
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            getContentPane().add(content,BorderLayout.CENTER, 1);
+            body.setViewportView(content);
+            getContentPane().add(body,BorderLayout.CENTER, 1);
             makeActive(attendance);
         }
         else if(e.getSource()==changePassword){
@@ -102,7 +108,8 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             content=new ChangePassword(userId);
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            getContentPane().add(content,BorderLayout.CENTER, 1);
+            body.setViewportView(content);
+            getContentPane().add(body,BorderLayout.CENTER, 1);
             makeActive(changePassword);
         }
         validate();
@@ -110,9 +117,6 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
     public JPanel getContentPanel(String subPage){
         JPanel content=new JPanel();
         content.setBounds(10,10,MAXIMIZED_HORIZ,MAXIMIZED_VERT);
-
-
-
         return content;
     }
 }

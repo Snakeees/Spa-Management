@@ -33,7 +33,7 @@ public class LoginScreen extends JFrame {
         panel.add(createUsernamePanel(), gbc);
         panel.add(createPasswordPanel(), gbc);
         panel.add(createSubmitButtonPanel(), gbc);
-        setSize(400, 300);
+        setSize(500, 400);
 
         return panel;
     }

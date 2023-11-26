@@ -189,19 +189,19 @@ public class TherapistPanel extends javax.swing.JPanel {
                 attendanceShowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(attendanceShowPanelLayout.createSequentialGroup()
                                 .addGap(2, 2, 2)
-                                .addComponent(att1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(att1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(att2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(att2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(4, 4, 4)
-                                .addComponent(att3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(att3, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(att4, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(att4, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(att5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(att5, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(att6, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(att6, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(8, 8, 8)
-                                .addComponent(att7, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(att7, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap())
         );
         attendanceShowPanelLayout.setVerticalGroup(
@@ -497,7 +497,9 @@ public class TherapistPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         Container container = getParent();
         getParent().remove(1);
-        container.add(new TherapistsPanel(), BorderLayout.CENTER, 1);
+        JScrollPane body=new JScrollPane();
+        body.setViewportView(new TherapistsPanel());
+        container.add(body, BorderLayout.CENTER, 1);
         container.validate();
         container.repaint();
     }
@@ -511,7 +513,9 @@ public class TherapistPanel extends javax.swing.JPanel {
                 db.executeUpdate("INSERT INTO Therapist ( FirstName, PhoneNumber, Address, IsActive) VALUES(?,?,?,?)", therapistNameTxt.getText(), phoneNumberTxt.getText(),addressTxt.getText(), true);
                 Container container = getParent();
                 getParent().remove(1);
-                container.add(new TherapistsPanel(), BorderLayout.CENTER, 1);
+                JScrollPane body=new JScrollPane();
+                body.setViewportView(new TherapistsPanel());
+                container.add(body, BorderLayout.CENTER, 1);
                 container.validate();
                 container.repaint();
                 JOptionPane.showMessageDialog(this, "Therapist created successfully!" );
@@ -531,7 +535,9 @@ public class TherapistPanel extends javax.swing.JPanel {
                 }
                 Container container = getParent();
                 getParent().remove(1);
-                container.add(new TherapistsPanel(), BorderLayout.CENTER, 1);
+                JScrollPane body = new JScrollPane();
+                body.setViewportView(new TherapistsPanel());
+                container.add(body, BorderLayout.CENTER, 1);
                 container.validate();
                 container.repaint();
                 JOptionPane.showMessageDialog(this, "Therapist details updated successfully!" );

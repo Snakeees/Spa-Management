@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -93,6 +94,12 @@ public class ServicesPanel extends javax.swing.JPanel {
 
 
         serviceTableListPane.setViewportView(serviceTableList);
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+        for (int i = 0; i < serviceTableList.getColumnCount()-1; i++) {
+            serviceTableList.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -154,7 +161,9 @@ public class ServicesPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         Container container = getParent();
         getParent().remove(1);
-        container.add(new ServicePanel(null,true), BorderLayout.CENTER, 1);
+        JScrollPane body=new JScrollPane();
+        body.setViewportView(new ServicePanel(null,true));
+        container.add(body, BorderLayout.CENTER, 1);
         container.validate();
         container.repaint();
     }
@@ -172,7 +181,9 @@ public class ServicesPanel extends javax.swing.JPanel {
             Object o = table.getModel().getValueAt(row, 0);
             Container container = getParent();
             getParent().remove(1);
-            container.add(new ServicePanel((int) o,true), BorderLayout.CENTER, 1);
+            JScrollPane body=new JScrollPane();
+            body.setViewportView(new ServicePanel((int) o,true));
+            container.add(body, BorderLayout.CENTER, 1);
             container.validate();
             container.repaint();
 
@@ -191,7 +202,9 @@ public class ServicesPanel extends javax.swing.JPanel {
             Object o = table.getModel().getValueAt(row, 0);
             Container container = getParent();
             getParent().remove(1);
-            container.add(new ServicePanel((int) o,false), BorderLayout.CENTER, 1);
+            JScrollPane body=new JScrollPane();
+            body.setViewportView(new ServicePanel((int) o,false));
+            container.add(body, BorderLayout.CENTER, 1);
             container.validate();
             container.repaint();
 
@@ -224,7 +237,9 @@ public class ServicesPanel extends javax.swing.JPanel {
                 db.executeUpdate("Delete from Service where ID=?",o);
                 Container container = getParent();
                 getParent().remove(1);
-                container.add(new ServicesPanel(), BorderLayout.CENTER, 1);
+                JScrollPane body=new JScrollPane();
+                body.setViewportView(new ServicesPanel());
+                container.add(body, BorderLayout.CENTER, 1);
                 container.validate();
                 container.repaint();
             } else if (result == JOptionPane.CANCEL_OPTION) {

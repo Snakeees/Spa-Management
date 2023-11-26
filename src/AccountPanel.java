@@ -326,7 +326,9 @@ private void initComponents(UserLogin userLogin,boolean isEditable) {
                                 db.executeUpdate("INSERT INTO UserLogin ( LoginName, Password, IsAdmin, IsActive) VALUES(?,?,?,?)", userNameTxt.getText(), passwordTxt.getText(), isAdmin.isSelected(), true);
                                 Container container = getParent();
                                 getParent().remove(1);
-                                container.add(new AccountsPanel(), BorderLayout.CENTER, 1);
+                                JScrollPane body = new JScrollPane();
+                                body.setViewportView(new AccountsPanel());
+                                container.add(body, BorderLayout.CENTER, 1);
                                 container.validate();
                                 container.repaint();
                                 JOptionPane.showMessageDialog(this, "Account created successfully!" );
@@ -348,7 +350,9 @@ private void initComponents(UserLogin userLogin,boolean isEditable) {
                         db.executeUpdate("update UserLogin set LoginName=? , IsAdmin=? where ID=? ;", userLogin.getLoginName(), userLogin.isAdmin(), userLogin.getId());
                         Container container = getParent();
                         getParent().remove(1);
-                        container.add(new AccountsPanel(), BorderLayout.CENTER, 1);
+                        JScrollPane body = new JScrollPane();
+                        body.setViewportView(new AccountsPanel());
+                        container.add(body, BorderLayout.CENTER, 1);
                         container.validate();
                         container.repaint();
                         JOptionPane.showMessageDialog(this, "Account details updated successfully!" );
@@ -377,7 +381,9 @@ private void confirmPasswordTxtActionPerformed(java.awt.event.ActionEvent evt) {
                 // TODO add your handling code here:
                 Container container = getParent();
                 getParent().remove(1);
-                container.add(new AccountsPanel(), BorderLayout.CENTER, 1);
+                JScrollPane body = new JScrollPane();
+                body.setViewportView(new AccountsPanel());
+                container.add(body, BorderLayout.CENTER, 1);
                 container.validate();
                 container.repaint();
         }

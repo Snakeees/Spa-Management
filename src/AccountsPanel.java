@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -92,7 +93,12 @@ public class AccountsPanel extends javax.swing.JPanel {
         accountListTable.setBackground(new java.awt.Color(216, 235, 243));
         accountListTable.setPreferredScrollableViewportSize(accountListTable.getPreferredSize());
 
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
+        for (int i = 0; i < accountListTable.getColumnCount()-1; i++) {
+            accountListTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
         accountListTablePane.setViewportView(accountListTable);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -155,7 +161,9 @@ public class AccountsPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         Container container = getParent();
         getParent().remove(1);
-        container.add(new AccountPanel(null,true), BorderLayout.CENTER, 1);
+        JScrollPane body = new JScrollPane();
+        body.setViewportView(new AccountPanel(null,true));
+        container.add(body, BorderLayout.CENTER, 1);
         container.validate();
         container.repaint();
     }
@@ -174,7 +182,9 @@ public class AccountsPanel extends javax.swing.JPanel {
             Object o = table.getModel().getValueAt(row, 0);
             Container container = getParent();
             getParent().remove(1);
-            container.add(new AccountPanel((int) o,true), BorderLayout.CENTER, 1);
+            JScrollPane body = new JScrollPane();
+            body.setViewportView(new AccountPanel((int) o,true));
+            container.add(body, BorderLayout.CENTER, 1);
             container.validate();
             container.repaint();
 
@@ -207,7 +217,9 @@ public class AccountsPanel extends javax.swing.JPanel {
                 db.executeUpdate("Delete from UserLogin where ID=?",o);
                 Container container = getParent();
                 getParent().remove(1);
-                container.add(new AccountsPanel(), BorderLayout.CENTER, 1);
+                JScrollPane body = new JScrollPane();
+                body.setViewportView(new AccountsPanel());
+                container.add(body, BorderLayout.CENTER, 1);
                 container.validate();
                 container.repaint();
             } else if (result == JOptionPane.CANCEL_OPTION) {

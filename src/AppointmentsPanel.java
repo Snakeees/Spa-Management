@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -177,7 +178,12 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                 }
             }
         };
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
+        for (int i = 0; i < appointmentsListTable.getColumnCount()-1; i++) {
+            appointmentsListTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
         addAppointment = new javax.swing.JButton();
         appointmentListTablePane = new javax.swing.JScrollPane();
         appointmentsDetailLabel = new javax.swing.JLabel();
@@ -390,6 +396,12 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                 }
             }
         };
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+        for (int i = 0; i < appointmentsListTable.getColumnCount()-1; i++) {
+            appointmentsListTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
         appointmentsListTable.setBackground(new java.awt.Color(216, 235, 243));
         appointmentListTablePane.setViewportView(appointmentsListTable);
         validate();
@@ -400,7 +412,9 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         // TODO add your handling code here:
         Container container = getParent();
         getParent().remove(1);
-        container.add(new AppointmentPanel(null,true), BorderLayout.CENTER, 1);
+        JScrollPane body = new JScrollPane();
+        body.setViewportView(new AppointmentPanel(null,true));
+        container.add(body, BorderLayout.CENTER, 1);
         container.validate();
         container.repaint();
     }
@@ -440,7 +454,9 @@ class EditAction extends AbstractAction {
             Object o = table.getModel().getValueAt(row, 0);
             Container container = getParent();
             getParent().remove(1);
-            container.add(new AppointmentPanel((int) o,true), BorderLayout.CENTER, 1);
+            JScrollPane body = new JScrollPane();
+            body.setViewportView(new AppointmentPanel((int) o,true));
+            container.add(body, BorderLayout.CENTER, 1);
             container.validate();
             container.repaint();
 
@@ -459,7 +475,9 @@ class EditAction extends AbstractAction {
             Object o = table.getModel().getValueAt(row, 0);
             Container container = getParent();
             getParent().remove(1);
-            container.add(new AppointmentPanel((int) o,false), BorderLayout.CENTER, 1);
+            JScrollPane body = new JScrollPane();
+            body.setViewportView(new AppointmentPanel((int) o,false));
+            container.add(body, BorderLayout.CENTER, 1);
             container.validate();
             container.repaint();
 
@@ -492,7 +510,9 @@ class EditAction extends AbstractAction {
                 db.executeUpdate("Update Appointment set IsActive=false where ID=?",o);
                 Container container = getParent();
                 getParent().remove(1);
-                container.add(new AppointmentsPanel(), BorderLayout.CENTER, 1);
+                JScrollPane body=new JScrollPane();
+                body.setViewportView(new AppointmentsPanel());
+                container.add(body, BorderLayout.CENTER, 1);
                 container.validate();
                 container.repaint();
             } else if (result == JOptionPane.CANCEL_OPTION) {

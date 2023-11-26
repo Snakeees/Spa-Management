@@ -26,11 +26,14 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         getContentPane().setBackground(Color.decode("#d8ebf3"));
         createHeaderPanel().setLocation(0,0);
+        setSize(500, 400);
         getContentPane().add(createHeaderPanel(), BorderLayout.NORTH, 0);
         content= new Reports();
         makeActive(reports);
         content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
-        getContentPane().add(content,BorderLayout.CENTER, 1);
+        JScrollPane body=new JScrollPane();
+        body.setViewportView(content);
+        getContentPane().add(body,BorderLayout.CENTER, 1);
     }
     public void makeActive(JButton button){
         button.setFont(new Font("Play", Font.BOLD, 25));
@@ -81,6 +84,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        JScrollPane body=new JScrollPane();
         if(e.getSource()==reports){
             updateOtherButtons();
             content.invalidate();
@@ -88,7 +92,8 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             content=new Reports();
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            getContentPane().add(content,BorderLayout.CENTER, 1);
+            body.setViewportView(content);
+            getContentPane().add(body,BorderLayout.CENTER, 1);
             makeActive(reports);
         }
         if(e.getSource()==therapists){
@@ -98,7 +103,8 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             content=new TherapistsPanel();
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            getContentPane().add(content,BorderLayout.CENTER, 1);
+            body.setViewportView(content);
+            getContentPane().add(body,BorderLayout.CENTER, 1);
             makeActive(therapists);
         }
         else if(e.getSource()==accounts){
@@ -108,7 +114,8 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             content=new AccountsPanel();
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            getContentPane().add(content,BorderLayout.CENTER, 1);
+            body.setViewportView(content);
+            getContentPane().add(body,BorderLayout.CENTER, 1);
             makeActive(accounts);
         }
         else if(e.getSource()==services){
@@ -118,7 +125,8 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             content=new ServicesPanel();
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            getContentPane().add(content,BorderLayout.CENTER, 1);
+            body.setViewportView(content);
+            getContentPane().add(body,BorderLayout.CENTER, 1);
             makeActive(services);
 
         }
@@ -129,7 +137,8 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             content=new ChangePassword(getUserId());
             content.setSize(JFrame.MAXIMIZED_HORIZ,JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            getContentPane().add(content,BorderLayout.CENTER, 1);
+            body.setViewportView(content);
+            getContentPane().add(body,BorderLayout.CENTER, 1);
             makeActive(changePassword);
         }
         validate();

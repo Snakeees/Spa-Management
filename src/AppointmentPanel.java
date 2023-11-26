@@ -105,7 +105,7 @@ private void initComponents(boolean isEditable) {
         setBackground(new java.awt.Color(216, 235, 243));
 
         backLabel.setBackground(new java.awt.Color(53, 183, 234));
-        backLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        backLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
         backLabel.setText("BACK");
         backLabel.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,11 +114,11 @@ private void initComponents(boolean isEditable) {
         });
 
         addAppointmentLabel.setBackground(new java.awt.Color(216, 235, 243));
-        addAppointmentLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        addAppointmentLabel.setFont(new java.awt.Font("Play", 1, 24)); // NOI18N
         addAppointmentLabel.setText("ADD APPOINTMENT");
 
         submitLabel.setBackground(new java.awt.Color(53, 183, 234));
-        submitLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        submitLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
         submitLabel.setText("CREATE");
         submitLabel.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,27 +127,27 @@ private void initComponents(boolean isEditable) {
         });
 
         clientNameLabel.setBackground(new java.awt.Color(216, 235, 243));
-        clientNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        clientNameLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
         clientNameLabel.setText("CLIENT NAME");
 
         phoneNumberLabel.setBackground(new java.awt.Color(216, 235, 243));
-        phoneNumberLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        phoneNumberLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
         phoneNumberLabel.setText("CLIENT PHONE NUMBER");
 
         serviceLabel.setBackground(new java.awt.Color(216, 235, 243));
-        serviceLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        serviceLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
         serviceLabel.setText("SERVICE");
 
         therapistLabel.setBackground(new java.awt.Color(216, 235, 243));
-        therapistLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        therapistLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
         therapistLabel.setText("THERAPIST");
 
         appointmentDateLabel.setBackground(new java.awt.Color(216, 235, 243));
-        appointmentDateLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        appointmentDateLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
         appointmentDateLabel.setText("APPOINTMENT DATE");
 
         appointmentTimeLabel.setBackground(new java.awt.Color(216, 235, 243));
-        appointmentTimeLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        appointmentTimeLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
         appointmentTimeLabel.setText("APPOINTMENT TIME");
 
         boolean foundTherapist=false;
@@ -413,7 +413,9 @@ private void initComponents(boolean isEditable) {
                 // TODO add your handling code here:
                 Container container = getParent();
                 getParent().remove(1);
-                container.add(new AppointmentsPanel(), BorderLayout.CENTER, 1);
+                JScrollPane body = new JScrollPane();
+                body.setViewportView(new AppointmentsPanel());
+                container.add(body, BorderLayout.CENTER, 1);
                 container.validate();
                 container.repaint();
         }
@@ -427,7 +429,9 @@ private void initComponents(boolean isEditable) {
                                 db.executeUpdate("INSERT INTO Appointment ( ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime,TherapistID, ServiceID, IsDone, IsPaid, IsActive) VALUES(?,?,?,?,?,?,?,?,?)", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate,appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(),((Service) serviceListSelector.getSelectedItem()).getId(), false, false, true);
                                 Container container = getParent();
                                 getParent().remove(1);
-                                container.add(new AppointmentsPanel(), BorderLayout.CENTER, 1);
+                                JScrollPane body=new JScrollPane();
+                                body.setViewportView(new AppointmentsPanel());
+                                container.add(body, BorderLayout.CENTER, 1);
                                 container.validate();
                                 container.repaint();
                                 JOptionPane.showMessageDialog(this, "Appointment created successfully!" );
@@ -442,7 +446,9 @@ private void initComponents(boolean isEditable) {
                                 db.executeUpdate("update Appointment set ClientName=?, ClientPhoneNumber=?, AppointmentDate=?, AppointmentTime=?,TherapistID=?, ServiceID=? where ID=? ;", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate,appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(),((Service) serviceListSelector.getSelectedItem()).getId(),appointment.getId());
                                 Container container = getParent();
                                 getParent().remove(1);
-                                container.add(new AppointmentsPanel(), BorderLayout.CENTER, 1);
+                                JScrollPane body=new JScrollPane();
+                                body.setViewportView(new AppointmentsPanel());
+                                container.add(body, BorderLayout.CENTER, 1);
                                 container.validate();
                                 container.repaint();
                                 JOptionPane.showMessageDialog(this, "Appointmentno details updated successfully!" );

@@ -324,7 +324,9 @@ public class ServicePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         Container container = getParent();
         getParent().remove(1);
-        container.add(new ServicesPanel(), BorderLayout.CENTER, 1);
+        JScrollPane body=new JScrollPane();
+        body.setViewportView(new ServicesPanel());
+        container.add(body, BorderLayout.CENTER, 1);
         container.validate();
         container.repaint();
     }
@@ -338,7 +340,9 @@ public class ServicePanel extends javax.swing.JPanel {
                     db.executeUpdate("INSERT INTO Service ( ServiceName, Duration, Cost,IsActive) VALUES(?,?,?,?)", serviceNameTxt.getText(), serviceDurationTxt.getText(),costPerClientTxt.getText(), true);
                     Container container = getParent();
                     getParent().remove(1);
-                    container.add(new ServicesPanel(), BorderLayout.CENTER, 1);
+                    JScrollPane body=new JScrollPane();
+                    body.setViewportView(new ServicesPanel());
+                    container.add(body, BorderLayout.CENTER, 1);
                     container.validate();
                     container.repaint();
                     JOptionPane.showMessageDialog(this, "Service created successfully!" );
@@ -352,7 +356,9 @@ public class ServicePanel extends javax.swing.JPanel {
                 db.executeUpdate("update Service set ServiceName=?, Duration=?, Cost=?, IsActive=? where ID=? ;", serviceNameTxt.getText(),serviceDurationTxt.getText(),costPerClientTxt.getText(),isActive.isSelected() , service.getId());
                 Container container = getParent();
                 getParent().remove(1);
-                container.add(new ServicesPanel(), BorderLayout.CENTER, 1);
+                JScrollPane body=new JScrollPane();
+                body.setViewportView(new ServicesPanel());
+                container.add(body, BorderLayout.CENTER, 1);
                 container.validate();
                 container.repaint();
                 JOptionPane.showMessageDialog(this, "Service details updated successfully!" );

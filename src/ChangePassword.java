@@ -152,11 +152,13 @@ public class ChangePassword extends javax.swing.JPanel {
             } else {
                 String newHashedPassword = HashPassword.hashPassword(newPasswordTxt.getText());
                 db.executeUpdate("update UserLogin set password=? where ID=? ;", newHashedPassword, getUserId());
-                Container container = getParent();
-                getParent().remove(1);
-                container.add(new AccountsPanel(), BorderLayout.CENTER, 1);
-                container.validate();
-                container.repaint();
+//                Container container = getParent();
+//                getParent().remove(1);
+//                JScrollPane body=new JScrollPane();
+//                body.setViewportView(new AccountsPanel());
+//                container.add(body, BorderLayout.CENTER, 1);
+//                container.validate();
+//                container.repaint();
                 JOptionPane.showMessageDialog(this, "Password updated successfully!");
             }
         } else {
