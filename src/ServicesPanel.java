@@ -18,7 +18,9 @@ public class ServicesPanel extends javax.swing.JPanel {
     private javax.swing.JButton addService;
     private javax.swing.JScrollPane serviceTableListPane;
     private javax.swing.JTable serviceTableList;
+    private Object[][] tableData;
     public ServicesPanel() {
+        tableData=getUserServices();
         initComponents();
     }
 
@@ -34,7 +36,7 @@ public class ServicesPanel extends javax.swing.JPanel {
 
         addService = new javax.swing.JButton();
 
-        Object[][] data = getUserServices();
+        Object[][] data = tableData;
         javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
                 data,
                 new String[]{
@@ -89,12 +91,20 @@ public class ServicesPanel extends javax.swing.JPanel {
         serviceTableList.setBackground(new java.awt.Color(216, 235, 243));
         serviceTableList.setPreferredScrollableViewportSize(serviceTableList.getPreferredSize());
 
-
+        if(tableData!=null && tableData.length>0)
         serviceTableListPane.setViewportView(serviceTableList);
+        else{
+            JPanel noDataPanel = new JPanel();
+            noDataPanel.setLayout(new FlowLayout());
+            JLabel messageLabel = new JLabel("No Services are available");
+            messageLabel.setFont(new Font("Play",Font.BOLD,16));
+            noDataPanel.add(messageLabel);
+            serviceTableListPane.setViewportView(noDataPanel);
+        }
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
-        for (int i = 0; i < serviceTableList.getColumnCount()-1; i++) {
+        for (int i = 0; i < serviceTableList.getColumnCount()-2; i++) {
             serviceTableList.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
         serviceTableList.getTableHeader().setDefaultRenderer(new AppointmentsPanel.BoldAndCenteredHeaderRenderer());

@@ -149,15 +149,29 @@ public class ChangePassword extends javax.swing.JPanel {
             } else if (!newPasswordTxt.getText().equals(confirmPasswordTxt.getText())) {
                 JOptionPane.showMessageDialog(this, "Confirm password should match with new password ");
             } else {
-                String newHashedPassword = HashPassword.hashPassword(newPasswordTxt.getText());
-                db.executeUpdate("update UserLogin set password=? where ID=? ;", newHashedPassword, getUserId());
-//                Container container = getParent();
-//                JScrollPane body=new JScrollPane();
-//                body.setViewportView(new AccountsPanel());
-//                container.add(body, BorderLayout.CENTER, 1);
-//                container.validate();
-//                container.repaint();
-                JOptionPane.showMessageDialog(this, "Password updated successfully!");
+                int result = JOptionPane.showOptionDialog(
+                        getParent(),
+                        "Do you want to update your password?",
+                        "UPDATE ALERT",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        new Object[]{"YES", "NO"},
+                        "YES");
+
+                // Check which button was clicked
+                if (result == JOptionPane.OK_OPTION) {
+                    String newHashedPassword = HashPassword.hashPassword(newPasswordTxt.getText());
+                    db.executeUpdate("update UserLogin set password=? where ID=? ;", newHashedPassword, getUserId());
+                    LoginScreen loginScreen = new LoginScreen("Password updated successfully!");
+                    loginScreen.setVisible(true);
+                    SwingUtilities.getWindowAncestor(this).dispose();
+                }
+                else {
+                    confirmPasswordTxt.setText("");
+                    oldPasswordTxt.setText("");
+                    newPasswordTxt.setText("");
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "Required fields can not be empty.");

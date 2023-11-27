@@ -15,11 +15,13 @@ public class AccountsPanel extends javax.swing.JPanel {
     private javax.swing.JButton addAccount;
     private javax.swing.JScrollPane accountListTablePane;
     private javax.swing.JTable accountListTable;
+    private Object[][] tableData;
 
     /**
      * Creates new form AccountsPanel
      */
     public AccountsPanel() {
+        tableData=getUserAccounts();
         initComponents();
     }
 
@@ -35,7 +37,7 @@ public class AccountsPanel extends javax.swing.JPanel {
 
         addAccount = new javax.swing.JButton();
 
-        Object[][] data = getUserAccounts();
+        Object[][] data = tableData;
         javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
                 data,
                 new String[]{
@@ -93,7 +95,7 @@ public class AccountsPanel extends javax.swing.JPanel {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
-        for (int i = 0; i < accountListTable.getColumnCount()-1; i++) {
+        for (int i = 0; i < accountListTable.getColumnCount()-2; i++) {
             accountListTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
         accountListTable.getTableHeader().setDefaultRenderer(new AppointmentsPanel.BoldAndCenteredHeaderRenderer());
@@ -101,7 +103,17 @@ public class AccountsPanel extends javax.swing.JPanel {
         Dimension headerSize = header.getPreferredSize();
         headerSize.height = 40;
         header.setPreferredSize(headerSize);
-        accountListTablePane.setViewportView(accountListTable);
+        if(tableData!=null && tableData.length>0){
+            accountListTablePane.setViewportView(accountListTable);
+        }
+        else{
+                JPanel noDataPanel = new JPanel();
+                noDataPanel.setLayout(new FlowLayout());
+                JLabel messageLabel = new JLabel("No Accounts are available");
+                messageLabel.setFont(new Font("Play",Font.BOLD,16));
+                noDataPanel.add(messageLabel);
+                accountListTablePane.setViewportView(noDataPanel);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

@@ -17,7 +17,7 @@ public class TherapistPanel extends javax.swing.JPanel {
     Therapist therapist;
     ArrayList<TherapistAttendance> therapistAttendances;
     SimpleDateFormat requiredDateFormate=new java.text.SimpleDateFormat("yyyy-MM-dd");
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MMM-yyyy");
     public TherapistPanel(Integer therapistId,boolean isEditable) {
         therapist=getTherapist(therapistId);
         therapistAttendances=getTherapistAttendance(therapistId);
@@ -438,6 +438,7 @@ public class TherapistPanel extends javax.swing.JPanel {
         for(int i=6,j=x,k=x;i>=0;i--,k--){
             Date d=new Date();
             d.setDate(d.getDate()-(x-k));
+            attendanceList.get(i).setToolTipText(dateFormater.format(d));
             currentDate=requiredDateFormate.format(d);
             if(j>=0) {
                 listDate = requiredDateFormate.format(therapistAttendances.get(j).getDate());
@@ -483,19 +484,38 @@ public class TherapistPanel extends javax.swing.JPanel {
         }
         else{
             if(therapistNameTxt.getText()!=null && !therapistNameTxt.getText().trim().equals("") && phoneNumberTxt.getText()!=null && addressTxt.getText()!=null &&  !phoneNumberTxt.getText().trim().equals("") && !addressTxt.getText().trim().equals("")) {
-                if(resignationDateTxt.getDate()==null){
-                    db.executeUpdate("update Therapist set FirstName=?, PhoneNumber=?, Address=?, IsActive=? where ID=? ;", therapistNameTxt.getText(), phoneNumberTxt.getText(),addressTxt.getText(),isActive.isSelected() , therapist.getId());
+                int result = JOptionPane.showOptionDialog(
+                        getParent(),
+                        "Do you want to update the Therapist Details?",
+                        "UPDATE ALERT",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        new Object[]{"YES", "NO"},
+                        "YES");
+
+                // Check which button was clicked
+                if (result == JOptionPane.OK_OPTION) {
+                    if(resignationDateTxt.getDate()==null){
+                        db.executeUpdate("update Therapist set FirstName=?, PhoneNumber=?, Address=?, IsActive=? where ID=? ;", therapistNameTxt.getText(), phoneNumberTxt.getText(),addressTxt.getText(),isActive.isSelected() , therapist.getId());
+                    }
+                    else{
+                        String modifiedDate=requiredDateFormate.format(resignationDateTxt.getDate().getTime());
+                        db.executeUpdate("update Therapist set FirstName=?, PhoneNumber=?, Address=?, IsActive=?, ResignationDate=? where ID=? ;", therapistNameTxt.getText(), phoneNumberTxt.getText(),addressTxt.getText(),isActive.isSelected() , modifiedDate, therapist.getId());
+                    }
+                    JViewport container = (JViewport)getParent();
+                    container.setView(new TherapistsPanel());
+                    container.validate();
+                    container.repaint();
+                    JOptionPane.showMessageDialog(this, "Therapist details updated successfully!" );
+
                 }
-                else{
-                    String modifiedDate=dateFormat.format(resignationDateTxt.getDate().getTime());
-                    db.executeUpdate("update Therapist set FirstName=?, PhoneNumber=?, Address=?, IsActive=?, ResignationDate=? where ID=? ;", therapistNameTxt.getText(), phoneNumberTxt.getText(),addressTxt.getText(),isActive.isSelected() , modifiedDate, therapist.getId());
+                else if (result == JOptionPane.CANCEL_OPTION) {
+                        JViewport container = (JViewport)getParent();
+                        container.setView(new TherapistsPanel());
+                        container.validate();
                 }
-                JViewport container = (JViewport)getParent();
-                container.setView(new TherapistsPanel());
-                container.validate();
-                container.repaint();
-                JOptionPane.showMessageDialog(this, "Therapist details updated successfully!" );
-            }
+                }
             else{
                 JOptionPane.showMessageDialog(this, "Required details can not be empty.");
             }

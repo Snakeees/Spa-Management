@@ -17,7 +17,9 @@ public class TherapistsPanel extends javax.swing.JPanel {
     private javax.swing.JButton addTherapist;
     private javax.swing.JScrollPane therapistTableListPane;
     private javax.swing.JTable therapistTableList;
+    private Object[][] tableData;
     public TherapistsPanel() {
+        tableData=getTherapist();
         initComponents();
     }
 
@@ -33,7 +35,7 @@ public class TherapistsPanel extends javax.swing.JPanel {
 
         addTherapist = new javax.swing.JButton();
 
-        Object[][] data = getUserServices();
+        Object[][] data = tableData;
         javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
                 data,
                 new String[]{
@@ -88,8 +90,16 @@ public class TherapistsPanel extends javax.swing.JPanel {
         therapistTableList.setBackground(new java.awt.Color(216, 235, 243));
         therapistTableList.setPreferredScrollableViewportSize(therapistTableList.getPreferredSize());
 
-
-        therapistTableListPane.setViewportView(therapistTableList);
+        if(tableData!=null && tableData.length>0)
+            therapistTableListPane.setViewportView(therapistTableList);
+        else{
+            JPanel noDataPanel = new JPanel();
+            noDataPanel.setLayout(new FlowLayout());
+            JLabel messageLabel = new JLabel("No Therapists are available");
+            messageLabel.setFont(new Font("Play",Font.BOLD,16));
+            noDataPanel.add(messageLabel);
+            therapistTableListPane.setViewportView(noDataPanel);
+        }
 
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -125,7 +135,7 @@ public class TherapistsPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>
 
-    private Object[][] getUserServices() {
+    private Object[][] getTherapist() {
         Database db = new Database();
         List<List<Object>> cells = new ArrayList<>();
         try {

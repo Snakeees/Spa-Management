@@ -352,12 +352,30 @@ public class ServicePanel extends javax.swing.JPanel {
         }
         else{
             if(serviceNameTxt.getText()!=null && !serviceNameTxt.getText().trim().equals("") && serviceDurationTxt.getText()!=null && costPerClientTxt.getText()!=null &&  !costPerClientTxt.getText().trim().equals("") && !serviceDurationTxt.getText().trim().equals("")) {
-                db.executeUpdate("update Service set ServiceName=?, Duration=?, Cost=?, IsActive=? where ID=? ;", serviceNameTxt.getText(),serviceDurationTxt.getText(),costPerClientTxt.getText(),isActive.isSelected() , service.getId());
-                JViewport container = (JViewport)getParent();
-                container.setView(new ServicesPanel());
-                container.validate();
-                container.repaint();
-                JOptionPane.showMessageDialog(this, "Service details updated successfully!" );
+                int result = JOptionPane.showOptionDialog(
+                        getParent(),
+                        "Do you want to update the Service Details?",
+                        "UPDATE ALERT",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        new Object[]{"YES", "NO"},
+                        "YES");
+
+                // Check which button was clicked
+                if (result == JOptionPane.OK_OPTION) {
+                    db.executeUpdate("update Service set ServiceName=?, Duration=?, Cost=?, IsActive=? where ID=? ;", serviceNameTxt.getText(),serviceDurationTxt.getText(),costPerClientTxt.getText(),isActive.isSelected() , service.getId());
+                    JViewport container = (JViewport)getParent();
+                    container.setView(new ServicesPanel());
+                    container.validate();
+                    container.repaint();
+                    JOptionPane.showMessageDialog(this, "Service details updated successfully!" );
+                }
+                else if (result == JOptionPane.CANCEL_OPTION) {
+                    JViewport container = (JViewport)getParent();
+                    container.setView(new ServicesPanel());
+                    container.validate();
+                }
             }
             else{
                 JOptionPane.showMessageDialog(this, "Required details can not be empty.");

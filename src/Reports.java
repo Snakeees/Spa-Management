@@ -4,6 +4,7 @@
  */
 
 import java.sql.ResultSet;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -15,6 +16,7 @@ public class Reports extends javax.swing.JPanel {
     /**
      * Creates new form Reports
      */
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     public Reports() {
         initComponents();
     }
@@ -28,7 +30,8 @@ public class Reports extends javax.swing.JPanel {
         Database db = new Database();
         Date date = new Date();
         try {
-            ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and a.AppointmentDate>=?",date.getYear()+"-"+date.getMonth()+"-1");
+            Date startDate=dateFormat.parse(date.getYear()+"-"+date.getMonth()+"-1");
+            ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and a.AppointmentDate>=? and a.IsActive=true and a.AppointmentDate<?",dateFormat.format(startDate),dateFormat.format(date));
             while (rs.next()) {
                 return rs.getInt("monthIncome");
             }
@@ -41,7 +44,8 @@ public class Reports extends javax.swing.JPanel {
         Database db = new Database();
         Date date = new Date();
         try {
-            ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where AppointmentDate>=?",date.getYear()+"-"+date.getMonth()+"-1");
+            Date startDate=dateFormat.parse(date.getYear()+"-"+date.getMonth()+"-1");
+            ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where AppointmentDate>=? and IsActive=true and AppointmentDate<?",dateFormat.format(startDate),dateFormat.format(date));
             while (rs.next()) {
                 return rs.getInt("visits");
             }
@@ -118,15 +122,18 @@ public class Reports extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(incomePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(83, 83, 83)
+                        .addGap(40, 40, 40)
                         .addComponent(incomeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 299, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup( layout.createSequentialGroup()
+                                    .addGap(60, 60, 60)
                         .addComponent(visitLabel)
-                        .addGap(333, 333, 333))
+                        )
                     .addGroup( layout.createSequentialGroup()
-                        .addComponent(visitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(visitPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(130, 130, 130)
+                    )))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

@@ -324,12 +324,10 @@ private void initComponents(UserLogin userLogin,boolean isEditable) {
                                 container.validate();
                                 container.repaint();
                                 JOptionPane.showMessageDialog(this, "Account created successfully!" );
-
                         }
                         else{
                                 JOptionPane.showMessageDialog(this, "Confirm password should match password " );
                         }
-
                 }
                 else{
                         JOptionPane.showMessageDialog(this, "Required fields can not be empty. " );
@@ -337,14 +335,33 @@ private void initComponents(UserLogin userLogin,boolean isEditable) {
         }
         else{
                 if(userNameTxt.getText()!=null && !userNameTxt.getText().trim().equals("")) {
-                        userLogin.setLoginName(userNameTxt.getText());
-                        userLogin.setAdmin(isAdmin.isSelected());
-                        db.executeUpdate("update UserLogin set LoginName=? , IsAdmin=? where ID=? ;", userLogin.getLoginName(), userLogin.isAdmin(), userLogin.getId());
-                        JViewport container = (JViewport)getParent();
-                        container.setView(new AccountsPanel());
-                        container.validate();
-                        container.repaint();
-                        JOptionPane.showMessageDialog(this, "Account details updated successfully!" );
+                        int result = JOptionPane.showOptionDialog(
+                                getParent(),
+                                "Do you want to update the Account Details?",
+                                "UPDATE ALERT",
+                                JOptionPane.OK_CANCEL_OPTION,
+                                JOptionPane.INFORMATION_MESSAGE,
+                                null,
+                                new Object[]{"YES", "NO"},
+                                "YES");
+
+                        // Check which button was clicked
+                        if (result == JOptionPane.OK_OPTION) {
+                                userLogin.setLoginName(userNameTxt.getText());
+                                userLogin.setAdmin(isAdmin.isSelected());
+                                db.executeUpdate("update UserLogin set LoginName=? , IsAdmin=? where ID=? ;", userLogin.getLoginName(), userLogin.isAdmin(), userLogin.getId());
+                                JViewport container = (JViewport)getParent();
+                                container.setView(new AccountsPanel());
+                                container.validate();
+                                container.repaint();
+                                JOptionPane.showMessageDialog(this, "Account details updated successfully!" );
+
+                        }
+                        else if (result == JOptionPane.CANCEL_OPTION) {
+                                JViewport container = (JViewport)getParent();
+                                container.setView(new AccountsPanel());
+                                container.validate();
+                        }
                 }
                 else{
                         JOptionPane.showMessageDialog(this, "User name can not be empty.");

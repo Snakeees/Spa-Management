@@ -9,7 +9,10 @@ public class LoginScreen extends JFrame {
     private JTextField userField;
     private JPasswordField passField;
 
-    public LoginScreen() {
+    public LoginScreen(String message) {
+        if(message!=null){
+            JOptionPane.showMessageDialog(this,"Password updated successfully!" );
+        }
         createFrame();
         JPanel mainPanel = createMainPanel();
         getContentPane().add(mainPanel, BorderLayout.CENTER); // Use BorderLayout for JFrame
@@ -44,7 +47,7 @@ public class LoginScreen extends JFrame {
         headerPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
         headerPanel.setOpaque(false);
 
-        JLabel heading = new JLabel("Serenity Spa");
+        JLabel heading = new JLabel("Serenity SPA");
         heading.setFont(new Font("Play", Font.BOLD, 40));
         headerPanel.add(heading);
 
@@ -98,11 +101,11 @@ public class LoginScreen extends JFrame {
                 String role = validateCredentials(username, password);
                 int userId = getUserId(username);
                 if ("admin".equals(role)) {
-                    AdminDashboardScreen adminDashboardScreen=new AdminDashboardScreen(userId);
+                    AdminDashboardScreen adminDashboardScreen=new AdminDashboardScreen(userId,username);
                     adminDashboardScreen.setVisible(true);
                     dispose();
                 } else if ("nonadmin".equals(role)) {
-                    NonAdminDashboardScreen nonAdminDashboardScreen=new NonAdminDashboardScreen(userId);
+                    NonAdminDashboardScreen nonAdminDashboardScreen=new NonAdminDashboardScreen(userId,username);
                     nonAdminDashboardScreen.setVisible(true);
                     dispose();
                 } else {

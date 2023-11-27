@@ -3,10 +3,9 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
-import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
-import java.util.Timer;
 
 public class AppointmentsPanel  extends javax.swing.JPanel {
 
@@ -15,9 +14,12 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
      */
     ArrayList<Service> allServices;
     ArrayList<Therapist> allTherapist;
+    private Object[][] tableData;
+    SimpleDateFormat timeFormater = new SimpleDateFormat("HH:mm");
 
     public AppointmentsPanel() {
         updateDropdownDetails();
+        tableData=getAppointments();
         initComponents();
     }
     private void updateDropdownDetails() {
@@ -57,7 +59,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                 String clientName=rs.getString("clientName");
                 String service = rs.getString("service");
                 String therapist = rs.getString("therapist");
-                String time=rs.getTime("time").toString();
+                String time=timeFormater.format(rs.getTime("time"));
 
                 ArrayList<Object> arr = new ArrayList<>();
                 arr.add(id);
@@ -106,7 +108,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
            query.append("and a.ServiceID=? ");
        }
        if(clientNameTxt.getText()!=null && !clientNameTxt.getText().equals("")){
-           parameters.add(clientNameTxt.getText()+"%");
+           parameters.add("%"+clientNameTxt.getText()+"%");
            query.append("and a.ClientName LIKE ?");
        }
        query.append(" ORDER BY a.AppointmentTime");
@@ -118,7 +120,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                 String serviceName = rs.getString("service");
                 String clientName=rs.getString("clientName");
                 String therapistName = rs.getString("therapist");
-                String time=rs.getTime("time").toString();
+                String time=timeFormater.format(rs.getTime("time"));
 
                 ArrayList<Object> arr = new ArrayList<>();
                 arr.add(id);
@@ -148,7 +150,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
     }
     @SuppressWarnings("unchecked")
     private void initComponents() {
-        Object[][] data = getAppointments();
+        Object[][] data = tableData;
         javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(
                 data,
                 new String[]{
@@ -209,7 +211,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
 
         therapistLabel.setBackground(new java.awt.Color(216, 235, 243));
         therapistLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
-        therapistLabel.setText("THERAPIST");
+        therapistLabel.setText("THERAPIST NAME");
 
         serviceLabel.setBackground(new java.awt.Color(216, 235, 243));
         serviceLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
@@ -232,13 +234,13 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
 
 
         appointmentsListTable.setBackground(new java.awt.Color(216, 235, 243));
-        if(getAppointments()!=null && getAppointments().length>0)
+        if(tableData!=null && tableData.length>0)
             appointmentListTablePane.setViewportView(appointmentsListTable);
         else{
             JPanel noDataPanel = new JPanel();
             noDataPanel.setLayout(new FlowLayout());
-
-            JLabel messageLabel = new JLabel("No APPOINTMENTS are scheduled");
+            JLabel messageLabel = new JLabel("No Appointments are scheduled");
+            messageLabel.setFont(new Font("Play",Font.BOLD,16));
             noDataPanel.add(messageLabel);
             appointmentListTablePane.setViewportView(noDataPanel);
         }
@@ -271,7 +273,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
 
         therapistLabel.setBackground(new java.awt.Color(216, 235, 243));
         therapistLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
-        therapistLabel.setText("THERAPIST");
+        therapistLabel.setText("THERAPIST NAME");
 
         serviceLabel.setBackground(new java.awt.Color(216, 235, 243));
         serviceLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
@@ -324,7 +326,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                         .addGroup( layout.createSequentialGroup()
                                 .addContainerGap(4, Short.MAX_VALUE)
                                 .addComponent(appointmentListTablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 1300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(4, 4, 4)
+                                .addContainerGap(4, Short.MAX_VALUE)
                         )
         );
         layout.setVerticalGroup(
@@ -386,8 +388,9 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
 
     private void searchLableActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        tableData=getAppointmentsWithRestriction();
         appointmentsListTable= new javax.swing.JTable(new javax.swing.table.DefaultTableModel(
-                getAppointmentsWithRestriction(),
+                tableData,
                 new String[]{
                         "APPOINTMENT ID","CLIENT NAME","SERVICE", "THERAPIST","TIME", "OPTIONS"
                 }
@@ -428,13 +431,14 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         headerSize.height = 40;
         header.setPreferredSize(headerSize);
         appointmentsListTable.setBackground(new java.awt.Color(216, 235, 243));
-        if(getAppointmentsWithRestriction()!=null && getAppointmentsWithRestriction().length>0)
+        if(tableData!=null && tableData.length>0)
             appointmentListTablePane.setViewportView(appointmentsListTable);
         else{
             JPanel noDataPanel = new JPanel();
             noDataPanel.setLayout(new FlowLayout());
 
             JLabel messageLabel = new JLabel("No APPOINTMENTS are scheduled");
+            messageLabel.setFont(new Font("Play",Font.BOLD,16));
             noDataPanel.add(messageLabel);
             appointmentListTablePane.setViewportView(noDataPanel);
         }
@@ -526,7 +530,7 @@ class EditAction extends AbstractAction {
                     JOptionPane.OK_CANCEL_OPTION,
                     JOptionPane.INFORMATION_MESSAGE,
                     null,
-                    new Object[]{"OK", "Close"},
+                    new Object[]{"OK", "CANCEL"},
                     "OK");
 
             // Check which button was clicked

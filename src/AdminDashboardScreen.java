@@ -18,10 +18,9 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         return userId;
     }
 
-    public AdminDashboardScreen(int userId)  {
-        navButtons=new ArrayList<>();
+    public AdminDashboardScreen(int userId,String userName)  {
         this.userId = userId;
-        setTitle("Serenity SPA");
+        setTitle("Serenity SPA: "+userName);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         getContentPane().setBackground(Color.decode("#d8ebf3"));
@@ -44,22 +43,31 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
     }
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel();
-//        headerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         headerPanel.setLayout(new GridLayout(1,4));
         headerPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
         headerPanel.setOpaque(false);
-
-        reports = getButton("Reports");
+        navButtons=new ArrayList<>();
+        if(reports==null) {
+            reports = getButton("Reports");
+        }
+        if(therapists==null) {
+            therapists = getButton("Therapist");
+        }
+        if(services==null) {
+            services = getButton("Service");
+        }
+        if(accounts==null) {
+            accounts = getButton("Account");
+        }
+        if(changePassword==null) {
+            changePassword = getButton("Reset Password");
+        }
         headerPanel.add(reports);
-        therapists = getButton("Therapist");
         headerPanel.add(therapists);
-        services =getButton("Service");
         headerPanel.add(services);
-        accounts =getButton("Account");
         headerPanel.add(accounts);
-
-        changePassword = getButton("Reset Password");
         headerPanel.add(changePassword);
+
         navButtons.add(reports);
         navButtons.add(therapists);
         navButtons.add(services);
@@ -96,7 +104,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             getContentPane().add(body,BorderLayout.CENTER, 1);
             makeActive(reports);
         }
-        if(e.getSource()==therapists){
+        else if(e.getSource()==therapists){
             updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
@@ -128,7 +136,6 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             body.setViewportView(content);
             getContentPane().add(body,BorderLayout.CENTER, 1);
             makeActive(services);
-
         }
         else if(e.getSource()==changePassword){
             updateOtherButtons();

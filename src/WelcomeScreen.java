@@ -44,7 +44,7 @@ public class WelcomeScreen extends JFrame {
         continueButton.addActionListener(action -> {
             // Logic when button is clicked
             System.out.println("Continue Button Clicked");
-            LoginScreen loginScreen = new LoginScreen();
+            LoginScreen loginScreen = new LoginScreen(null);
             loginScreen.setVisible(true);
             dispose();
         });

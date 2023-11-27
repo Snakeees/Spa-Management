@@ -140,7 +140,7 @@ private void initComponents(boolean isEditable) {
 
         therapistLabel.setBackground(new java.awt.Color(216, 235, 243));
         therapistLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
-        therapistLabel.setText("THERAPIST");
+        therapistLabel.setText("THERAPIST NAME");
 
         appointmentDateLabel.setBackground(new java.awt.Color(216, 235, 243));
         appointmentDateLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
@@ -158,7 +158,7 @@ private void initComponents(boolean isEditable) {
                         foundTherapist=true;
                 }
         }
-        if (!foundTherapist) {
+        if (!foundTherapist  && appointment!=null) {
                 therapistListSelector.addItem(selectedTherapist);
                 selectedTherapistIndex=allTherapist.size();
         }
@@ -170,7 +170,7 @@ private void initComponents(boolean isEditable) {
                         foundService = true;
                 }
         }
-        if (!foundService) {
+        if (!foundService && appointment!=null) {
                 serviceListSelector.addItem(selectedService);
                 selectedServiceIndex=allServices.size();
         }
@@ -425,9 +425,9 @@ private void initComponents(boolean isEditable) {
                 // TODO add your handling code here:
                 Database db=new Database();
                 if(appointment==null){
-                        if(clientNameTxt.getText()!=null && !clientNameTxt.getText().trim().equals("") && phoneNumberTxt.getText()!=null && appointmentDateTxt.getDate()!=null &&  !phoneNumberTxt.getText().trim().equals("")) {
+                        if(clientNameTxt.getText()!=null && !clientNameTxt.getText().trim().equals("") && phoneNumberTxt.getText()!=null && appointmentDateTxt.getDate()!=null &&  !phoneNumberTxt.getText().trim().equals("")  ) {
                                 String modifiedDate=dateFormat.format(appointmentDateTxt.getDate().getTime());
-                                db.executeUpdate("INSERT INTO Appointment ( ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime,TherapistID, ServiceID, IsDone, IsPaid, IsActive) VALUES(?,?,?,?,?,?,?,?,?)", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate,appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(),((Service) serviceListSelector.getSelectedItem()).getId(), false, false, true);
+                                db.executeUpdate("INSERT INTO Appointment ( ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime,TherapistID, ServiceID, IsActive) VALUES(?,?,?,?,?,?,?)", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate,appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(),((Service) serviceListSelector.getSelectedItem()).getId(), true);
                                 JViewport container = (JViewport)getParent();
                                 container.setView(new AppointmentsPanel());
                                 container.validate();
@@ -440,13 +440,30 @@ private void initComponents(boolean isEditable) {
                 }
                 else{
                         if(clientNameTxt.getText()!=null && !clientNameTxt.getText().trim().equals("") && phoneNumberTxt.getText()!=null && appointmentDateTxt.getDate()!=null &&  !phoneNumberTxt.getText().trim().equals("")) {
-                                String modifiedDate=dateFormat.format(appointmentDateTxt.getDate().getTime());
-                                db.executeUpdate("update Appointment set ClientName=?, ClientPhoneNumber=?, AppointmentDate=?, AppointmentTime=?,TherapistID=?, ServiceID=? where ID=? ;", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate,appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(),((Service) serviceListSelector.getSelectedItem()).getId(),appointment.getId());
-                                JViewport container = (JViewport)getParent();
-                                container.setView(new AppointmentsPanel());
-                                container.validate();
-                                container.repaint();
-                                JOptionPane.showMessageDialog(this, "Appointmentno details updated successfully!" );
+                                int result = JOptionPane.showOptionDialog(
+                                        getParent(),
+                                        "Do you want to update the Appointment Details?",
+                                        "UPDATE ALERT",
+                                        JOptionPane.OK_CANCEL_OPTION,
+                                        JOptionPane.INFORMATION_MESSAGE,
+                                        null,
+                                        new Object[]{"YES", "NO"},
+                                        "YES");
+
+                                // Check which button was clicked
+                                if (result == JOptionPane.OK_OPTION) {
+                                        String modifiedDate=dateFormat.format(appointmentDateTxt.getDate().getTime());
+                                        db.executeUpdate("update Appointment set ClientName=?, ClientPhoneNumber=?, AppointmentDate=?, AppointmentTime=?,TherapistID=?, ServiceID=? where ID=? ;", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate,appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(),((Service) serviceListSelector.getSelectedItem()).getId(),appointment.getId());
+                                        JViewport container = (JViewport)getParent();
+                                        container.setView(new AppointmentsPanel());
+                                        container.validate();
+                                        container.repaint();
+                                        JOptionPane.showMessageDialog(this, "Appointmentno details updated successfully!" );
+                                } else if (result == JOptionPane.CANCEL_OPTION) {
+                                        JViewport container = (JViewport)getParent();
+                                        container.setView(new AppointmentsPanel());
+                                        container.validate();
+                                }
                         }
                         else{
                                 JOptionPane.showMessageDialog(this, "Required details can not be empty.");

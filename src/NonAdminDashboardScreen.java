@@ -18,10 +18,10 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
         return userId;
     }
 
-    public NonAdminDashboardScreen(int userId)  {
+    public NonAdminDashboardScreen(int userId, String userName)  {
         navButtons=new ArrayList<>();
         this.userId = userId;
-        setTitle("Serenity SPA");
+        setTitle("Serenity SPA: "+userName);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         getContentPane().setBackground(Color.decode("#d8ebf3"));
@@ -90,7 +90,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             getContentPane().add(body,BorderLayout.CENTER, 1);
             makeActive(appointments);
         }
-        if(e.getSource()==attendance){
+        else if(e.getSource()==attendance){
             updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
