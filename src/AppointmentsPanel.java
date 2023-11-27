@@ -1,8 +1,5 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
@@ -54,7 +51,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         List<List<Object>> cells = new ArrayList<>();
         java.util.Date d=new java.util.Date();
         try {
-            ResultSet rs = db.executeQuery("select a.ID, a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t,Service s where AppointmentDate=? and a.IsActive=? and t.ID=a.TherapistID and a.ServiceID=s.ID",new java.sql.Date(d.getYear(),d.getMonth(),d.getDate()),true);
+            ResultSet rs = db.executeQuery("select a.ID, a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t,Service s where AppointmentDate=? and a.IsActive=? and t.ID=a.TherapistID and a.ServiceID=s.ID ORDER BY a.AppointmentTime",new java.sql.Date(d.getYear(),d.getMonth(),d.getDate()),true);
             while (rs.next()) {
                 int id=rs.getInt("ID");
                 String clientName=rs.getString("clientName");
@@ -112,6 +109,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
            parameters.add(clientNameTxt.getText()+"%");
            query.append("and a.ClientName LIKE ?");
        }
+       query.append(" ORDER BY a.AppointmentTime");
 
         try {
             rs = db.executeQuery(query.toString(),parameters.toArray());
@@ -180,13 +178,17 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         };
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-
         for (int i = 0; i < appointmentsListTable.getColumnCount()-1; i++) {
             appointmentsListTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
             appointmentsListTable.getColumnModel().getColumn(i).setMaxWidth(200);
             appointmentsListTable.getColumnModel().getColumn(i).setWidth(180);
             appointmentsListTable.getColumnModel().getColumn(i).setPreferredWidth(180);
         }
+        appointmentsListTable.getTableHeader().setDefaultRenderer(new BoldAndCenteredHeaderRenderer());
+        JTableHeader header = appointmentsListTable.getTableHeader();
+        Dimension headerSize = header.getPreferredSize();
+        headerSize.height = 40;
+        header.setPreferredSize(headerSize);
         addAppointment = new javax.swing.JButton();
         appointmentListTablePane = new javax.swing.JScrollPane();
         appointmentsDetailLabel = new javax.swing.JLabel();
@@ -230,7 +232,16 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
 
 
         appointmentsListTable.setBackground(new java.awt.Color(216, 235, 243));
-        appointmentListTablePane.setViewportView(appointmentsListTable);
+        if(getAppointments()!=null && getAppointments().length>0)
+            appointmentListTablePane.setViewportView(appointmentsListTable);
+        else{
+            JPanel noDataPanel = new JPanel();
+            noDataPanel.setLayout(new FlowLayout());
+
+            JLabel messageLabel = new JLabel("No APPOINTMENTS are scheduled");
+            noDataPanel.add(messageLabel);
+            appointmentListTablePane.setViewportView(noDataPanel);
+        }
 
         appointmentsDetailLabel.setBackground(new java.awt.Color(216, 235, 243));
         appointmentsDetailLabel.setFont(new java.awt.Font("Play", 1, 18)); // NOI18N
@@ -243,12 +254,12 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         });
         therapistNameList.addItem(new Therapist(0,"select"));
         serviceList.addItem(new Service(0,"select"));
-        for (int i=0;i<allTherapist.size();i++) {
-            therapistNameList.addItem(allTherapist.get(i));
+        for (int j=0;j<allTherapist.size();j++) {
+            therapistNameList.addItem(allTherapist.get(j));
 
         }
-        for (int i=0;i<allServices.size();i++) {
-            serviceList.addItem(allServices.get(i));
+        for (int j=0;j<allServices.size();j++) {
+            serviceList.addItem(allServices.get(j));
 
         }
 
@@ -281,6 +292,8 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         serviceList.setSelectedItem(null);
         therapistNameList.setSelectedItem(null);
         dateSelectorTxt.setDate(new Date());
+
+
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -409,8 +422,22 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
             appointmentsListTable.getColumnModel().getColumn(i).setWidth(180);
             appointmentsListTable.getColumnModel().getColumn(i).setPreferredWidth(180);
         }
+        appointmentsListTable.getTableHeader().setDefaultRenderer(new BoldAndCenteredHeaderRenderer());
+        JTableHeader header = appointmentsListTable.getTableHeader();
+        Dimension headerSize = header.getPreferredSize();
+        headerSize.height = 40;
+        header.setPreferredSize(headerSize);
         appointmentsListTable.setBackground(new java.awt.Color(216, 235, 243));
-        appointmentListTablePane.setViewportView(appointmentsListTable);
+        if(getAppointmentsWithRestriction()!=null && getAppointmentsWithRestriction().length>0)
+            appointmentListTablePane.setViewportView(appointmentsListTable);
+        else{
+            JPanel noDataPanel = new JPanel();
+            noDataPanel.setLayout(new FlowLayout());
+
+            JLabel messageLabel = new JLabel("No APPOINTMENTS are scheduled");
+            noDataPanel.add(messageLabel);
+            appointmentListTablePane.setViewportView(noDataPanel);
+        }
         validate();
 
 
@@ -584,6 +611,30 @@ class EditAction extends AbstractAction {
         @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             panel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
             return panel;
+        }
+    }
+
+    static class BoldAndCenteredHeaderRenderer extends DefaultTableCellRenderer {
+        Font boldFont = new Font(getFont().getName(), Font.BOLD, getFont().getSize()+4);
+
+        BoldAndCenteredHeaderRenderer() {
+            setHorizontalAlignment(SwingConstants.CENTER);
+            setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
+            Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            if (comp instanceof JLabel) {
+                ((JLabel) comp).setFont(boldFont);
+                ((JLabel) comp).setBorder(BorderFactory.createLineBorder(Color.decode("#969999")));
+            }
+
+            return comp;
         }
     }
 }

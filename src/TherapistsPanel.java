@@ -1,8 +1,5 @@
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -100,6 +97,11 @@ public class TherapistsPanel extends javax.swing.JPanel {
         for (int i = 0; i < therapistTableList.getColumnCount()-1; i++) {
             therapistTableList.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+        therapistTableList.getTableHeader().setDefaultRenderer(new AppointmentsPanel.BoldAndCenteredHeaderRenderer());
+        JTableHeader header = therapistTableList.getTableHeader();
+        Dimension headerSize = header.getPreferredSize();
+        headerSize.height = 40;
+        header.setPreferredSize(headerSize);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -308,6 +310,29 @@ public class TherapistsPanel extends javax.swing.JPanel {
         @Override public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             panel.setBackground(isSelected ? table.getSelectionBackground() : table.getBackground());
             return panel;
+        }
+    }
+    static class BoldAndCenteredHeaderRenderer extends DefaultTableCellRenderer {
+        Font boldFont = new Font(getFont().getName(), Font.BOLD, getFont().getSize()+4);
+
+        BoldAndCenteredHeaderRenderer() {
+            setHorizontalAlignment(SwingConstants.CENTER);
+            setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(
+                JTable table, Object value, boolean isSelected,
+                boolean hasFocus, int row, int column) {
+
+            Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+
+            if (comp instanceof JLabel) {
+                ((JLabel) comp).setFont(boldFont);
+                ((JLabel) comp).setBorder(BorderFactory.createLineBorder(Color.decode("#969999")));
+            }
+
+            return comp;
         }
     }
     // End of variables declaration
