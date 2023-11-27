@@ -73,7 +73,7 @@ public class Reports extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(216, 235, 243));
 
-        incomeValue.setFont(new java.awt.Font("Play", 1, 24)); // NOI18N
+        incomeValue.setFont(new java.awt.Font("Play", 1, 24)); 
         incomeValue.setText("₹ " + getIncome());
 
         javax.swing.GroupLayout incomePanelLayout = new javax.swing.GroupLayout(incomePanel);
@@ -93,7 +93,7 @@ public class Reports extends javax.swing.JPanel {
                                 .addContainerGap(90, Short.MAX_VALUE))
         );
 
-        visitValue.setFont(new java.awt.Font("Play", 1, 24)); // NOI18N
+        visitValue.setFont(new java.awt.Font("Play", 1, 24)); 
         visitValue.setText(Integer.toString(getVisits()));
 
         javax.swing.GroupLayout visitPanelLayout = new javax.swing.GroupLayout(visitPanel);
@@ -113,10 +113,10 @@ public class Reports extends javax.swing.JPanel {
                                 .addContainerGap(90, Short.MAX_VALUE))
         );
 
-        incomeLabel.setFont(new java.awt.Font("Play", 1, 18)); // NOI18N
+        incomeLabel.setFont(new java.awt.Font("Play", 1, 18)); 
         incomeLabel.setText("Current Month Income");
 
-        visitLabel.setFont(new java.awt.Font("Play", 1, 18)); // NOI18N
+        visitLabel.setFont(new java.awt.Font("Play", 1, 18)); 
         visitLabel.setText("Current Month Visits");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

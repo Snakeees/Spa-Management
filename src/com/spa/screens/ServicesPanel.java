@@ -127,7 +127,7 @@ public class ServicesPanel extends javax.swing.JPanel {
                                 .addGap(25, 25, 25)
                                 .addComponent(serviceTableListPane, javax.swing.GroupLayout.PREFERRED_SIZE, 532, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
-    }// </editor-fold>
+    }
 
     private Object[][] getUserServices() {
         Database db = new Database();
@@ -185,30 +185,6 @@ public class ServicesPanel extends javax.swing.JPanel {
         }
     }
 
-    static class BoldAndCenteredHeaderRenderer extends DefaultTableCellRenderer {
-        Font boldFont = new Font(getFont().getName(), Font.BOLD, getFont().getSize() + 4);
-
-        BoldAndCenteredHeaderRenderer() {
-            setHorizontalAlignment(SwingConstants.CENTER);
-            setBorder(BorderFactory.createLineBorder(Color.BLACK)); // Add border
-        }
-
-        @Override
-        public Component getTableCellRendererComponent(
-                JTable table, Object value, boolean isSelected,
-                boolean hasFocus, int row, int column) {
-
-            Component comp = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-            if (comp instanceof JLabel) {
-                ((JLabel) comp).setFont(boldFont);
-                ((JLabel) comp).setBorder(BorderFactory.createLineBorder(Color.decode("#969999")));
-            }
-
-            return comp;
-        }
-    }
-
     class EditAction extends AbstractAction {
         private final JTable table;
 
@@ -251,8 +227,6 @@ public class ServicesPanel extends javax.swing.JPanel {
     class ButtonsEditor extends AbstractCellEditor implements TableCellEditor {
         protected final ButtonItems panel;
         protected final JTable table;
-
-
         protected ButtonsEditor(JTable table) {
             super();
             ArrayList<String> options = new ArrayList<>();

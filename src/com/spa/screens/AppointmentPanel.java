@@ -118,7 +118,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         appointmentTimeTxt.setEditor(de);
         setBackground(new java.awt.Color(216, 235, 243));
         backLabel.setBackground(new java.awt.Color(53, 183, 234));
-        backLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
+        backLabel.setFont(new java.awt.Font("Play", 1, 12)); 
         backLabel.setText("BACK");
         backLabel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -127,10 +127,10 @@ public class AppointmentPanel extends javax.swing.JPanel {
         });
 
         addAppointmentLabel.setBackground(new java.awt.Color(216, 235, 243));
-        addAppointmentLabel.setFont(new java.awt.Font("Play", 1, 24)); // NOI18N
+        addAppointmentLabel.setFont(new java.awt.Font("Play", 1, 24)); 
         addAppointmentLabel.setText("CREATE APPOINTMENT");
         submitLabel.setBackground(new java.awt.Color(53, 183, 234));
-        submitLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
+        submitLabel.setFont(new java.awt.Font("Play", 1, 12)); 
         submitLabel.setText("CREATE");
         submitLabel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,27 +139,27 @@ public class AppointmentPanel extends javax.swing.JPanel {
         });
 
         clientNameLabel.setBackground(new java.awt.Color(216, 235, 243));
-        clientNameLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
+        clientNameLabel.setFont(new java.awt.Font("Play", 1, 12)); 
         clientNameLabel.setText("CLIENT NAME");
 
         phoneNumberLabel.setBackground(new java.awt.Color(216, 235, 243));
-        phoneNumberLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
+        phoneNumberLabel.setFont(new java.awt.Font("Play", 1, 12)); 
         phoneNumberLabel.setText("CLIENT PHONE NUMBER");
 
         serviceLabel.setBackground(new java.awt.Color(216, 235, 243));
-        serviceLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
+        serviceLabel.setFont(new java.awt.Font("Play", 1, 12)); 
         serviceLabel.setText("SERVICE");
 
         therapistLabel.setBackground(new java.awt.Color(216, 235, 243));
-        therapistLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
+        therapistLabel.setFont(new java.awt.Font("Play", 1, 12)); 
         therapistLabel.setText("THERAPIST NAME");
 
         appointmentDateLabel.setBackground(new java.awt.Color(216, 235, 243));
-        appointmentDateLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
+        appointmentDateLabel.setFont(new java.awt.Font("Play", 1, 12)); 
         appointmentDateLabel.setText("APPOINTMENT DATE");
 
         appointmentTimeLabel.setBackground(new java.awt.Color(216, 235, 243));
-        appointmentTimeLabel.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
+        appointmentTimeLabel.setFont(new java.awt.Font("Play", 1, 12)); 
         appointmentTimeLabel.setText("APPOINTMENT TIME");
 
         boolean foundTherapist = false;
@@ -422,7 +422,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
         }
 
 
-    }// </editor-fold>
+    }
 
     private void backLabelActionPerformed(java.awt.event.ActionEvent evt) {
         JViewport container = (JViewport) getParent();

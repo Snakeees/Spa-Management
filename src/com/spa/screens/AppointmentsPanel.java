@@ -217,11 +217,11 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         dateLabel = new javax.swing.JLabel();
         dateSelectorTxt = new com.toedter.calendar.JDateChooser();
         dateLabel.setBackground(new java.awt.Color(216, 235, 243));
-        dateLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
+        dateLabel.setFont(new java.awt.Font("Play", 1, 14)); 
         dateLabel.setText("DATE");
         clientNameLabel = new javax.swing.JLabel();
         clientNameTxt = new javax.swing.JTextField();
-        clientNameLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
+        clientNameLabel.setFont(new java.awt.Font("Play", 1, 14)); 
         clientNameLabel.setText("CLIENT NAME");
 
 
@@ -256,7 +256,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         }
 
         appointmentsDetailLabel.setBackground(new java.awt.Color(216, 235, 243));
-        appointmentsDetailLabel.setFont(new java.awt.Font("Play", 1, 18)); // NOI18N
+        appointmentsDetailLabel.setFont(new java.awt.Font("Play", 1, 18)); 
         appointmentsDetailLabel.setText("APPOINTMENTS LIST");
 
         therapistNameList.addItemListener(new java.awt.event.ItemListener() {
@@ -281,11 +281,11 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         });
 
         therapistLabel.setBackground(new java.awt.Color(216, 235, 243));
-        therapistLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
+        therapistLabel.setFont(new java.awt.Font("Play", 1, 14)); 
         therapistLabel.setText("THERAPIST NAME");
 
         serviceLabel.setBackground(new java.awt.Color(216, 235, 243));
-        serviceLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
+        serviceLabel.setFont(new java.awt.Font("Play", 1, 14)); 
         serviceLabel.setText("SERVICE");
 
         searchLable = new javax.swing.JButton();
@@ -293,7 +293,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
 
 
         searchLable.setBackground(new java.awt.Color(53, 183, 234));
-        searchLable.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
+        searchLable.setFont(new java.awt.Font("Play", 1, 12)); 
         searchLable.setText("SEARCH");
         searchLable.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -372,34 +372,26 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                                 .addComponent(appointmentListTablePane, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(0, Short.MAX_VALUE))
         );
-    }// </editor-fold>
-
+    }
 
     private void serviceListItemStateChanged(java.awt.event.ItemEvent evt) {
-        // TODO add your handling code here:
         if(serviceList.getSelectedItem()!=null && ((Service)serviceList.getSelectedItem()).getServiceName().equals("select")){
             serviceList.setSelectedItem(null);
         }
     }
-
     private void therapistNameListItemStateChanged(java.awt.event.ItemEvent evt) {
-        // TODO add your handling code here:
         if(therapistNameList.getSelectedItem()!=null && ((Therapist)therapistNameList.getSelectedItem()).getFirstName().equals("select")){
             therapistNameList.setSelectedItem(null);
         }
-
     }
 
-
     private void searchLableActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
         tableData=getAppointmentsWithRestriction();
         appointmentsListTable= new javax.swing.JTable(new javax.swing.table.DefaultTableModel(
                 tableData,
                 new String[]{
                         "APPOINTMENT ID","CLIENT NAME","SERVICE", "THERAPIST","TIME", "OPTIONS"
                 }
-
         )) {
             @Override
             public void updateUI() {
@@ -407,7 +399,6 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
                 setRowHeight(36);
                 setAutoCreateRowSorter(true);
                 TableColumn column = getColumnModel().getColumn(5);
-                System.out.println(column.getHeaderValue());
                 column.setCellRenderer(new AppointmentsPanel.ButtonsRenderer());
                 column.setCellEditor(new AppointmentsPanel.ButtonsEditor(this));
             }
@@ -442,21 +433,13 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
             appointmentListTablePane.setViewportView(noDataPanel);
         }
         validate();
-
-
     }
     private void addAppointmentActionPerformed(java.awt.event.ActionEvent evt) {
-        // TODO add your handling code here:
         JViewport container = (JViewport)getParent();
         container.setView(new AppointmentPanel(null,true));
         container.validate();
         container.repaint();
     }
-
-
-
-
-
 
 class EditAction extends AbstractAction {
         private final JTable table;
@@ -473,7 +456,6 @@ class EditAction extends AbstractAction {
             container.setView(new AppointmentPanel((int) o,true));
             container.validate();
             container.repaint();
-
         }
     }
     class ViewAction extends AbstractAction {
@@ -491,7 +473,6 @@ class EditAction extends AbstractAction {
             container.setView(new AppointmentPanel((int) o,false));
             container.validate();
             container.repaint();
-
         }
     }
     class CancelAction extends AbstractAction {
@@ -514,8 +495,6 @@ class EditAction extends AbstractAction {
                     null,
                     new Object[]{"OK", "CANCEL"},
                     "OK");
-
-            // Check which button was clicked
             if (result == JOptionPane.OK_OPTION) {
                 Database db=new Database();
                 db.executeUpdate("Update Appointment set IsActive=false where ID=?",o);
@@ -523,19 +502,13 @@ class EditAction extends AbstractAction {
                 container.setView(new AppointmentsPanel());
                 container.validate();
                 container.repaint();
-            } else if (result == JOptionPane.CANCEL_OPTION) {
-                System.out.println("Close button clicked");
-            }
-
+            } 
         }
     }
 
     class ButtonsEditor extends AbstractCellEditor implements TableCellEditor {
         protected final ButtonItems panel ;
         protected final JTable table;
-
-
-
         private class EditingStopHandler extends MouseAdapter implements ActionListener {
             @Override public void mousePressed(MouseEvent e) {
                 Object o = e.getSource();
@@ -548,7 +521,6 @@ class EditAction extends AbstractAction {
                     }
                 }
             }
-
             @Override public void actionPerformed(ActionEvent e) {
                 EventQueue.invokeLater(AppointmentsPanel.ButtonsEditor.this::fireEditingStopped);
             }
@@ -579,7 +551,6 @@ class EditAction extends AbstractAction {
             panel.setBackground(tbl.getSelectionBackground());
             return panel;
         }
-
         @Override public Object getCellEditorValue() {
             return "";
         }
@@ -619,7 +590,6 @@ class EditAction extends AbstractAction {
                 ((JLabel) comp).setFont(boldFont);
                 ((JLabel) comp).setBorder(BorderFactory.createLineBorder(Color.decode("#969999")));
             }
-
             return comp;
         }
     }

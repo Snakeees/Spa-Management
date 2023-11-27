@@ -443,7 +443,7 @@ public class TherapistPanel extends javax.swing.JPanel {
             );
         }
 
-    }// </editor-fold>
+    }
 
     private void updateAttendanceDisplay() {
         String currentDate;

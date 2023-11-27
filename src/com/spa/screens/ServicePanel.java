@@ -327,7 +327,7 @@ public class ServicePanel extends javax.swing.JPanel {
         }
 
 
-    }// </editor-fold>
+    }
 
     private void backLabelActionPerformed(java.awt.event.ActionEvent evt) {
         JViewport container = (JViewport) getParent();

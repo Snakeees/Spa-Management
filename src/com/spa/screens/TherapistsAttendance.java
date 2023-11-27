@@ -56,10 +56,10 @@ public class TherapistsAttendance extends javax.swing.JPanel {
 
         setBackground(new java.awt.Color(216, 235, 243));
 
-        therpaistNameLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
+        therpaistNameLabel.setFont(new java.awt.Font("Play", 1, 14)); 
         therpaistNameLabel.setText("THERAPIST NAME");
 
-        therapistNameList.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
+        therapistNameList.setFont(new java.awt.Font("Play", 1, 12)); 
         List<Therapist> therapistList = getTherapists(true);
         this.therapists = therapistList;
         for (Therapist therapist : therapistList) {
@@ -73,12 +73,12 @@ public class TherapistsAttendance extends javax.swing.JPanel {
                 therapistNameListActionPerformed(evt);
             }
         });
-        checkInLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
+        checkInLabel.setFont(new java.awt.Font("Play", 1, 14)); 
         checkInLabel.setText("CHECKIN TIME");
-        jLabel2.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Play", 1, 14)); 
         jLabel2.setText("CHECKOUT TIME");
         submit.setBackground(new java.awt.Color(53, 183, 234));
-        submit.setFont(new java.awt.Font("Play", 1, 12)); // NOI18N
+        submit.setFont(new java.awt.Font("Play", 1, 12)); 
         submit.setText("SUBMIT");
         submit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,7 +128,7 @@ public class TherapistsAttendance extends javax.swing.JPanel {
                                 .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(207, Short.MAX_VALUE))
         );
-    }// </editor-fold>//GEN-END:initComponents
+    }//GEN-END:initComponents
 
     private void therapistNameListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_therapistNameListActionPerformed
         Therapist therapist = (Therapist) therapistNameList.getSelectedItem();
