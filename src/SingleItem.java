@@ -1,19 +1,15 @@
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class SingleItem  extends JPanel {
-    private final List<JButton> buttons =  new ArrayList<>();
-
-//    private final List<Icon> buttons = Arrays.asList(new Icon("user.png"), new Icon("edit"));
-
+public class SingleItem extends JPanel {
+    private final List<JButton> buttons = new ArrayList<>();
 
     protected SingleItem(List<String> items) {
         super();
         setOpaque(true);
         for (String str : items) {
-            JButton b=new JButton(str.toUpperCase());
+            JButton b = new JButton(str.toUpperCase());
             b.setFocusable(false);
             b.setRolloverEnabled(false);
             buttons.add(b);

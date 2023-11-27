@@ -8,40 +8,66 @@ public class Therapist {
     private boolean isActive;
     private Date resignationDate;
 
-    @Override
-    public String toString() {
-        return firstName;
-    }
-
-    public Therapist(int id, String firstName, String phoneNumber, String address, boolean isActive, Date resignationDate) {
-        this.id = id;
-        this.firstName = firstName;
-        this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.isActive = isActive;
-        this.resignationDate = resignationDate;
-    }
-
     public Therapist(int id, String firstName) {
         this.id = id;
         this.firstName = firstName;
     }
 
-    public Therapist(){}
+    public Therapist() {
+    }
+
+    @Override
+    public String toString() {
+        return firstName;
+    }
 
     // Getters
-    public int getId() { return id; }
-    public String getFirstName() { return firstName; }
-    public String getPhoneNumber() { return phoneNumber; }
-    public String getAddress() { return address; }
-    public boolean isActive() { return isActive; }
-    public Date getResignationDate() { return resignationDate; }
+    public int getId() {
+        return id;
+    }
 
     // Setters
-    public void setId(int id) { this.id = id; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-    public void setAddress(String address) { this.address = address; }
-    public void setActive(boolean active) { isActive = active; }
-    public void setResignationDate(Date resignationDate) { this.resignationDate = resignationDate; }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public Date getResignationDate() {
+        return resignationDate;
+    }
+
+    public void setResignationDate(Date resignationDate) {
+        this.resignationDate = resignationDate;
+    }
 }

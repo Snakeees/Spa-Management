@@ -10,8 +10,8 @@ public class LoginScreen extends JFrame {
     private JPasswordField passField;
 
     public LoginScreen(String message) {
-        if(message!=null){
-            JOptionPane.showMessageDialog(this,"Password updated successfully!" );
+        if (message != null) {
+            JOptionPane.showMessageDialog(this, "Password updated successfully!");
         }
         createFrame();
         JPanel mainPanel = createMainPanel();
@@ -97,23 +97,26 @@ public class LoginScreen extends JFrame {
         submitButton.addActionListener(action -> {
             String username = userField.getText();
             String password = new String(passField.getPassword());
-            if(!Objects.equals(username, "") && !password.isEmpty()) {
+            if (!Objects.equals(username, "") && !password.isEmpty()) {
                 String role = validateCredentials(username, password);
                 int userId = getUserId(username);
                 if ("admin".equals(role)) {
-                    AdminDashboardScreen adminDashboardScreen=new AdminDashboardScreen(userId,username);
+                    AdminDashboardScreen adminDashboardScreen = new AdminDashboardScreen(userId, username);
                     adminDashboardScreen.setVisible(true);
                     dispose();
-                } else if ("nonadmin".equals(role)) {
-                    NonAdminDashboardScreen nonAdminDashboardScreen=new NonAdminDashboardScreen(userId,username);
+                }
+                else if ("nonadmin".equals(role)) {
+                    NonAdminDashboardScreen nonAdminDashboardScreen = new NonAdminDashboardScreen(userId, username);
                     nonAdminDashboardScreen.setVisible(true);
                     dispose();
-                } else {
+                }
+                else {
                     JOptionPane.showMessageDialog(LoginScreen.this,
                             "Invalid username or password", "Login Error",
                             JOptionPane.ERROR_MESSAGE);
                 }
-            } else {
+            }
+            else {
                 JOptionPane.showMessageDialog(LoginScreen.this,
                         "Empty username or password field", "Login Error",
                         JOptionPane.ERROR_MESSAGE);
@@ -128,13 +131,14 @@ public class LoginScreen extends JFrame {
     public int getUserId(String username) {
         Database db = new Database();
         try {
-            ResultSet rs = db.executeQuery("SELECT ID FROM UserLogin WHERE LoginName = ? AND IsActive = ?", username, true);
+            ResultSet rs = db.executeQuery("SELECT ID FROM UserLogin WHERE LoginName = ? AND IsActive = ? limit 1", username, true);
 
             if (rs.next()) {
                 int userId = rs.getInt("ID");
                 db.disconnect();
                 return userId;
-            } else {
+            }
+            else {
                 db.disconnect();
                 return 0;
             }
@@ -148,13 +152,14 @@ public class LoginScreen extends JFrame {
         Database db = new Database();
         try {
             String hashedPassword = HashPassword.hashPassword(password);
-            ResultSet rs = db.executeQuery("SELECT IsAdmin, IsActive FROM UserLogin WHERE LoginName = ? AND Password = ? AND IsActive = ?", username, hashedPassword, true);
+            ResultSet rs = db.executeQuery("SELECT IsAdmin, IsActive FROM UserLogin WHERE LoginName = ? AND Password = ? AND IsActive = ? limit 1", username, hashedPassword, true);
 
             if (rs.next()) {
                 boolean isAdmin = rs.getBoolean("IsAdmin");
                 db.disconnect();
                 return isAdmin ? "admin" : "nonadmin";
-            } else {
+            }
+            else {
                 db.disconnect();
                 return null;
             }

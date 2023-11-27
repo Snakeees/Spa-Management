@@ -12,10 +12,26 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
     /**
      * Creates new form appointmentsPanel
      */
+    // Variables declaration - do not modify
     ArrayList<Service> allServices;
     ArrayList<Therapist> allTherapist;
     private Object[][] tableData;
     SimpleDateFormat timeFormater = new SimpleDateFormat("HH:mm");
+    private javax.swing.JScrollPane appointmentListTablePane;
+    private javax.swing.JButton addAppointment;
+    private javax.swing.JLabel appointmentsDetailLabel;
+    private javax.swing.JTable appointmentsListTable;
+    private javax.swing.JLabel serviceLabel;
+    private javax.swing.JComboBox<Service> serviceList;
+    private javax.swing.JLabel therapistLabel;
+    private javax.swing.JComboBox<Therapist> therapistNameList;
+    private javax.swing.JLabel dateLabel;
+    private com.toedter.calendar.JDateChooser dateSelectorTxt;
+    private javax.swing.JLabel clientNameLabel;
+    private javax.swing.JTextField clientNameTxt;
+    private javax.swing.JButton searchLable;
+
+    // End of variables declaration
 
     public AppointmentsPanel() {
         updateDropdownDetails();
@@ -209,13 +225,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         clientNameLabel.setText("CLIENT NAME");
 
 
-        therapistLabel.setBackground(new java.awt.Color(216, 235, 243));
-        therapistLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
-        therapistLabel.setText("THERAPIST NAME");
 
-        serviceLabel.setBackground(new java.awt.Color(216, 235, 243));
-        serviceLabel.setFont(new java.awt.Font("Play", 1, 14)); // NOI18N
-        serviceLabel.setText("SERVICE");
 
         setBackground(new java.awt.Color(216, 235, 243));
 
@@ -247,7 +257,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
 
         appointmentsDetailLabel.setBackground(new java.awt.Color(216, 235, 243));
         appointmentsDetailLabel.setFont(new java.awt.Font("Play", 1, 18)); // NOI18N
-        appointmentsDetailLabel.setText("TODAY'S APPOINTMENT LIST");
+        appointmentsDetailLabel.setText("APPOINTMENTS LIST");
 
         therapistNameList.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -262,7 +272,6 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         }
         for (int j=0;j<allServices.size();j++) {
             serviceList.addItem(allServices.get(j));
-
         }
 
         serviceList.addItemListener(new java.awt.event.ItemListener() {
@@ -382,10 +391,6 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
     }
 
 
-    private void clientNameTxtItemStateChanged(java.awt.event.ItemEvent evt) {
-        // TODO add your handling code here:
-    }
-
     private void searchLableActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         tableData=getAppointmentsWithRestriction();
@@ -436,8 +441,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         else{
             JPanel noDataPanel = new JPanel();
             noDataPanel.setLayout(new FlowLayout());
-
-            JLabel messageLabel = new JLabel("No APPOINTMENTS are scheduled");
+            JLabel messageLabel = new JLabel("No Appointments are scheduled");
             messageLabel.setFont(new Font("Play",Font.BOLD,16));
             noDataPanel.add(messageLabel);
             appointmentListTablePane.setViewportView(noDataPanel);
@@ -456,23 +460,6 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
 
 
 
-
-    // Variables declaration - do not modify
-    private javax.swing.JScrollPane appointmentListTablePane;
-    private javax.swing.JButton addAppointment;
-    private javax.swing.JLabel appointmentsDetailLabel;
-    private javax.swing.JTable appointmentsListTable;
-    private javax.swing.JLabel serviceLabel;
-    private javax.swing.JComboBox<Service> serviceList;
-    private javax.swing.JLabel therapistLabel;
-    private javax.swing.JComboBox<Therapist> therapistNameList;
-    private javax.swing.JLabel dateLabel;
-    private com.toedter.calendar.JDateChooser dateSelectorTxt;
-    private javax.swing.JLabel clientNameLabel;
-    private javax.swing.JTextField clientNameTxt;
-    private javax.swing.JButton searchLable;
-
-    // End of variables declaration
 
 
 

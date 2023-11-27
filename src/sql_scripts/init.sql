@@ -45,8 +45,6 @@ CREATE TABLE Appointment (
     AppointmentTime time,
     TherapistID int,
     ServiceID int,
-    IsDone boolean,
-    IsPaid boolean,
     IsActive boolean,
     FOREIGN KEY (TherapistID) REFERENCES Therapist(ID),
     FOREIGN KEY (ServiceID) REFERENCES Service(ID)
@@ -65,23 +63,23 @@ CREATE TABLE TherapistAttendance (
 INSERT INTO UserLogin (ID, LoginName, Password, IsAdmin, IsActive) VALUES
 (1, 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', TRUE, TRUE),
 (2, 'nonadmin', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8', FALSE, TRUE);
-
-
-INSERT INTO Service (ID, ServiceName, Duration, Cost, IsActive, ServiceLastDate) VALUES
-(201, 'Massage Therapy', 60, 100, TRUE, '2023-12-31'),
-(202, 'Facial Treatment', 30, 50, TRUE, '2023-12-31'),
-(203, 'Aromatherapy', 45, 75, TRUE, '2023-12-31');
-
-INSERT INTO Therapist (ID, FirstName, PhoneNumber, Address, IsActive, ResignationDate) VALUES
-(1, 'John Doe', '123-456-7890', '1234 Maple St', TRUE, NULL),
-(2, 'Jane Smith', '234-567-8901', '5678 Oak Ave', TRUE, NULL),
-(3, 'Emily Johnson', '345-678-9012', '9101 Pine Blvd', FALSE, '2023-12-31');
-
-INSERT INTO Appointment (ID, ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime, TherapistID, ServiceID, IsDone, IsPaid,IsActive) VALUES
-(1, 'Alice','555-1234', '2023-11-15', '09:00:00', 1, 201, TRUE, TRUE,true),
-(2, 'ice','555-5678', '2023-11-16', '10:30:00', 2, 202, FALSE, FALSE,true),
-(3, 'Bob','555-9012', '2023-11-17', '14:00:00', 1, 203, FALSE, TRUE,true);
-
-
-INSERT INTO TherapistAttendance(ID,TherapistID,Date,CheckinTime,checkOutTime) VALUES
-(1,1,'2023-11-23',NULL,NULL),(2,1,'2023-11-20',NULL,NULL),(3,1,'2023-11-19',NULL,NULL),(4,1,'2023-11-17',NULL,NULL);
+--
+--
+--INSERT INTO Service (ID, ServiceName, Duration, Cost, IsActive, ServiceLastDate) VALUES
+--(201, 'Massage Therapy', 60, 100, TRUE, '2023-12-31'),
+--(202, 'Facial Treatment', 30, 50, TRUE, '2023-12-31'),
+--(203, 'Aromatherapy', 45, 75, TRUE, '2023-12-31');
+--
+--INSERT INTO Therapist (ID, FirstName, PhoneNumber, Address, IsActive, ResignationDate) VALUES
+--(1, 'John Doe', '123-456-7890', '1234 Maple St', TRUE, NULL),
+--(2, 'Jane Smith', '234-567-8901', '5678 Oak Ave', TRUE, NULL),
+--(3, 'Emily Johnson', '345-678-9012', '9101 Pine Blvd', FALSE, '2023-12-31');
+--
+--INSERT INTO Appointment (ID, ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime, TherapistID, ServiceID, IsDone, IsPaid,IsActive) VALUES
+--(1, 'Alice','555-1234', '2023-11-15', '09:00:00', 1, 201, TRUE, TRUE,true),
+--(2, 'ice','555-5678', '2023-11-16', '10:30:00', 2, 202, FALSE, FALSE,true),
+--(3, 'Bob','555-9012', '2023-11-17', '14:00:00', 1, 203, FALSE, TRUE,true);
+--
+--
+--INSERT INTO TherapistAttendance(ID,TherapistID,Date,CheckinTime,checkOutTime) VALUES
+--(1,1,'2023-11-23',NULL,NULL),(2,1,'2023-11-20',NULL,NULL),(3,1,'2023-11-19',NULL,NULL),(4,1,'2023-11-17',NULL,NULL);

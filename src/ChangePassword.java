@@ -5,15 +5,25 @@ import java.sql.ResultSet;
 public class ChangePassword extends javax.swing.JPanel {
 
     private final int userId;
+    // Variables declaration - do not modify
+    private javax.swing.JLabel confirmPasswordLabel;
+    private javax.swing.JPasswordField confirmPasswordTxt;
+    private javax.swing.JPanel container;
+    private javax.swing.JPanel content;
+    private javax.swing.JLabel oldPasswordLabel;
+    private javax.swing.JPasswordField oldPasswordTxt;
+    private javax.swing.JLabel newPasswordLabel;
+    private javax.swing.JPasswordField newPasswordTxt;
+    private javax.swing.JButton submit;
+    public ChangePassword(int userId) {
+        this.userId = userId;
+        initComponents();
+    }
 
     public int getUserId() {
         return userId;
     }
 
-    public ChangePassword(int userId) {
-        this.userId = userId;
-        initComponents();
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,7 +46,7 @@ public class ChangePassword extends javax.swing.JPanel {
 
         content.setBackground(new java.awt.Color(216, 235, 243));
         oldPasswordLabel.setText("OLD PASSWORD");
-        confirmPasswordLabel.setText("CONFIRM PASSWORD");
+        confirmPasswordLabel.setText("RE-ENTER NEW PASSWORD");
         newPasswordLabel.setText("NEW PASSWORD");
 
         oldPasswordLabel.setFont(new Font("Play", Font.BOLD, 15));
@@ -135,8 +145,8 @@ public class ChangePassword extends javax.swing.JPanel {
             Database db = new Database();
             boolean userWithPasswordExist = false;
             String oldHashedPassword = HashPassword.hashPassword(oldPasswordTxt.getText());
-            ResultSet rs = db.executeQuery("SELECT id FROM UserLogin WHERE ID = ? AND Password = ? AND IsActive = ?", getUserId(), oldHashedPassword, true);
             try {
+                ResultSet rs = db.executeQuery("SELECT id FROM UserLogin WHERE ID = ? AND Password = ? AND IsActive = ?", getUserId(), oldHashedPassword, true);
                 if (rs.next()) {
                     userWithPasswordExist = true;
 
@@ -146,9 +156,11 @@ public class ChangePassword extends javax.swing.JPanel {
             }
             if (!userWithPasswordExist) {
                 JOptionPane.showMessageDialog(this, "Old password did not match with existing password.");
-            } else if (!newPasswordTxt.getText().equals(confirmPasswordTxt.getText())) {
+            }
+            else if (!newPasswordTxt.getText().equals(confirmPasswordTxt.getText())) {
                 JOptionPane.showMessageDialog(this, "Confirm password should match with new password ");
-            } else {
+            }
+            else {
                 int result = JOptionPane.showOptionDialog(
                         getParent(),
                         "Do you want to update your password?",
@@ -161,11 +173,16 @@ public class ChangePassword extends javax.swing.JPanel {
 
                 // Check which button was clicked
                 if (result == JOptionPane.OK_OPTION) {
-                    String newHashedPassword = HashPassword.hashPassword(newPasswordTxt.getText());
-                    db.executeUpdate("update UserLogin set password=? where ID=? ;", newHashedPassword, getUserId());
-                    LoginScreen loginScreen = new LoginScreen("Password updated successfully!");
-                    loginScreen.setVisible(true);
-                    SwingUtilities.getWindowAncestor(this).dispose();
+                    try {
+                        String newHashedPassword = HashPassword.hashPassword(newPasswordTxt.getText());
+                        db.executeUpdate("update UserLogin set password=? where ID=? ;", newHashedPassword, getUserId());
+                        LoginScreen loginScreen = new LoginScreen("Password updated successfully!");
+                        loginScreen.setVisible(true);
+                        SwingUtilities.getWindowAncestor(this).dispose();
+                    }catch (Exception e){
+                        JOptionPane.showMessageDialog(this, "Failed to update password ");
+                        e.printStackTrace();
+                    }
                 }
                 else {
                     confirmPasswordTxt.setText("");
@@ -173,20 +190,10 @@ public class ChangePassword extends javax.swing.JPanel {
                     newPasswordTxt.setText("");
                 }
             }
-        } else {
+        }
+        else {
             JOptionPane.showMessageDialog(this, "Required fields can not be empty.");
         }
     }
-
-    // Variables declaration - do not modify
-    private javax.swing.JLabel confirmPasswordLabel;
-    private javax.swing.JPasswordField confirmPasswordTxt;
-    private javax.swing.JPanel container;
-    private javax.swing.JPanel content;
-    private javax.swing.JLabel oldPasswordLabel;
-    private javax.swing.JPasswordField oldPasswordTxt;
-    private javax.swing.JLabel newPasswordLabel;
-    private javax.swing.JPasswordField newPasswordTxt;
-    private javax.swing.JButton submit;
 }
 

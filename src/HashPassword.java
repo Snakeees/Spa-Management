@@ -3,7 +3,7 @@ import java.security.NoSuchAlgorithmException;
 
 public class HashPassword {
     public static String hashPassword(String password) {
-        MessageDigest md = null;
+        MessageDigest md;
         try {
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
@@ -12,7 +12,6 @@ public class HashPassword {
         md.update(password.getBytes());
         byte[] digest = md.digest();
         String hashedPassword = bytesToHex(digest);
-        System.out.println("Hashed Password: "+hashedPassword);
         return hashedPassword;
     }
 

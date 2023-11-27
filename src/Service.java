@@ -26,20 +26,55 @@ public class Service {
     }
 
     // Getters
-    public int getId() { return id; }
-    public String getServiceName() { return serviceName; }
-    public int getDuration() { return duration; }
-    public int getCost() { return cost; }
-    public boolean isActive() { return isActive; }
-    public Date getServiceLastDate() { return serviceLastDate; }
+    public int getId() {
+        return id;
+    }
 
     // Setters
-    public void setId(int id) { this.id = id; }
-    public void setServiceName(String serviceName) { this.serviceName = serviceName; }
-    public void setDuration(int duration) { this.duration = duration; }
-    public void setCost(int cost) { this.cost = cost; }
-    public void setActive(boolean active) { isActive = active; }
-    public void setServiceLastDate(Date serviceLastDate) { this.serviceLastDate = serviceLastDate; }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getServiceName() {
+        return serviceName;
+    }
+
+    public void setServiceName(String serviceName) {
+        this.serviceName = serviceName;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public Date getServiceLastDate() {
+        return serviceLastDate;
+    }
+
+    public void setServiceLastDate(Date serviceLastDate) {
+        this.serviceLastDate = serviceLastDate;
+    }
+
     @Override
     public String toString() {
         return serviceName;
