@@ -175,7 +175,7 @@ public class ServicesPanel extends javax.swing.JPanel {
     static class ButtonsRenderer implements TableCellRenderer {
         List<String> options = Arrays.asList("view", "update");
 
-        private final SingleItem panel = new SingleItem(options) {
+        private final ButtonItems panel = new ButtonItems(options) {
             @Override
             public void updateUI() {
                 super.updateUI();
@@ -254,7 +254,7 @@ public class ServicesPanel extends javax.swing.JPanel {
     }
 
     class ButtonsEditor extends AbstractCellEditor implements TableCellEditor {
-        protected final SingleItem panel;
+        protected final ButtonItems panel;
         protected final JTable table;
 
 
@@ -263,7 +263,7 @@ public class ServicesPanel extends javax.swing.JPanel {
             ArrayList<String> options = new ArrayList<>();
             options.add("View");
             options.add("update");
-            this.panel = new SingleItem(options);
+            this.panel = new ButtonItems(options);
             this.table = table;
             List<JButton> list = panel.getButtons();
             list.get(1).setAction(new ServicesPanel.EditAction(table));
