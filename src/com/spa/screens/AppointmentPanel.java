@@ -1,3 +1,8 @@
+package com.spa.screens;
+
+import com.spa.dto.Appointment;
+import com.spa.dto.Service;
+import com.spa.dto.Therapist;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;

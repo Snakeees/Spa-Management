@@ -1,3 +1,5 @@
+package com.spa.screens;
+
 import java.sql.*;
 import java.util.logging.Logger;
 

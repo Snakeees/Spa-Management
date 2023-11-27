@@ -1,4 +1,4 @@
-/*
+package com.spa.screens;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
@@ -13,7 +13,7 @@ import java.util.Date;
 public class Reports extends javax.swing.JPanel {
 
     /**
-     * Creates new form Reports
+     * Creates new form com.spa.screens.Reports
      */
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     // Variables declaration - do not modify//GEN-BEGIN:variables

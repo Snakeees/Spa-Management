@@ -1,3 +1,5 @@
+package com.spa.dto;
+
 import java.util.Date;
 
 public class Appointment {

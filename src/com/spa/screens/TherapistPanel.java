@@ -1,3 +1,7 @@
+package com.spa.screens;
+
+import com.spa.dto.Therapist;
+import com.spa.dto.TherapistAttendance;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -10,7 +14,7 @@ import java.util.Date;
 public class TherapistPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form TherapistPanel
+     * Creates new form com.spa.screens.TherapistPanel
      */
     Therapist therapist;
     ArrayList<TherapistAttendance> therapistAttendances;

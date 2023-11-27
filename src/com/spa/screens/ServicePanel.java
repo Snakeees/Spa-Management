@@ -1,3 +1,7 @@
+package com.spa.screens;
+
+import com.spa.dto.Service;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;
@@ -7,7 +11,7 @@ import java.util.Date;
 public class ServicePanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form ServicePanel
+     * Creates new form com.spa.screens.ServicePanel
      */
     Service service;
     // Variables declaration - do not modify

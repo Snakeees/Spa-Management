@@ -1,3 +1,5 @@
+package com.spa.screens;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;

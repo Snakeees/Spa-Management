@@ -1,3 +1,5 @@
+package com.spa.dto;
+
 import java.sql.Time;
 import java.util.Date;
 

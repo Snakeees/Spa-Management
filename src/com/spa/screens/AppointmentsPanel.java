@@ -1,3 +1,8 @@
+package com.spa.screens;
+
+import com.spa.dto.Service;
+import com.spa.dto.Therapist;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
@@ -69,7 +74,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         List<List<Object>> cells = new ArrayList<>();
         java.util.Date d=new java.util.Date();
         try {
-            ResultSet rs = db.executeQuery("select a.ID, a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t,Service s where AppointmentDate=? and a.IsActive=? and t.ID=a.TherapistID and a.ServiceID=s.ID ORDER BY a.AppointmentTime",new java.sql.Date(d.getYear(),d.getMonth(),d.getDate()),true);
+            ResultSet rs = db.executeQuery("select a.ID, a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t,com.spa.dto.Service s where AppointmentDate=? and a.IsActive=? and t.ID=a.TherapistID and a.ServiceID=s.ID ORDER BY a.AppointmentTime",new java.sql.Date(d.getYear(),d.getMonth(),d.getDate()),true);
             while (rs.next()) {
                 int id=rs.getInt("ID");
                 String clientName=rs.getString("clientName");
@@ -107,7 +112,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         List<List<Object>> cells = new ArrayList<>();
         ResultSet rs;
         List<Object> parameters=new ArrayList<>();
-        StringBuilder query=new StringBuilder("select a.ID,a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t,Service s where a.IsActive=true and t.ID=a.TherapistID and a.ServiceID=s.ID  ");
+        StringBuilder query=new StringBuilder("select a.ID,a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t,com.spa.dto.Service s where a.IsActive=true and t.ID=a.TherapistID and a.ServiceID=s.ID  ");
         Date date=dateSelectorTxt.getDate();
         if(date!=null){
             parameters.add(new java.sql.Date(date.getYear(),date.getMonth(),date.getDate()));

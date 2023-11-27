@@ -1,7 +1,10 @@
-/*
+package com.spa.screens;/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
+
+import com.spa.dto.Therapist;
+import com.spa.dto.TherapistAttendance;
 
 import javax.swing.*;
 import java.sql.Date;
@@ -31,7 +34,7 @@ public class TherapistsAttendance extends javax.swing.JPanel {
 
 
     /**
-     * Creates new form TherapistsAttendance
+     * Creates new form com.spa.screens.TherapistsAttendance
      */
     public TherapistsAttendance() {
         initComponents();

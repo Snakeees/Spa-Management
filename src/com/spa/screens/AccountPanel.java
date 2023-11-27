@@ -1,3 +1,7 @@
+package com.spa.screens;
+
+import com.spa.dto.UserLogin;
+
 import javax.swing.*;
 import java.awt.*;
 import java.sql.ResultSet;

@@ -1,3 +1,5 @@
+package com.spa.dto;
+
 public class UserLogin {
     private int id;
     private String loginName;
