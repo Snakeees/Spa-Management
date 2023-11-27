@@ -59,12 +59,7 @@ public class TherapistsPanel extends javax.swing.JPanel {
 
             @Override
             public boolean isCellEditable(int row, int col) {
-                switch (col) {
-                    case 3:
-                        return true;
-                    default:
-                        return false;
-                }
+                return col == 3;
             }
         };
         setBackground(new java.awt.Color(216, 235, 243));

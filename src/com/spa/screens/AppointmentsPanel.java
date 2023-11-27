@@ -191,12 +191,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
             }
             @Override
             public boolean isCellEditable(int row, int col) {
-                switch (col) {
-                    case 5:
-                        return true;
-                    default:
-                        return false;
-                }
+                return col == 5;
             }
         };
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -418,12 +413,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
             }
             @Override
             public boolean isCellEditable(int row, int col) {
-                switch (col) {
-                    case 5:
-                        return true;
-                    default:
-                        return false;
-                }
+                return col == 5;
             }
         };
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();

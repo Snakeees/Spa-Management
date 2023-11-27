@@ -18,7 +18,7 @@ public class WelcomeScreen extends JFrame {
         // Adding the Label
         JLabel welcomeLabel = new JLabel("Welcome to My App");
         welcomeLabel.setForeground(Color.BLUE);
-        welcomeLabel.setFont(new Font(Font.SANS_SERIF, Font.BOLD, 20));
+        welcomeLabel.setFont(new Font("Play", Font.BOLD, 20));
         JPanel labelPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         labelPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
         labelPanel.add(welcomeLabel);

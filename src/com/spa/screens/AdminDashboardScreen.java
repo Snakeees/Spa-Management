@@ -151,7 +151,6 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         }
         validate();
     }
-
     private void updateOtherButtons() {
         for (JButton button : navButtons) {
             makeInActive(button);

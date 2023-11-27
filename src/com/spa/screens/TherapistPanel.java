@@ -446,7 +446,8 @@ public class TherapistPanel extends javax.swing.JPanel {
     }// </editor-fold>
 
     private void updateAttendanceDisplay() {
-        String currentDate, listDate;
+        String currentDate;
+        String listDate;
         int x = therapistAttendances.size() - 1;
         for (int i = 6, j = x, k = x; i >= 0; i--, k--) {
             Date d = new Date();

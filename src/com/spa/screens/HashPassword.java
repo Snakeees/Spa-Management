@@ -13,8 +13,7 @@ public class HashPassword {
         }
         md.update(password.getBytes());
         byte[] digest = md.digest();
-        String hashedPassword = bytesToHex(digest);
-        return hashedPassword;
+        return bytesToHex(digest);
     }
 
     private static String bytesToHex(byte[] bytes) {
