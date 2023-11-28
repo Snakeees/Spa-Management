@@ -75,6 +75,8 @@ public class TherapistsAttendance extends JPanel {
                 therapistNameListActionPerformed(evt);
             }
         });
+        therapistNameList.setBackground(Color.WHITE);
+
         checkInLabel.setFont(new Font("Play", 1, 14));
         checkInLabel.setText("CHECKIN TIME");
         jLabel2.setFont(new Font("Play", 1, 14));

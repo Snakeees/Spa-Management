@@ -35,6 +35,8 @@ public class AppointmentsPanel extends JPanel {
     private JTextField clientNameTxt;
     private JButton searchLable;
 
+
+
     public AppointmentsPanel() {
         updateDropdownDetails();
         tableData = getAppointments();
@@ -50,54 +52,7 @@ public class AppointmentsPanel extends JPanel {
     private void initComponents() {
         setBackground(new Color(216, 235, 243));
         appointmentListTablePane = new JScrollPane();
-        DefaultTableModel model = new DefaultTableModel(
-                tableData,
-                new String[]{
-                        "APPOINTMENT ID", "CLIENT NAME", "SERVICE", "THERAPIST", "TIME", "OPTIONS"
-                }
-        );
-        appointmentsListTable = new JTable(model) {
-            @Override
-            public void updateUI() {
-                super.updateUI();
-                setRowHeight(36);
-                setAutoCreateRowSorter(true);
-                TableColumn column = getColumnModel().getColumn(5);
-                column.setCellRenderer(new AppointmentsPanel.ButtonsRenderer());
-                column.setCellEditor(new AppointmentsPanel.ButtonsEditor(this));
-            }
-
-            @Override
-            public boolean isCellEditable(int row, int col) {
-                return col == 5;
-            }
-        };
-        //Customizing default cell render for good look
-        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        for (int i = 0; i < appointmentsListTable.getColumnCount() - 1; i++) {
-            appointmentsListTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-            appointmentsListTable.getColumnModel().getColumn(i).setMaxWidth(200);
-            appointmentsListTable.getColumnModel().getColumn(i).setWidth(180);
-            appointmentsListTable.getColumnModel().getColumn(i).setPreferredWidth(180);
-        }
-        //Customizing default header cell render for good look
-        appointmentsListTable.getTableHeader().setDefaultRenderer(new BoldAndCenteredHeaderRenderer());
-        JTableHeader header = appointmentsListTable.getTableHeader();
-        Dimension headerSize = header.getPreferredSize();
-        headerSize.height = 40;
-        header.setPreferredSize(headerSize);
-        if (tableData != null && tableData.length > 0)
-            appointmentListTablePane.setViewportView(appointmentsListTable);
-        else {
-            //if data is empty, showing "No data Panel"
-            JPanel noDataPanel = new JPanel();
-            noDataPanel.setLayout(new FlowLayout());
-            JLabel messageLabel = new JLabel("No Appointments are scheduled");
-            messageLabel.setFont(new Font("Play", Font.BOLD, 16));
-            noDataPanel.add(messageLabel);
-            appointmentListTablePane.setViewportView(noDataPanel);
-        }
+        updateTable(tableData);
         addAppointment = new JButton();
         appointmentsDetailLabel = new JLabel();
         therapistNameList = new JComboBox<>();
@@ -107,9 +62,10 @@ public class AppointmentsPanel extends JPanel {
         dateLabel = new JLabel();
         dateSelectorTxt = new com.toedter.calendar.JDateChooser();
         dateSelectorTxt.setDateFormatString("dd-MM-yyyy");
+        dateSelectorTxt.setToolTipText("DD-MM-YYYY");
         dateLabel.setBackground(new Color(216, 235, 243));
         dateLabel.setFont(new Font("Play", 1, 14));
-        dateLabel.setText("DATE");
+        dateLabel.setText("DATE (DD-MM-YYYY)");
         clientNameLabel = new JLabel();
         clientNameTxt = new JTextField();
         clientNameLabel.setFont(new Font("Play", 1, 14));
@@ -157,7 +113,8 @@ public class AppointmentsPanel extends JPanel {
                 serviceListItemStateChanged(evt);
             }
         });
-
+        therapistNameList.setBackground(Color.WHITE);
+        serviceList.setBackground(Color.WHITE);
         therapistLabel.setBackground(new Color(216, 235, 243));
         therapistLabel.setFont(new Font("Play", 1, 14));
         therapistLabel.setText("THERAPIST NAME");
@@ -184,27 +141,29 @@ public class AppointmentsPanel extends JPanel {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(525, 525, 525)
+                                .addGap(600,600,600)
                                 .addComponent(appointmentsDetailLabel, GroupLayout.PREFERRED_SIZE, 519, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(addAppointment, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
                                 .addGap(70, 70, 70))
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(443, 443, 443)
+                                .addContainerGap(4, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                         .addComponent(therapistLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(dateLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(serviceLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(clientNameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(3,3,3)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                         .addComponent(clientNameTxt, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(serviceList, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(therapistNameList, 0, 197, Short.MAX_VALUE)
                                         .addComponent(dateSelectorTxt, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(35, 35, 35)
+                                .addGap(3,3,3)
                                 .addComponent(searchLable, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
-                                .addGap(135, 135, 135))
+                                .addContainerGap(4, Short.MAX_VALUE)
+
+                        )
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(4, Short.MAX_VALUE)
                                 .addComponent(appointmentListTablePane, GroupLayout.PREFERRED_SIZE, 1300, GroupLayout.PREFERRED_SIZE)
@@ -223,7 +182,7 @@ public class AppointmentsPanel extends JPanel {
                                 .addGap(10,10,10)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(therapistNameList, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(therapistLabel, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(therapistLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
                                 .addGap(7,7,7)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
                                         .addComponent(serviceList, GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
@@ -238,8 +197,8 @@ public class AppointmentsPanel extends JPanel {
 
                                         .addGap(4,4,4)
                                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                        .addComponent(dateSelectorTxt, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(dateLabel, GroupLayout.PREFERRED_SIZE, 20, GroupLayout.PREFERRED_SIZE)))
+                                                        .addComponent(dateSelectorTxt, GroupLayout.PREFERRED_SIZE, 28, GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(dateLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)))
                                 .addGap(9,9,9)
                                 .addComponent(appointmentListTablePane, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(0, Short.MAX_VALUE))
@@ -263,8 +222,12 @@ public class AppointmentsPanel extends JPanel {
     // updating the table details with the search details when search button is clicked
     private void searchLableActionPerformed(ActionEvent evt) {
         tableData = getAppointmentsWithRestriction();
+       updateTable(tableData);
+        validate();
+    }
+    public void updateTable(Object[][] data){
         appointmentsListTable = new JTable(new DefaultTableModel(
-                tableData,
+                data,
                 new String[]{
                         "APPOINTMENT ID", "CLIENT NAME", "SERVICE", "THERAPIST", "TIME", "OPTIONS"
                 }
@@ -311,7 +274,6 @@ public class AppointmentsPanel extends JPanel {
             noDataPanel.add(messageLabel);
             appointmentListTablePane.setViewportView(noDataPanel);
         }
-        validate();
     }
     //navigate to create appointment page when create appointment button is clicked
     private void addAppointmentActionPerformed(ActionEvent evt) {
@@ -545,10 +507,9 @@ public class AppointmentsPanel extends JPanel {
                 try {
                     Database db = new Database();
                     db.executeUpdate("Update Appointment set IsActive=false where ID=?", o);
-                    JViewport container = (JViewport) getParent();
-                    container.setView(new AppointmentsPanel());
-                    container.validate();
-                    container.repaint();
+                    updateTable(getAppointmentsWithRestriction());
+                    validate();
+                    repaint();
                 }catch (Exception exception){
                     exception.printStackTrace();
                     JOptionPane.showMessageDialog(getParent(),"Failed to cancel Appointment");

@@ -123,10 +123,10 @@ public class TherapistPanel extends JPanel {
         currentActiveLabel.setText("CURRENTLY ACTIVE");
 
         resignationDateLabel.setBackground(new Color(216, 235, 243));
-        resignationDateLabel.setText("RESIGNATION DATE");
+        resignationDateLabel.setText("RESIGNATION DATE  (DD-MM-YYYY)");
 
         attendanceLabel.setBackground(new Color(216, 235, 243));
-        attendanceLabel.setText("ATTENDANCE( For past 7 days)");
+        attendanceLabel.setText("ATTENDANCE (For past 7 Days)");
 
         isActive.setBackground(new Color(216, 235, 243));
         isActive.setToolTipText("");

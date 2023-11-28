@@ -79,6 +79,8 @@ public class AppointmentPanel extends JPanel {
 
         appointmentTimeTxt.setFont(new Font("Play", 0, 12));
         therapistListSelector.setFont(new Font("Play", 0, 12));
+        therapistListSelector.setBackground(Color.WHITE);
+        serviceListSelector.setBackground(Color.WHITE);
         serviceListSelector.setFont(new Font("Play", 0, 12));
         setBackground(new Color(216, 235, 243));
         backLabel.setBackground(new Color(53, 183, 234));
@@ -120,12 +122,11 @@ public class AppointmentPanel extends JPanel {
 
         appointmentDateLabel.setBackground(new Color(216, 235, 243));
         appointmentDateLabel.setFont(new Font("Play", 1, 12));
-        appointmentDateLabel.setText("APPOINTMENT DATE (dd-mm-yyyy)");
+        appointmentDateLabel.setText("APPOINTMENT DATE (DD-MM-YYYY)");
 
         appointmentTimeLabel.setBackground(new Color(216, 235, 243));
         appointmentTimeLabel.setFont(new Font("Play", 1, 12));
-        appointmentTimeLabel.setText("APPOINTMENT TIME (HH:MM)");
-
+        appointmentTimeLabel.setText("APPOINTMENT TIME (HH:MM) (24 Hours Format)");
         boolean foundTherapist = false;
         for (int i = 0; i < allTherapist.size(); i++) {
             therapistListSelector.addItem(allTherapist.get(i));
