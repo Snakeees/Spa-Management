@@ -364,7 +364,7 @@ public class ServicePanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "Service created successfully!");
             }
             else {
-                JOptionPane.showMessageDialog(this, "Required fields can not be empty. ");
+                JOptionPane.showMessageDialog(this, "All fields are required");
             }
         }
         else {

@@ -48,7 +48,7 @@ public class ChangePassword extends javax.swing.JPanel {
 
         content.setBackground(new java.awt.Color(216, 235, 243));
         oldPasswordLabel.setText("OLD PASSWORD");
-        confirmPasswordLabel.setText("RE-ENTER NEW PASSWORD");
+        confirmPasswordLabel.setText("CONFIRM NEW PASSWORD");
         newPasswordLabel.setText("NEW PASSWORD");
 
         oldPasswordLabel.setFont(new Font("Play", Font.BOLD, 15));
@@ -160,7 +160,7 @@ public class ChangePassword extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Old password did not match with existing password.");
             }
             else if (!newPasswordTxt.getText().equals(confirmPasswordTxt.getText())) {
-                JOptionPane.showMessageDialog(this, "Confirm password should match with new password ");
+                JOptionPane.showMessageDialog(this, "Confirm new password should match with new password ");
             }
             else {
                 int result = JOptionPane.showOptionDialog(
@@ -194,7 +194,7 @@ public class ChangePassword extends javax.swing.JPanel {
             }
         }
         else {
-            JOptionPane.showMessageDialog(this, "Required fields can not be empty.");
+            JOptionPane.showMessageDialog(this, "All fields are required");
         }
     }
 }

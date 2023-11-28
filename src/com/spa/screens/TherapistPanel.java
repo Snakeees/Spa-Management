@@ -490,7 +490,7 @@ public class TherapistPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Therapist created successfully!");
             }
             else {
-                JOptionPane.showMessageDialog(this, "Required fields can not be empty. ");
+                JOptionPane.showMessageDialog(this, "All fields are required");
             }
         }
         else {

@@ -64,7 +64,7 @@ public class AccountPanel extends JPanel {
 
         userNameLabel.setText("USER NAME");
         passwordLabel.setText("PASSWORD");
-        confirmPasswordLabel.setText("RE-ENTER PASSWORD");
+        confirmPasswordLabel.setText("CONFIRM PASSWORD");
         submit.setLabel("CREATE");
         isAdminLabel.setText("ADMIN ACCOUNT");
         addAccountLabel.setText("CREATE ACCOUNT");
@@ -242,7 +242,7 @@ public class AccountPanel extends JPanel {
                 }
             }
             else {
-                JOptionPane.showMessageDialog(this, "Required fields can not be empty. ");
+                JOptionPane.showMessageDialog(this, "All fields are required ");
             }
         } else {
             if (userNameTxt.getText() != null && !userNameTxt.getText().trim().equals("")) {

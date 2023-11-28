@@ -420,7 +420,7 @@ public class AppointmentPanel extends JPanel {
                 }
             }
             else {
-                JOptionPane.showMessageDialog(this, "Required fields can not be empty. ");
+                JOptionPane.showMessageDialog(this, "All fields are required");
             }
         }
         else {
