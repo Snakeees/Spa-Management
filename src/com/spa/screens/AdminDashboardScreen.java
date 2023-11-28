@@ -88,7 +88,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         headerPanel.setBackground(new Color(53, 183, 234));
         return headerPanel;
     }
-
+    // To create navigation buttons
     public JButton getButton(String label) {
         JButton button;
         button = new JButton(label);

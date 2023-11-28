@@ -17,7 +17,6 @@ public class ServicePanel extends JPanel {
     /**
      * Creates new form com.spa.screens.ServicePanel
      */
-    // Variables declaration - do not modify
     Service service;
     private JLabel activeLable;
     private JLabel addServiceLabel;
@@ -38,28 +37,7 @@ public class ServicePanel extends JPanel {
         initComponents(service, isEditable);
     }
 
-    private Service getService(Integer serviceId) {
-        Service currentService = null;
-        try {
-            Database db = new Database();
-            ResultSet rs = db.executeQuery("Select * from Service where ID=?", serviceId);
-            ResultSet rs1 = db.executeQuery("Select AppointmentDate from Appointment where ServiceID=? order by AppointmentDate desc limit 1;", serviceId);
-            while (rs.next()) {
-                currentService = new Service();
-                currentService.setActive(rs.getBoolean("IsActive"));
-                currentService.setId(rs.getInt("ID"));
-                currentService.setServiceName(rs.getString("ServiceName"));
-                currentService.setCost(rs.getInt("Cost"));
-                currentService.setDuration(rs.getTime("Duration"));
-            }
-            if (rs1.next() && currentService != null) {
-                currentService.setServiceLastDate(rs1.getDate("AppointmentDate"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return currentService;
-    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -116,7 +94,6 @@ public class ServicePanel extends JPanel {
         activeLable.setFont(new Font("Play", Font.BOLD, 15));
         lastServiceDateLabel.setFont(new Font("Play", Font.BOLD, 15));
         serviceDurationTxt.setFont(new Font("Play", 0, 12));
-//        lastServiceDateTxt.setDateFormatString("dd-MM-yyyy");
         submitLabel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 submitActionPerformed(evt);
@@ -131,6 +108,7 @@ public class ServicePanel extends JPanel {
         this.setLayout(layout);
         lastServiceDateTxt.setEnabled(false);
 
+        // Viewing and Updating the Services
         if (service != null) {
             serviceNameTxt.setText(service.getServiceName());
             serviceDurationTxt.setValue(service.getDuration());
@@ -142,6 +120,7 @@ public class ServicePanel extends JPanel {
                 Date lastServiceDate = service.getServiceLastDate();
                 lastServiceDateTxt.setText(requiredDateFormate.format(lastServiceDate));
             }
+            // Updating the Services
             if (isEditable) {
                 addServiceLabel.setText("UPDATE SERVICE");
                 submitLabel.setText("UPDATE");
@@ -214,6 +193,7 @@ public class ServicePanel extends JPanel {
 
                 );
             }
+            // Viewing the Service Details
             else {
                 serviceNameTxt.setEnabled(false);
                 serviceDurationTxt.setEnabled(false);
@@ -284,6 +264,7 @@ public class ServicePanel extends JPanel {
 
             }
         }
+        // Creating Service Details
         else if (isEditable) {
             layout.setHorizontalGroup(
                     layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -344,24 +325,29 @@ public class ServicePanel extends JPanel {
 
 
     }
-
+    //This method navigates to Service Table page when back button is clicked
     private void backLabelActionPerformed(ActionEvent evt) {
         JViewport container = (JViewport) getParent();
         container.setView(new ServicesPanel());
         container.validate();
         container.repaint();
     }
-
+    // This method get execute when submit button is clicked while updating and creating Service details
     private void submitActionPerformed(ActionEvent evt) {
         Database db = new Database();
         if (service == null) {
             if (serviceNameTxt.getText() != null && !serviceNameTxt.getText().trim().equals("") && serviceDurationTxt.getValue() != null && costPerClientTxt.getText() != null && !costPerClientTxt.getText().trim().equals("") && !serviceDurationTxt.getValue().toString().equals("00:00")) {
-                db.executeUpdate("INSERT INTO Service ( ServiceName, Duration, Cost,IsActive) VALUES(?,?,?,?)", serviceNameTxt.getText(), serviceDurationTxt.getValue(), costPerClientTxt.getText(), true);
-                JViewport container = (JViewport) getParent();
-                container.setView(new ServicesPanel());
-                container.validate();
-                container.repaint();
-                JOptionPane.showMessageDialog(this, "Service created successfully!");
+                try {
+                    db.executeUpdate("INSERT INTO Service ( ServiceName, Duration, Cost,IsActive) VALUES(?,?,?,?)", serviceNameTxt.getText(), serviceDurationTxt.getValue(), costPerClientTxt.getText(), true);
+                    JViewport container = (JViewport) getParent();
+                    container.setView(new ServicesPanel());
+                    container.validate();
+                    container.repaint();
+                    JOptionPane.showMessageDialog(this, "Service created successfully!");
+                }catch (Exception exception){
+                    exception.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Failed create service");
+                }
             }
             else {
                 JOptionPane.showMessageDialog(this, "All fields are required");
@@ -381,12 +367,17 @@ public class ServicePanel extends JPanel {
 
                 // Check which button was clicked
                 if (result == JOptionPane.OK_OPTION) {
-                    db.executeUpdate("update Service set ServiceName=?, Duration=?, Cost=?, IsActive=? where ID=? ;", serviceNameTxt.getText(), serviceDurationTxt.getValue(), costPerClientTxt.getText(), isActive.isSelected(), service.getId());
-                    JViewport container = (JViewport) getParent();
-                    container.setView(new ServicesPanel());
-                    container.validate();
-                    container.repaint();
-                    JOptionPane.showMessageDialog(this, "Service details updated successfully!");
+                    try {
+                        db.executeUpdate("update Service set ServiceName=?, Duration=?, Cost=?, IsActive=? where ID=? ;", serviceNameTxt.getText(), serviceDurationTxt.getValue(), costPerClientTxt.getText(), isActive.isSelected(), service.getId());
+                        JViewport container = (JViewport) getParent();
+                        container.setView(new ServicesPanel());
+                        container.validate();
+                        container.repaint();
+                        JOptionPane.showMessageDialog(this, "Service details updated successfully!");
+                    }catch (Exception exception){
+                        exception.printStackTrace();
+                        JOptionPane.showMessageDialog(this, "Failed to update service details");
+                    }
                 }
                 else if (result == JOptionPane.CANCEL_OPTION) {
                     JViewport container = (JViewport) getParent();
@@ -398,5 +389,28 @@ public class ServicePanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "Required details can not be empty.");
             }
         }
+    }
+    // This method fetches the Service details when Service form page is opened in the update or edit mode
+    private Service getService(Integer serviceId) {
+        Service currentService = null;
+        try {
+            Database db = new Database();
+            ResultSet rs = db.executeQuery("Select * from Service where ID=?", serviceId);
+            ResultSet rs1 = db.executeQuery("Select AppointmentDate from Appointment where ServiceID=? order by AppointmentDate desc limit 1;", serviceId);
+            while (rs.next()) {
+                currentService = new Service();
+                currentService.setActive(rs.getBoolean("IsActive"));
+                currentService.setId(rs.getInt("ID"));
+                currentService.setServiceName(rs.getString("ServiceName"));
+                currentService.setCost(rs.getInt("Cost"));
+                currentService.setDuration(rs.getTime("Duration"));
+            }
+            if (rs1.next() && currentService != null) {
+                currentService.setServiceLastDate(rs1.getDate("AppointmentDate"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return currentService;
     }
 }
