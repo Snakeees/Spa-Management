@@ -486,7 +486,7 @@ public class AppointmentsPanel extends JPanel {
         private final JTable table;
 
         protected CancelAction(JTable table) {
-            super("DELETE");
+            super("CANCEL");
             this.table = table;
         }
 
