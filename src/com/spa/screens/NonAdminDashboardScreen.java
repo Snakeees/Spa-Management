@@ -30,6 +30,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
         content = new AppointmentsPanel();
         makeActive(appointments);
         content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
+        body.setBorder(BorderFactory.createEmptyBorder());
         body.setViewportView(content);
         getContentPane().add(body, BorderLayout.CENTER, 1);
     }
@@ -89,6 +90,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             body.setViewportView(content);
+            body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
             makeActive(appointments);
         }
@@ -100,6 +102,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             body.setViewportView(content);
+            body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
             makeActive(attendance);
         }
@@ -111,6 +114,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             body.setViewportView(content);
+            body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
             makeActive(changePassword);
         }

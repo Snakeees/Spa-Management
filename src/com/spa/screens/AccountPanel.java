@@ -4,95 +4,77 @@ import com.spa.dto.UserLogin;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.sql.ResultSet;
 
-public class AccountPanel extends javax.swing.JPanel {
+public class AccountPanel extends JPanel {
 
     UserLogin userLogin;
-    private javax.swing.JLabel confirmPasswordLabel;
-    private javax.swing.JPasswordField confirmPasswordTxt;
-    private javax.swing.JPanel container;
-    private javax.swing.JPanel content;
-    private javax.swing.JLabel isAdminLabel;
-    private javax.swing.JCheckBox isAdmin;
-    private javax.swing.JLabel passwordLabel;
-    private javax.swing.JPasswordField passwordTxt;
-    private javax.swing.JButton submit;
-    private javax.swing.JLabel userNameLabel;
-    private javax.swing.JTextField userNameTxt;
-    private javax.swing.JButton backButton;
-    private javax.swing.JLabel addAccountLabel;
+    private JLabel confirmPasswordLabel;
+    private JPasswordField confirmPasswordTxt;
+    private JPanel container;
+    private JPanel content;
+    private JLabel isAdminLabel;
+    private JCheckBox isAdmin;
+    private JLabel passwordLabel;
+    private JPasswordField passwordTxt;
+    private JButton submit;
+    private JLabel userNameLabel;
+    private JTextField userNameTxt;
+    private JButton backButton;
+    private JLabel addAccountLabel;
     public AccountPanel(Integer id, boolean isEditable) {
         this.userLogin = getAccount(id);
         initComponents(userLogin, isEditable);
     }
-
-    private UserLogin getAccount(Integer id) {
-        UserLogin user = null;
-        try {
-            Database db = new Database();
-            ResultSet rs = db.executeQuery("Select * from UserLogin where ID=?", id);
-            while (rs.next()) {
-                user = new UserLogin();
-                user.setActive(rs.getBoolean("IsActive"));
-                user.setId(rs.getInt("ID"));
-                user.setLoginName(rs.getString("LoginName"));
-                user.setPassword(rs.getString("Password"));
-                user.setAdmin(rs.getBoolean("IsAdmin"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return user;
-    }
-
     /**
      *
      * @param userLogin
      * @param isEditable
      */
     private void initComponents(UserLogin userLogin, boolean isEditable) {
+        setBackground(new Color(216, 235, 243));
 
-        container = new javax.swing.JPanel();
-        content = new javax.swing.JPanel();
-        userNameLabel = new javax.swing.JLabel();
-        passwordLabel = new javax.swing.JLabel();
-        confirmPasswordLabel = new javax.swing.JLabel();
-        userNameTxt = new javax.swing.JTextField();
-        confirmPasswordTxt = new javax.swing.JPasswordField();
-        passwordTxt = new javax.swing.JPasswordField();
-        submit = new javax.swing.JButton();
-        isAdminLabel = new javax.swing.JLabel();
-        addAccountLabel = new javax.swing.JLabel();
-        isAdmin = new javax.swing.JCheckBox();
-        backButton = new javax.swing.JButton();
+        container = new JPanel();
+        content = new JPanel();
+        userNameLabel = new JLabel();
+        passwordLabel = new JLabel();
+        confirmPasswordLabel = new JLabel();
+        userNameTxt = new JTextField();
+        confirmPasswordTxt = new JPasswordField();
+        passwordTxt = new JPasswordField();
+        submit = new JButton();
+        isAdminLabel = new JLabel();
+        addAccountLabel = new JLabel();
+        isAdmin = new JCheckBox();
+        backButton = new JButton();
 
-        setBackground(new java.awt.Color(216, 235, 243));
-        container.setBackground(new java.awt.Color(216, 235, 243));
-        content.setBackground(new java.awt.Color(216, 235, 243));
-        isAdmin.setBackground(new java.awt.Color(216, 235, 243));
+        container.setBackground(new Color(216, 235, 243));
+        content.setBackground(new Color(216, 235, 243));
+        isAdmin.setBackground(new Color(216, 235, 243));
+        submit.setBackground(new Color(53, 183, 234));
+        submit.setBorder(BorderFactory.createLineBorder(null));
+        backButton.setBackground(new Color(53, 183, 234));
 
-        userNameLabel.setText("USER NAME");
-        passwordLabel.setText("PASSWORD");
-        confirmPasswordLabel.setText("RE-ENTER PASSWORD");
         addAccountLabel.setFont(new Font("Play", Font.BOLD, 20));
         userNameLabel.setFont(new Font("Play", Font.BOLD, 15));
         passwordLabel.setFont(new Font("Play", Font.BOLD, 15));
         confirmPasswordLabel.setFont(new Font("Play", Font.BOLD, 15));
         isAdminLabel.setFont(new Font("Play", Font.BOLD, 15));
 
-        submit.setBackground(new java.awt.Color(53, 183, 234));
-        submit.setBorder(javax.swing.BorderFactory.createLineBorder(null));
+        userNameLabel.setText("USER NAME");
+        passwordLabel.setText("PASSWORD");
+        confirmPasswordLabel.setText("RE-ENTER PASSWORD");
         submit.setLabel("CREATE");
-        submit.addActionListener(this::submitActionPerformed);
         isAdminLabel.setText("ADMIN ACCOUNT");
         addAccountLabel.setText("CREATE ACCOUNT");
-
-        backButton.setBackground(new java.awt.Color(53, 183, 234));
         backButton.setText("BACK");
-        backButton.addActionListener(this::backButtonActionPerformed);
 
-        javax.swing.GroupLayout contentLayout = new javax.swing.GroupLayout(content);
+        backButton.addActionListener(this::backButtonActionPerformed);
+        submit.addActionListener(this::submitActionPerformed);
+
+
+        GroupLayout contentLayout = new GroupLayout(content);
         if (userLogin != null && isEditable) {
             userNameTxt.setText(userLogin.getLoginName());
             passwordTxt.setText("");
@@ -103,136 +85,137 @@ public class AccountPanel extends javax.swing.JPanel {
 
             content.setLayout(contentLayout);
             contentLayout.setHorizontalGroup(
-                    contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(contentLayout.createSequentialGroup()
-                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(contentLayout.createSequentialGroup()
                                                     .addGap(500, 500, 500)
-                                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                                             .addComponent(userNameLabel)
-                                                            .addComponent(isAdminLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                            .addComponent(isAdminLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                     .addGap(87, 87, 87)
-                                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                            .addComponent(userNameTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                                                            .addComponent(isAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                            .addComponent(userNameTxt, GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                                                            .addComponent(isAdmin, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                             .addGroup(contentLayout.createSequentialGroup()
                                                     .addGap(63, 63, 63)
                                                     .addComponent(backButton)
                                                     .addGap(480, 480, 480)
-                                                    .addComponent(addAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addComponent(addAccountLabel, GroupLayout.PREFERRED_SIZE, 300, GroupLayout.PREFERRED_SIZE))
                                             .addGroup(contentLayout.createSequentialGroup()
                                                     .addGap(640, 640, 640)
-                                                    .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                    .addComponent(submit, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))))
             );
             contentLayout.setVerticalGroup(
-                    contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(contentLayout.createSequentialGroup()
                                     .addGap(15, 15, 15)
-                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(backButton))
                                     .addGap(10, 10, 10)
-                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(addAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(addAccountLabel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
                                     .addGap(38, 38, 38)
-                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(userNameTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                             .addComponent(userNameLabel))
                                     .addGap(21, 21, 21)
-                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(isAdminLabel)
                                             .addComponent(isAdmin))
                                     .addGap(97, 97, 97)
-                                    .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(submit, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
             );
         } else if (isEditable) {
             content.setLayout(contentLayout);
             contentLayout.setHorizontalGroup(
-                    contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(contentLayout.createSequentialGroup()
-                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(contentLayout.createSequentialGroup()
                                                     .addGap(500, 500, 500)
-                                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                                             .addComponent(userNameLabel)
                                                             .addComponent(passwordLabel)
-                                                            .addComponent(confirmPasswordLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
-                                                            .addComponent(isAdminLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                            .addComponent(confirmPasswordLabel, GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                                                            .addComponent(isAdminLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                     .addGap(87, 87, 87)
-                                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                            .addComponent(confirmPasswordTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
+                                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                            .addComponent(confirmPasswordTxt, GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                                                             .addComponent(passwordTxt)
                                                             .addComponent(userNameTxt)
-                                                            .addComponent(isAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                                            .addComponent(isAdmin, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                             .addGroup(contentLayout.createSequentialGroup()
                                                     .addGap(63, 63, 63)
                                                     .addComponent(backButton)
                                                     .addGap(480, 480, 480)
-                                                    .addComponent(addAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addComponent(addAccountLabel, GroupLayout.PREFERRED_SIZE, 243, GroupLayout.PREFERRED_SIZE))
                                             .addGroup(contentLayout.createSequentialGroup()
                                                     .addGap(640, 640, 640)
-                                                    .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                    .addComponent(submit, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE))))
             );
             contentLayout.setVerticalGroup(
-                    contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(contentLayout.createSequentialGroup()
                                     .addGap(15, 15, 15)
-                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(backButton))
                                     .addGap(10, 10, 10)
-                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(addAccountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(addAccountLabel, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE))
                                     .addGap(38, 38, 38)
-                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(userNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                            .addComponent(userNameTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                             .addComponent(userNameLabel))
                                     .addGap(27, 27, 27)
-                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(passwordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                            .addComponent(passwordTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                             .addComponent(passwordLabel))
                                     .addGap(27, 27, 27)
-                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(confirmPasswordTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                            .addComponent(confirmPasswordTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                             .addComponent(confirmPasswordLabel))
                                     .addGap(27, 27, 27)
-                                    .addGroup(contentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(isAdminLabel)
                                             .addComponent(isAdmin))
                                     .addGap(97, 97, 97)
-                                    .addComponent(submit, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(submit, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
             );
         }
 
 
-        javax.swing.GroupLayout containerLayout = new javax.swing.GroupLayout(container);
+        GroupLayout containerLayout = new GroupLayout(container);
         container.setLayout(containerLayout);
         containerLayout.setHorizontalGroup(
-                containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                containerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(containerLayout.createSequentialGroup()
-                                .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(content, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
         containerLayout.setVerticalGroup(
-                containerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                containerLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(containerLayout.createSequentialGroup()
-                                .addComponent(content, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(content, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addComponent(container, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(container, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
         );
 
 
     }
 
-    private void submitActionPerformed(java.awt.event.ActionEvent evt) {
+    // This method get execute when submit button is clicked while updating and creating account details
+    private void submitActionPerformed(ActionEvent evt) {
         Database db = new Database();
         if (userLogin == null) {
             if (userNameTxt.getText() != null && !userNameTxt.getText().trim().equals("") && passwordTxt.getPassword() != null && confirmPasswordTxt.getPassword() != null && !passwordTxt.getText().trim().equals("")) {
@@ -299,10 +282,32 @@ public class AccountPanel extends javax.swing.JPanel {
 
 
     }
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {
+
+    //This method navigates to Accounts Table page when back button is clicked
+    private void backButtonActionPerformed(ActionEvent evt) {
         JViewport container = (JViewport) getParent();
         container.setView(new AccountsPanel());
         container.validate();
         container.repaint();
+    }
+
+    // This method fetches the Account details when Account form page is opened in the update or edit mode
+    private UserLogin getAccount(Integer id) {
+        UserLogin user = null;
+        try {
+            Database db = new Database();
+            ResultSet rs = db.executeQuery("Select * from UserLogin where ID=?", id);
+            while (rs.next()) {
+                user = new UserLogin();
+                user.setActive(rs.getBoolean("IsActive"));
+                user.setId(rs.getInt("ID"));
+                user.setLoginName(rs.getString("LoginName"));
+                user.setPassword(rs.getString("Password"));
+                user.setAdmin(rs.getBoolean("IsAdmin"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
     }
 }

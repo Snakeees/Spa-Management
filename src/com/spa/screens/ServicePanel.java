@@ -3,31 +3,36 @@ package com.spa.screens;
 import com.spa.dto.Service;
 
 import javax.swing.*;
+import javax.swing.text.DateFormatter;
+import javax.swing.text.DefaultFormatterFactory;
 import java.awt.*;
+import java.awt.event.*;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
-public class ServicePanel extends javax.swing.JPanel {
+public class ServicePanel extends JPanel {
 
     /**
      * Creates new form com.spa.screens.ServicePanel
      */
-    Service service;
     // Variables declaration - do not modify
-    private javax.swing.JLabel activeLable;
-    private javax.swing.JLabel addServiceLabel;
-    private javax.swing.JLabel costLabel;
-    private javax.swing.JTextField costPerClientTxt;
-    private javax.swing.JCheckBox isActive;
-    private javax.swing.JLabel lastServiceDateLabel;
-    private javax.swing.JFormattedTextField lastServiceDateTxt;
-    private javax.swing.JLabel serviceDurationLabel;
-    private javax.swing.JTextField serviceDurationTxt;
-    private javax.swing.JLabel serviceName;
-    private javax.swing.JTextField serviceNameTxt;
-    private javax.swing.JButton submitLabel;
-    private javax.swing.JButton backLabel;
+    Service service;
+    private JLabel activeLable;
+    private JLabel addServiceLabel;
+    private JLabel costLabel;
+    private JTextField costPerClientTxt;
+    private JCheckBox isActive;
+    private JLabel lastServiceDateLabel;
+    private JFormattedTextField lastServiceDateTxt;
+    private JLabel serviceDurationLabel;
+    private JSpinner serviceDurationTxt;
+    private JLabel serviceName;
+    private JTextField serviceNameTxt;
+    private JButton submitLabel;
+    private JButton backLabel;
+    private  SimpleDateFormat timeFormater=new SimpleDateFormat("HH:mm");
     public ServicePanel(Integer serviceId, boolean isEditable) {
         this.service = getService(serviceId);
         initComponents(service, isEditable);
@@ -45,7 +50,7 @@ public class ServicePanel extends javax.swing.JPanel {
                 currentService.setId(rs.getInt("ID"));
                 currentService.setServiceName(rs.getString("ServiceName"));
                 currentService.setCost(rs.getInt("Cost"));
-                currentService.setDuration(rs.getInt("Duration"));
+                currentService.setDuration(rs.getTime("Duration"));
             }
             if (rs1.next() && currentService != null) {
                 currentService.setServiceLastDate(rs1.getDate("AppointmentDate"));
@@ -63,37 +68,46 @@ public class ServicePanel extends javax.swing.JPanel {
      */
     private void initComponents(Service service, boolean isEditable) {
 
-        addServiceLabel = new javax.swing.JLabel();
-        serviceName = new javax.swing.JLabel();
-        serviceDurationLabel = new javax.swing.JLabel();
-        costLabel = new javax.swing.JLabel();
-        activeLable = new javax.swing.JLabel();
-        lastServiceDateLabel = new javax.swing.JLabel();
-        serviceNameTxt = new javax.swing.JTextField();
-        serviceDurationTxt = new javax.swing.JTextField();
-        costPerClientTxt = new javax.swing.JTextField();
-        lastServiceDateTxt = new javax.swing.JFormattedTextField();
-        isActive = new javax.swing.JCheckBox();
-        submitLabel = new javax.swing.JButton();
-        backLabel = new javax.swing.JButton();
-        SimpleDateFormat requiredDateFormate = new java.text.SimpleDateFormat("dd/MM/yyyy");
-        lastServiceDateTxt.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(requiredDateFormate)));
-        setBackground(new java.awt.Color(216, 235, 243));
+        addServiceLabel = new  JLabel();
+        serviceName = new  JLabel();
+        serviceDurationLabel = new  JLabel();
+        costLabel = new  JLabel();
+        activeLable = new  JLabel();
+        lastServiceDateLabel = new  JLabel();
+        serviceNameTxt = new  JTextField();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 1);
+        calendar.set(Calendar.MINUTE, 0);
+        Date initialTime = calendar.getTime();
+
+        SpinnerDateModel sm = new SpinnerDateModel(initialTime, null, null, Calendar.HOUR_OF_DAY);
+        serviceDurationTxt = new  JSpinner(sm);
+        JSpinner.DateEditor de = new JSpinner.DateEditor(serviceDurationTxt, "HH:mm");
+        serviceDurationTxt.setEditor(de);
+        costPerClientTxt = new JTextField();
+        lastServiceDateTxt = new JFormattedTextField();
+        isActive = new JCheckBox();
+        submitLabel = new JButton();
+        backLabel = new JButton();
+        SimpleDateFormat requiredDateFormate = new SimpleDateFormat("dd/MM/yyyy");
+        lastServiceDateTxt.setFormatterFactory(new DefaultFormatterFactory(new DateFormatter(requiredDateFormate)));
+        setBackground(new Color(216, 235, 243));
         addServiceLabel.setText("CREATE SERVICE");
-        serviceName.setBackground(new java.awt.Color(216, 235, 243));
+        serviceName.setBackground(new Color(216, 235, 243));
         serviceName.setText("SERVICE NAME");
-        serviceDurationLabel.setBackground(new java.awt.Color(216, 235, 243));
+        serviceDurationLabel.setBackground(new Color(216, 235, 243));
         serviceDurationLabel.setText("SERVICE DURATION (HH:MM)");
-        costLabel.setBackground(new java.awt.Color(216, 235, 243));
+        costLabel.setBackground(new Color(216, 235, 243));
         costLabel.setText("COST PER CLIENT");
-        activeLable.setBackground(new java.awt.Color(216, 235, 243));
+        activeLable.setBackground(new Color(216, 235, 243));
         activeLable.setText("CURRENTLY ACTIVE");
-        lastServiceDateLabel.setBackground(new java.awt.Color(216, 235, 243));
+        lastServiceDateLabel.setBackground(new Color(216, 235, 243));
         lastServiceDateLabel.setText("LAST SERVICE DATE");
-        isActive.setBackground(new java.awt.Color(216, 235, 243));
-        submitLabel.setBackground(new java.awt.Color(53, 183, 234));
+        isActive.setBackground(new Color(216, 235, 243));
+        submitLabel.setBackground(new Color(53, 183, 234));
         submitLabel.setText("CREATE");
-        backLabel.setBackground(new java.awt.Color(53, 183, 234));
+        backLabel.setBackground(new Color(53, 183, 234));
         backLabel.setText("BACK");
         addServiceLabel.setFont(new Font("Play", Font.BOLD, 20));
         serviceDurationLabel.setFont(new Font("Play", Font.BOLD, 15));
@@ -101,23 +115,24 @@ public class ServicePanel extends javax.swing.JPanel {
         costLabel.setFont(new Font("Play", Font.BOLD, 15));
         activeLable.setFont(new Font("Play", Font.BOLD, 15));
         lastServiceDateLabel.setFont(new Font("Play", Font.BOLD, 15));
-        submitLabel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        serviceDurationTxt.setFont(new Font("Play", 0, 12));
+        submitLabel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 submitActionPerformed(evt);
             }
         });
-        backLabel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        backLabel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 backLabelActionPerformed(evt);
             }
         });
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         lastServiceDateTxt.setEnabled(false);
 
         if (service != null) {
             serviceNameTxt.setText(service.getServiceName());
-            serviceDurationTxt.setText(Integer.toString(service.getDuration()));
+            serviceDurationTxt.setValue(service.getDuration());
             costPerClientTxt.setText(Integer.toString(service.getCost()));
             isActive.setSelected(service.isActive());
             if (service.getServiceLastDate() == null)
@@ -130,21 +145,21 @@ public class ServicePanel extends javax.swing.JPanel {
                 addServiceLabel.setText("UPDATE SERVICE");
                 submitLabel.setText("UPDATE");
                 layout.setHorizontalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(440, 440, 440)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                                                 .addComponent(serviceDurationLabel)
                                                                 .addComponent(serviceName)
                                                                 .addComponent(costLabel)
                                                                 .addComponent(activeLable)
                                                                 .addComponent(lastServiceDateLabel))
                                                         .addGap(145, 145, 145)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                .addComponent(isActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(serviceDurationTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                                .addComponent(isActive,GroupLayout.DEFAULT_SIZE,GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(serviceDurationTxt,GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                                                                 .addComponent(costPerClientTxt)
                                                                 .addComponent(lastServiceDateTxt)
                                                                 .addComponent(serviceNameTxt)))
@@ -152,49 +167,49 @@ public class ServicePanel extends javax.swing.JPanel {
                                                         .addGap(59, 59, 59)
                                                         .addComponent(backLabel)
                                                         .addGap(440, 440, 440)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                         .addGroup(layout.createSequentialGroup()
                                                                                 .addGap(20, 20, 20)
-                                                                                .addComponent(addServiceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                                .addComponent(addServiceLabel,GroupLayout.PREFERRED_SIZE, 223,GroupLayout.PREFERRED_SIZE))
                                                                         .addGroup(layout.createSequentialGroup()
                                                                                 .addGap(35, 35, 35)
-                                                                                .addComponent(submitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                                .addComponent(submitLabel,GroupLayout.PREFERRED_SIZE, 102,GroupLayout.PREFERRED_SIZE)
                                                                         )
                                                                 ))))));
                 layout.setVerticalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(15, 15, 15)
                                                         .addComponent(backLabel))
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(35, 35, 35)
-                                                        .addComponent(addServiceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                        .addComponent(addServiceLabel,GroupLayout.PREFERRED_SIZE, 35,GroupLayout.PREFERRED_SIZE)))
                                         .addGap(45, 45, 45)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(serviceName)
-                                                .addComponent(serviceNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(serviceNameTxt,GroupLayout.PREFERRED_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE))
                                         .addGap(20, 20, 20)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(serviceDurationLabel)
-                                                .addComponent(serviceDurationTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(serviceDurationTxt,GroupLayout.PREFERRED_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE))
                                         .addGap(20, 20, 20)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(costLabel)
-                                                .addComponent(costPerClientTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(costPerClientTxt,GroupLayout.PREFERRED_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE))
                                         .addGap(20, 20, 20)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(activeLable)
                                                 .addComponent(isActive))
                                         .addGap(20, 20, 20)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(lastServiceDateLabel)
-                                                .addComponent(lastServiceDateTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(lastServiceDateTxt,GroupLayout.PREFERRED_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE))
                                         .addGap(30, 30, 30)
-                                        .addComponent(submitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                        .addComponent(submitLabel,GroupLayout.PREFERRED_SIZE, 33,GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED))
 
                 );
             }
@@ -206,21 +221,21 @@ public class ServicePanel extends javax.swing.JPanel {
                 costPerClientTxt.setEnabled(false);
                 addServiceLabel.setText("VIEW SERVICE");
                 layout.setHorizontalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(440, 440, 440)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                                                 .addComponent(serviceDurationLabel)
                                                                 .addComponent(serviceName)
                                                                 .addComponent(costLabel)
                                                                 .addComponent(activeLable)
                                                                 .addComponent(lastServiceDateLabel))
                                                         .addGap(145, 145, 145)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                .addComponent(isActive, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(serviceDurationTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                                .addComponent(isActive, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(serviceDurationTxt, GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                                                                 .addComponent(costPerClientTxt)
                                                                 .addComponent(lastServiceDateTxt)
                                                                 .addComponent(serviceNameTxt)))
@@ -228,119 +243,119 @@ public class ServicePanel extends javax.swing.JPanel {
                                                         .addGap(59, 59, 59)
                                                         .addComponent(backLabel)
                                                         .addGap(440, 440, 440)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                                 .addGroup(layout.createSequentialGroup()
                                                                         .addGap(20, 20, 20)
-                                                                        .addComponent(addServiceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                        .addComponent(addServiceLabel, GroupLayout.PREFERRED_SIZE, 223,GroupLayout.PREFERRED_SIZE))
                                                         ))))
                 );
                 layout.setVerticalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(15, 15, 15)
                                                         .addComponent(backLabel))
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(35, 35, 35)
-                                                        .addComponent(addServiceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                        .addComponent(addServiceLabel, GroupLayout.PREFERRED_SIZE, 35,GroupLayout.PREFERRED_SIZE)))
                                         .addGap(45, 45, 45)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(serviceName)
-                                                .addComponent(serviceNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(serviceNameTxt,GroupLayout.PREFERRED_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE))
                                         .addGap(20, 20, 20)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(serviceDurationLabel)
-                                                .addComponent(serviceDurationTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(serviceDurationTxt,GroupLayout.PREFERRED_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE))
                                         .addGap(20, 20, 20)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(costLabel)
-                                                .addComponent(costPerClientTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(costPerClientTxt,GroupLayout.PREFERRED_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE))
                                         .addGap(20, 20, 20)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(activeLable)
                                                 .addComponent(isActive))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(lastServiceDateLabel)
-                                                .addComponent(lastServiceDateTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(lastServiceDateTxt,GroupLayout.PREFERRED_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE)))
                 );
 
             }
         }
         else if (isEditable) {
             layout.setHorizontalGroup(
-                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
                                                     .addGap(440, 440, 440)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                                             .addComponent(serviceDurationLabel)
                                                             .addComponent(serviceName)
                                                             .addComponent(costLabel))
                                                     .addGap(145, 145, 145)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                            .addComponent(serviceDurationTxt, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                                                            .addComponent(serviceDurationTxt,GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                                                             .addComponent(costPerClientTxt)
                                                             .addComponent(serviceNameTxt)))
                                             .addGroup(layout.createSequentialGroup()
                                                     .addGap(59, 59, 59)
                                                     .addComponent(backLabel)
                                                     .addGap(440, 440, 440)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                             .addGroup(layout.createSequentialGroup()
                                                                     .addGap(20, 20, 20)
-                                                                    .addComponent(addServiceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                                    .addComponent(addServiceLabel,GroupLayout.PREFERRED_SIZE, 223,GroupLayout.PREFERRED_SIZE))
                                                             .addGroup(layout.createSequentialGroup()
                                                                     .addGap(35, 35, 35)
-                                                                    .addComponent(submitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                                    .addComponent(submitLabel,GroupLayout.PREFERRED_SIZE, 102,GroupLayout.PREFERRED_SIZE)
                                                             )
                                                     ))))
             );
             layout.setVerticalGroup(
-                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
                                                     .addGap(15, 15, 15)
                                                     .addComponent(backLabel))
                                             .addGroup(layout.createSequentialGroup()
                                                     .addGap(35, 35, 35)
-                                                    .addComponent(addServiceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                                    .addComponent(addServiceLabel,GroupLayout.PREFERRED_SIZE, 35,GroupLayout.PREFERRED_SIZE)))
                                     .addGap(45, 45, 45)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(serviceName)
-                                            .addComponent(serviceNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(serviceNameTxt,GroupLayout.PREFERRED_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE))
                                     .addGap(20, 20, 20)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(serviceDurationLabel)
-                                            .addComponent(serviceDurationTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(serviceDurationTxt,GroupLayout.PREFERRED_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE))
                                     .addGap(20, 20, 20)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(costLabel)
-                                            .addComponent(costPerClientTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(costPerClientTxt,GroupLayout.PREFERRED_SIZE,GroupLayout.DEFAULT_SIZE,GroupLayout.PREFERRED_SIZE))
                                     .addGap(30, 30, 30)
-                                    .addComponent(submitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                                    .addComponent(submitLabel,GroupLayout.PREFERRED_SIZE, 33,GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED))
             );
         }
 
 
     }
 
-    private void backLabelActionPerformed(java.awt.event.ActionEvent evt) {
+    private void backLabelActionPerformed(ActionEvent evt) {
         JViewport container = (JViewport) getParent();
         container.setView(new ServicesPanel());
         container.validate();
         container.repaint();
     }
 
-    private void submitActionPerformed(java.awt.event.ActionEvent evt) {
+    private void submitActionPerformed(ActionEvent evt) {
         Database db = new Database();
         if (service == null) {
-            if (serviceNameTxt.getText() != null && !serviceNameTxt.getText().trim().equals("") && serviceDurationTxt.getText() != null && costPerClientTxt.getText() != null && !costPerClientTxt.getText().trim().equals("") && !serviceDurationTxt.getText().trim().equals("")) {
-                db.executeUpdate("INSERT INTO Service ( ServiceName, Duration, Cost,IsActive) VALUES(?,?,?,?)", serviceNameTxt.getText(), serviceDurationTxt.getText(), costPerClientTxt.getText(), true);
+            if (serviceNameTxt.getText() != null && !serviceNameTxt.getText().trim().equals("") && serviceDurationTxt.getValue() != null && costPerClientTxt.getText() != null && !costPerClientTxt.getText().trim().equals("") && !serviceDurationTxt.getValue().toString().equals("00:00")) {
+                db.executeUpdate("INSERT INTO Service ( ServiceName, Duration, Cost,IsActive) VALUES(?,?,?,?)", serviceNameTxt.getText(), serviceDurationTxt.getValue(), costPerClientTxt.getText(), true);
                 JViewport container = (JViewport) getParent();
                 container.setView(new ServicesPanel());
                 container.validate();
@@ -352,7 +367,7 @@ public class ServicePanel extends javax.swing.JPanel {
             }
         }
         else {
-            if (serviceNameTxt.getText() != null && !serviceNameTxt.getText().trim().equals("") && serviceDurationTxt.getText() != null && costPerClientTxt.getText() != null && !costPerClientTxt.getText().trim().equals("") && !serviceDurationTxt.getText().trim().equals("")) {
+            if (serviceNameTxt.getText() != null && !serviceNameTxt.getText().trim().equals("") && serviceDurationTxt.getValue() != null && costPerClientTxt.getText() != null && !costPerClientTxt.getText().trim().equals("") && !serviceDurationTxt.getValue().toString().equals("00:00")) {
                 int result = JOptionPane.showOptionDialog(
                         getParent(),
                         "Do you want to update the Service Details?",
@@ -365,7 +380,7 @@ public class ServicePanel extends javax.swing.JPanel {
 
                 // Check which button was clicked
                 if (result == JOptionPane.OK_OPTION) {
-                    db.executeUpdate("update Service set ServiceName=?, Duration=?, Cost=?, IsActive=? where ID=? ;", serviceNameTxt.getText(), serviceDurationTxt.getText(), costPerClientTxt.getText(), isActive.isSelected(), service.getId());
+                    db.executeUpdate("update Service set ServiceName=?, Duration=?, Cost=?, IsActive=? where ID=? ;", serviceNameTxt.getText(), serviceDurationTxt.getValue(), costPerClientTxt.getText(), isActive.isSelected(), service.getId());
                     JViewport container = (JViewport) getParent();
                     container.setView(new ServicesPanel());
                     container.validate();

@@ -22,6 +22,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
 
     public AdminDashboardScreen(int userId, String userName) {
         this.userId = userId;
+        // setting title of the window
         setTitle("Serenity SPA: " + userName);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -29,22 +30,28 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         createHeaderPanel().setLocation(0, 0);
         setSize(500, 400);
         getContentPane().add(createHeaderPanel(), BorderLayout.NORTH, 0);
+
+        // Displaying Reports page as default when admin login
         content = new Reports();
+        // Making Reports navigation button active at the time of admin login
         makeActive(reports);
         content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
+
         JScrollPane body = new JScrollPane();
+        body.setBorder(BorderFactory.createEmptyBorder());
         body.setViewportView(content);
         getContentPane().add(body, BorderLayout.CENTER, 1);
     }
-
+// Highlight the navigation button upon navigation to the page.
     public void makeActive(JButton button) {
         button.setFont(new Font("Play", Font.BOLD, 25));
     }
-
+// diminish the navigation button upon navigation away from the page.
     public void makeInActive(JButton button) {
         button.setFont(new Font("Play", Font.PLAIN, 20));
     }
 
+    // Creating the Header panel with navigation buttons
     private JPanel createHeaderPanel() {
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new GridLayout(1, 4));
@@ -91,6 +98,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         return button;
     }
 
+    // This method helps in the navigation between pages by clicking navigation buttons
     @Override
     public void actionPerformed(ActionEvent e) {
         JScrollPane body = new JScrollPane();
@@ -102,6 +110,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             body.setViewportView(content);
+            body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
             makeActive(reports);
         }
@@ -113,6 +122,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             body.setViewportView(content);
+            body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
             makeActive(therapists);
         }
@@ -124,6 +134,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             body.setViewportView(content);
+            body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
             makeActive(accounts);
         }
@@ -135,6 +146,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             body.setViewportView(content);
+            body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
             makeActive(services);
         }
@@ -146,11 +158,13 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             body.setViewportView(content);
+            body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
             makeActive(changePassword);
         }
         validate();
     }
+    // diminish all the buttons
     private void updateOtherButtons() {
         for (JButton button : navButtons) {
             makeInActive(button);

@@ -19,7 +19,7 @@ CREATE TABLE UserLogin(
 CREATE TABLE Service (
     ID int AUTO_INCREMENT PRIMARY KEY,
     ServiceName VARCHAR(255),
-    Duration int,
+    Duration TIME,
     Cost int,
     IsActive boolean,
     ServiceLastDate date

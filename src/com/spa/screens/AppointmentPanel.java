@@ -6,13 +6,14 @@ import com.spa.dto.Therapist;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
+import java.awt.*;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-public class AppointmentPanel extends javax.swing.JPanel {
+public class AppointmentPanel extends JPanel {
 
     /**
      * Creates new form NewJPanel12
@@ -24,22 +25,21 @@ public class AppointmentPanel extends javax.swing.JPanel {
     ArrayList<Service> allServices;
     ArrayList<Therapist> allTherapist;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    // Variables declaration - do not modify
-    private javax.swing.JLabel addAppointmentLabel;
-    private javax.swing.JLabel appointmentDateLabel;
+    private JLabel addAppointmentLabel;
+    private JLabel appointmentDateLabel;
     private com.toedter.calendar.JDateChooser appointmentDateTxt;
-    private javax.swing.JLabel appointmentTimeLabel;
-    private javax.swing.JSpinner appointmentTimeTxt;
-    private javax.swing.JButton backLabel;
-    private javax.swing.JLabel clientNameLabel;
-    private javax.swing.JTextField clientNameTxt;
-    private javax.swing.JLabel phoneNumberLabel;
-    private javax.swing.JTextField phoneNumberTxt;
-    private javax.swing.JLabel serviceLabel;
-    private javax.swing.JComboBox<Service> serviceListSelector;
-    private javax.swing.JButton submitLabel;
-    private javax.swing.JLabel therapistLabel;
-    private javax.swing.JComboBox<Therapist> therapistListSelector;
+    private JLabel appointmentTimeLabel;
+    private JSpinner appointmentTimeTxt;
+    private JButton backLabel;
+    private JLabel clientNameLabel;
+    private JTextField clientNameTxt;
+    private JLabel phoneNumberLabel;
+    private JTextField phoneNumberTxt;
+    private JLabel serviceLabel;
+    private JComboBox<Service> serviceListSelector;
+    private JButton submitLabel;
+    private JLabel therapistLabel;
+    private JComboBox<Therapist> therapistListSelector;
 
     public AppointmentPanel(Integer appointmentId, boolean isEditable) {
         appointment = getAppointmentDetails(appointmentId);
@@ -47,48 +47,6 @@ public class AppointmentPanel extends javax.swing.JPanel {
         initComponents(isEditable);
     }
 
-    private void updateDropdownDetails() {
-        try {
-            Database db = new Database();
-            ResultSet fetchService = db.executeQuery("Select * from Service where IsActive=true");
-            ResultSet fetchTherapist = db.executeQuery("Select * from Therapist where IsActive=true");
-            allServices = new ArrayList<>();
-            allTherapist = new ArrayList<>();
-            while (fetchService.next()) {
-                allServices.add(new Service(fetchService.getInt("ID"), fetchService.getString("ServiceName")));
-            }
-            while (fetchTherapist.next()) {
-                allTherapist.add(new Therapist(fetchTherapist.getInt("ID"), fetchTherapist.getString("firstName")));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private Appointment getAppointmentDetails(Integer appointmentId) {
-        Appointment currentAppointment = null;
-        try {
-            Database db = new Database();
-            ResultSet rs = db.executeQuery("Select * from Appointment where ID=?", appointmentId);
-            ResultSet rs1 = db.executeQuery("Select s.ID as serviceId, s.ServiceName as service, t.FirstName as therapist,t.ID as therapistId from Appointment a, Therapist t, Service s where a.ID=? and a.TherapistID=t.ID and a.ServiceID=s.ID;", appointmentId);
-            while (rs.next()) {
-                currentAppointment = new Appointment();
-                currentAppointment.setActive(rs.getBoolean("IsActive"));
-                currentAppointment.setId(rs.getInt("ID"));
-                currentAppointment.setClientName(rs.getString("ClientName"));
-                currentAppointment.setClientPhoneNumber(rs.getString("ClientPhoneNumber"));
-                currentAppointment.setAppointmentDate(rs.getDate("AppointmentDate"));
-                currentAppointment.setAppointmentTime(rs.getTime("AppointmentTime"));
-            }
-            if (rs1.next()) {
-                selectedService = new Service(rs1.getInt("serviceId"), rs1.getString("service"));
-                selectedTherapist = new Therapist(rs1.getInt("therapistId"), rs1.getString("therapist"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return currentAppointment;
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -97,25 +55,30 @@ public class AppointmentPanel extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     private void initComponents(boolean isEditable) {
-        backLabel = new javax.swing.JButton();
-        addAppointmentLabel = new javax.swing.JLabel();
-        submitLabel = new javax.swing.JButton();
-        clientNameLabel = new javax.swing.JLabel();
-        phoneNumberLabel = new javax.swing.JLabel();
-        serviceLabel = new javax.swing.JLabel();
-        therapistLabel = new javax.swing.JLabel();
-        appointmentDateLabel = new javax.swing.JLabel();
-        appointmentTimeLabel = new javax.swing.JLabel();
-        clientNameTxt = new javax.swing.JTextField();
-        phoneNumberTxt = new javax.swing.JTextField();
-        serviceListSelector = new javax.swing.JComboBox<>();
-        therapistListSelector = new javax.swing.JComboBox<>();
+        backLabel = new JButton();
+        addAppointmentLabel = new JLabel();
+        submitLabel = new JButton();
+        clientNameLabel = new JLabel();
+        phoneNumberLabel = new JLabel();
+        serviceLabel = new JLabel();
+        therapistLabel = new JLabel();
+        appointmentDateLabel = new JLabel();
+        appointmentTimeLabel = new JLabel();
+        clientNameTxt = new JTextField();
+        phoneNumberTxt = new JTextField();
+        serviceListSelector = new JComboBox<>();
+        therapistListSelector = new JComboBox<>();
         appointmentDateTxt = new JDateChooser();
+
+        therapistListSelector.setFont(new Font("Play", 0, 12));
+        serviceListSelector.setFont(new Font("Play", 0, 12));
         Date date = new Date();
         SpinnerDateModel sm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
-        appointmentTimeTxt = new javax.swing.JSpinner(sm);
+        appointmentTimeTxt = new JSpinner(sm);
         JSpinner.DateEditor de = new JSpinner.DateEditor(appointmentTimeTxt, "HH:mm");
         appointmentTimeTxt.setEditor(de);
+        appointmentTimeTxt.setFont(new Font("Play", 0, 12));
+
         setBackground(new java.awt.Color(216, 235, 243));
         backLabel.setBackground(new java.awt.Color(53, 183, 234));
         backLabel.setFont(new java.awt.Font("Play", 1, 12)); 
@@ -187,7 +150,7 @@ public class AppointmentPanel extends javax.swing.JPanel {
             selectedServiceIndex = allServices.size();
         }
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         if (appointment != null) {
             appointmentTimeTxt.setValue(appointment.getAppointmentTime());
@@ -201,71 +164,71 @@ public class AppointmentPanel extends javax.swing.JPanel {
                 submitLabel.setText("UPDATE");
                 addAppointmentLabel.setText("UPDATE APPOINTMENT DETAILS");
                 layout.setHorizontalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(29, 29, 29)
                                                         .addComponent(backLabel)
                                                         .addGap(370, 370, 370)
-                                                        .addComponent(addAppointmentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(addAppointmentLabel, GroupLayout.PREFERRED_SIZE, 500, GroupLayout.PREFERRED_SIZE)
                                                         .addGap(0, 28, Short.MAX_VALUE))
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(414, 414, 414)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                                .addComponent(phoneNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(serviceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(clientNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(therapistLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(appointmentDateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(appointmentTimeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                                                .addComponent(phoneNumberLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(serviceLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(clientNameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(therapistLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(appointmentDateLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(appointmentTimeLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                         .addGap(105, 105, 105)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                                                 .addComponent(appointmentDateTxt)
                                                                 .addComponent(appointmentTimeTxt)
-                                                                .addComponent(serviceListSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(therapistListSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(serviceListSelector, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(therapistListSelector, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(clientNameTxt)
                                                                 .addComponent(phoneNumberTxt))))
                                         .addGap(300, 300, 300))
                                 .addGroup(layout.createSequentialGroup()
                                         .addGap(600, 600, 600)
-                                        .addComponent(submitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(submitLabel, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
                                 )
                 );
                 layout.setVerticalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                         .addGap(15, 15, 15)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(backLabel))
                                         .addGap(10, 10, 10)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(addAppointmentLabel))
                                         .addGap(33, 33, 33)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(clientNameLabel)
-                                                .addComponent(clientNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(clientNameTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGap(44, 44, 44)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(phoneNumberLabel)
-                                                .addComponent(phoneNumberTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(phoneNumberTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGap(37, 37, 37)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(serviceLabel)
-                                                .addComponent(serviceListSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(serviceListSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGap(38, 38, 38)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addComponent(therapistLabel)
-                                                .addComponent(therapistListSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(therapistListSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGap(26, 26, 26)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addComponent(appointmentDateLabel)
-                                                .addComponent(appointmentDateTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(appointmentDateTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGap(25, 25, 25)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(appointmentTimeLabel)
-                                                .addComponent(appointmentTimeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(appointmentTimeTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGap(33, 33, 33)
                                         .addComponent(submitLabel)
                                 )
@@ -282,69 +245,69 @@ public class AppointmentPanel extends javax.swing.JPanel {
                 therapistListSelector.setEditable(false);
                 addAppointmentLabel.setText("VIEW APPOINTMENT DETAILS");
                 layout.setHorizontalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(29, 29, 29)
                                                         .addComponent(backLabel)
                                                         .addGap(370, 370, 370)
-                                                        .addComponent(addAppointmentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(addAppointmentLabel, GroupLayout.PREFERRED_SIZE, 359, GroupLayout.PREFERRED_SIZE)
                                                         .addGap(0, 28, Short.MAX_VALUE))
                                                 .addGroup(layout.createSequentialGroup()
                                                         .addGap(414, 414, 414)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                                .addComponent(phoneNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(serviceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(clientNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(therapistLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(appointmentDateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(appointmentTimeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                                                .addComponent(phoneNumberLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(serviceLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(clientNameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(therapistLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(appointmentDateLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(appointmentTimeLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                         .addGap(105, 105, 105)
-                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                                                 .addComponent(appointmentDateTxt)
                                                                 .addComponent(appointmentTimeTxt)
-                                                                .addComponent(serviceListSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(therapistListSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(serviceListSelector, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(therapistListSelector, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(clientNameTxt)
                                                                 .addComponent(phoneNumberTxt))))
                                         .addGap(435, 435, 435))
                                 .addGroup(layout.createSequentialGroup()
-                                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 );
                 layout.setVerticalGroup(
-                        layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                 .addGroup(layout.createSequentialGroup()
                                         .addGap(15, 15, 15)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(backLabel))
                                         .addGap(10, 10, 10)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(addAppointmentLabel))
                                         .addGap(33, 33, 33)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(clientNameLabel)
-                                                .addComponent(clientNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(clientNameTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGap(44, 44, 44)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(phoneNumberLabel)
-                                                .addComponent(phoneNumberTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(phoneNumberTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGap(37, 37, 37)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(serviceLabel)
-                                                .addComponent(serviceListSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(serviceListSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGap(38, 38, 38)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addComponent(therapistLabel)
-                                                .addComponent(therapistListSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(therapistListSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGap(26, 26, 26)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addComponent(appointmentDateLabel)
-                                                .addComponent(appointmentDateTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(appointmentDateTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGap(25, 25, 25)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(appointmentTimeLabel)
-                                                .addComponent(appointmentTimeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addComponent(appointmentTimeTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addContainerGap(163, Short.MAX_VALUE))
                 );
 
@@ -352,70 +315,70 @@ public class AppointmentPanel extends javax.swing.JPanel {
         }
         else {
             layout.setHorizontalGroup(
-                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addGroup(layout.createSequentialGroup()
                                                     .addGap(29, 29, 29)
                                                     .addComponent(backLabel)
                                                     .addGap(451, 451, 451)
-                                                    .addComponent(addAppointmentLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(addAppointmentLabel, GroupLayout.PREFERRED_SIZE, 359, GroupLayout.PREFERRED_SIZE)
                                                     .addGap(0, 28, Short.MAX_VALUE))
                                             .addGroup(layout.createSequentialGroup()
                                                     .addGap(414, 414, 414)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                            .addComponent(phoneNumberLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                            .addComponent(serviceLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                            .addComponent(clientNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                            .addComponent(therapistLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                            .addComponent(appointmentDateLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                            .addComponent(appointmentTimeLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING, false)
+                                                            .addComponent(phoneNumberLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                            .addComponent(serviceLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                            .addComponent(clientNameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                            .addComponent(therapistLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                            .addComponent(appointmentDateLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                            .addComponent(appointmentTimeLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                     .addGap(105, 105, 105)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                                             .addComponent(appointmentDateTxt)
                                                             .addComponent(appointmentTimeTxt)
-                                                            .addComponent(serviceListSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                            .addComponent(therapistListSelector, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                            .addComponent(serviceListSelector, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                            .addComponent(therapistListSelector, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                             .addComponent(clientNameTxt)
                                                             .addComponent(phoneNumberTxt))))
                                     .addGap(300, 300, 300))
                             .addGroup(layout.createSequentialGroup()
                                     .addGap(600, 600, 600)
-                                    .addComponent(submitLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(submitLabel, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
             );
             layout.setVerticalGroup(
-                    layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                     .addGap(15, 15, 15)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(backLabel))
                                     .addGap(10, 10, 10)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(addAppointmentLabel))
                                     .addGap(33, 33, 33)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(clientNameLabel)
-                                            .addComponent(clientNameTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(clientNameTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                     .addGap(44, 44, 44)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(phoneNumberLabel)
-                                            .addComponent(phoneNumberTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(phoneNumberTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                     .addGap(37, 37, 37)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(serviceLabel)
-                                            .addComponent(serviceListSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(serviceListSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                     .addGap(38, 38, 38)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addComponent(therapistLabel)
-                                            .addComponent(therapistListSelector, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(therapistListSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                     .addGap(26, 26, 26)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addComponent(appointmentDateLabel)
-                                            .addComponent(appointmentDateTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(appointmentDateTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                     .addGap(25, 25, 25)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(appointmentTimeLabel)
-                                            .addComponent(appointmentTimeTxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(appointmentTimeTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                     .addGap(33, 33, 33)
                                     .addComponent(submitLabel))
             );
@@ -490,4 +453,47 @@ public class AppointmentPanel extends javax.swing.JPanel {
             }
         }
     }
+    private void updateDropdownDetails() {
+        try {
+            Database db = new Database();
+            ResultSet fetchService = db.executeQuery("Select * from Service where IsActive=true");
+            ResultSet fetchTherapist = db.executeQuery("Select * from Therapist where IsActive=true");
+            allServices = new ArrayList<>();
+            allTherapist = new ArrayList<>();
+            while (fetchService.next()) {
+                allServices.add(new Service(fetchService.getInt("ID"), fetchService.getString("ServiceName")));
+            }
+            while (fetchTherapist.next()) {
+                allTherapist.add(new Therapist(fetchTherapist.getInt("ID"), fetchTherapist.getString("firstName")));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Appointment getAppointmentDetails(Integer appointmentId) {
+        Appointment currentAppointment = null;
+        try {
+            Database db = new Database();
+            ResultSet rs = db.executeQuery("Select * from Appointment where ID=?", appointmentId);
+            ResultSet rs1 = db.executeQuery("Select s.ID as serviceId, s.ServiceName as service, t.FirstName as therapist,t.ID as therapistId from Appointment a, Therapist t, Service s where a.ID=? and a.TherapistID=t.ID and a.ServiceID=s.ID;", appointmentId);
+            while (rs.next()) {
+                currentAppointment = new Appointment();
+                currentAppointment.setActive(rs.getBoolean("IsActive"));
+                currentAppointment.setId(rs.getInt("ID"));
+                currentAppointment.setClientName(rs.getString("ClientName"));
+                currentAppointment.setClientPhoneNumber(rs.getString("ClientPhoneNumber"));
+                currentAppointment.setAppointmentDate(rs.getDate("AppointmentDate"));
+                currentAppointment.setAppointmentTime(rs.getTime("AppointmentTime"));
+            }
+            if (rs1.next()) {
+                selectedService = new Service(rs1.getInt("serviceId"), rs1.getString("service"));
+                selectedTherapist = new Therapist(rs1.getInt("therapistId"), rs1.getString("therapist"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return currentAppointment;
+    }
+
 }

@@ -74,7 +74,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         List<List<Object>> cells = new ArrayList<>();
         java.util.Date d=new java.util.Date();
         try {
-            ResultSet rs = db.executeQuery("select a.ID, a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t,com.spa.dto.Service s where AppointmentDate=? and a.IsActive=? and t.ID=a.TherapistID and a.ServiceID=s.ID ORDER BY a.AppointmentTime",new java.sql.Date(d.getYear(),d.getMonth(),d.getDate()),true);
+            ResultSet rs = db.executeQuery("select a.ID, a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t, Service s where AppointmentDate=? and a.IsActive=? and t.ID=a.TherapistID and a.ServiceID=s.ID ORDER BY a.AppointmentTime",new java.sql.Date(d.getYear(),d.getMonth(),d.getDate()),true);
             while (rs.next()) {
                 int id=rs.getInt("ID");
                 String clientName=rs.getString("clientName");
@@ -223,6 +223,8 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         clientNameTxt = new javax.swing.JTextField();
         clientNameLabel.setFont(new java.awt.Font("Play", 1, 14)); 
         clientNameLabel.setText("CLIENT NAME");
+        therapistNameList.setFont(new Font("Play", 0, 12));
+        serviceList.setFont(new Font("Play", 0, 12));
 
 
 

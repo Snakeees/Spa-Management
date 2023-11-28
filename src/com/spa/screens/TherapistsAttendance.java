@@ -59,7 +59,8 @@ public class TherapistsAttendance extends javax.swing.JPanel {
         therpaistNameLabel.setFont(new java.awt.Font("Play", 1, 14)); 
         therpaistNameLabel.setText("THERAPIST NAME");
 
-        therapistNameList.setFont(new java.awt.Font("Play", 1, 12)); 
+
+        therapistNameList.setFont(new java.awt.Font("Play", 0, 12));
         List<Therapist> therapistList = getTherapists(true);
         this.therapists = therapistList;
         for (Therapist therapist : therapistList) {

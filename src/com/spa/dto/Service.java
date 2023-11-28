@@ -1,11 +1,12 @@
 package com.spa.dto;
 
+import java.sql.Time;
 import java.util.Date;
 
 public class Service {
     private int id;
     private String serviceName;
-    private int duration;
+    private Time duration;
     private int cost;
     private boolean isActive;
     private Date serviceLastDate;
@@ -18,14 +19,14 @@ public class Service {
         this.serviceName = serviceName;
     }
 
-    public Service(int id, String serviceName, int duration, int cost, boolean isActive, Date serviceLastDate) {
-        this.id = id;
-        this.serviceName = serviceName;
-        this.duration = duration;
-        this.cost = cost;
-        this.isActive = isActive;
-        this.serviceLastDate = serviceLastDate;
-    }
+//    public Service(int id, String serviceName, int duration, int cost, boolean isActive, Date serviceLastDate) {
+//        this.id = id;
+//        this.serviceName = serviceName;
+//        this.duration = duration;
+//        this.cost = cost;
+//        this.isActive = isActive;
+//        this.serviceLastDate = serviceLastDate;
+//    }
 
     // Getters
     public int getId() {
@@ -45,11 +46,11 @@ public class Service {
         this.serviceName = serviceName;
     }
 
-    public int getDuration() {
+    public Time getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(Time duration) {
         this.duration = duration;
     }
 
