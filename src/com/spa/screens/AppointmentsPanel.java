@@ -112,7 +112,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         List<List<Object>> cells = new ArrayList<>();
         ResultSet rs;
         List<Object> parameters=new ArrayList<>();
-        StringBuilder query=new StringBuilder("select a.ID,a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t,com.spa.dto.Service s where a.IsActive=true and t.ID=a.TherapistID and a.ServiceID=s.ID  ");
+        StringBuilder query=new StringBuilder("select a.ID,a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t, Service s where a.IsActive=true and t.ID=a.TherapistID and a.ServiceID=s.ID  ");
         Date date=dateSelectorTxt.getDate();
         if(date!=null){
             parameters.add(new java.sql.Date(date.getYear(),date.getMonth(),date.getDate()));
@@ -216,6 +216,7 @@ public class AppointmentsPanel  extends javax.swing.JPanel {
         serviceLabel = new javax.swing.JLabel();
         dateLabel = new javax.swing.JLabel();
         dateSelectorTxt = new com.toedter.calendar.JDateChooser();
+        dateSelectorTxt.setDateFormatString("dd-MM-yyyy");
         dateLabel.setBackground(new java.awt.Color(216, 235, 243));
         dateLabel.setFont(new java.awt.Font("Play", 1, 14)); 
         dateLabel.setText("DATE");

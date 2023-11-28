@@ -7,6 +7,7 @@ import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -69,61 +70,61 @@ public class AppointmentPanel extends JPanel {
         serviceListSelector = new JComboBox<>();
         therapistListSelector = new JComboBox<>();
         appointmentDateTxt = new JDateChooser();
-
-        therapistListSelector.setFont(new Font("Play", 0, 12));
-        serviceListSelector.setFont(new Font("Play", 0, 12));
+        appointmentDateTxt.setDateFormatString("dd-MM-yyyy");
         Date date = new Date();
         SpinnerDateModel sm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
         appointmentTimeTxt = new JSpinner(sm);
         JSpinner.DateEditor de = new JSpinner.DateEditor(appointmentTimeTxt, "HH:mm");
         appointmentTimeTxt.setEditor(de);
-        appointmentTimeTxt.setFont(new Font("Play", 0, 12));
 
-        setBackground(new java.awt.Color(216, 235, 243));
-        backLabel.setBackground(new java.awt.Color(53, 183, 234));
-        backLabel.setFont(new java.awt.Font("Play", 1, 12)); 
+        appointmentTimeTxt.setFont(new Font("Play", 0, 12));
+        therapistListSelector.setFont(new Font("Play", 0, 12));
+        serviceListSelector.setFont(new Font("Play", 0, 12));
+        setBackground(new Color(216, 235, 243));
+        backLabel.setBackground(new Color(53, 183, 234));
+        backLabel.setFont(new Font("Play", 1, 12));
         backLabel.setText("BACK");
-        backLabel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        backLabel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 backLabelActionPerformed(evt);
             }
         });
 
-        addAppointmentLabel.setBackground(new java.awt.Color(216, 235, 243));
-        addAppointmentLabel.setFont(new java.awt.Font("Play", 1, 24)); 
+        addAppointmentLabel.setBackground(new Color(216, 235, 243));
+        addAppointmentLabel.setFont(new Font("Play", 1, 24));
         addAppointmentLabel.setText("CREATE APPOINTMENT");
-        submitLabel.setBackground(new java.awt.Color(53, 183, 234));
-        submitLabel.setFont(new java.awt.Font("Play", 1, 12)); 
+        submitLabel.setBackground(new Color(53, 183, 234));
+        submitLabel.setFont(new Font("Play", 1, 12));
         submitLabel.setText("CREATE");
-        submitLabel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        submitLabel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 submitLabelActionPerformed(evt);
             }
         });
 
-        clientNameLabel.setBackground(new java.awt.Color(216, 235, 243));
-        clientNameLabel.setFont(new java.awt.Font("Play", 1, 12)); 
+        clientNameLabel.setBackground(new Color(216, 235, 243));
+        clientNameLabel.setFont(new Font("Play", 1, 12));
         clientNameLabel.setText("CLIENT NAME");
 
-        phoneNumberLabel.setBackground(new java.awt.Color(216, 235, 243));
-        phoneNumberLabel.setFont(new java.awt.Font("Play", 1, 12)); 
+        phoneNumberLabel.setBackground(new Color(216, 235, 243));
+        phoneNumberLabel.setFont(new Font("Play", 1, 12));
         phoneNumberLabel.setText("CLIENT PHONE NUMBER");
 
-        serviceLabel.setBackground(new java.awt.Color(216, 235, 243));
-        serviceLabel.setFont(new java.awt.Font("Play", 1, 12)); 
+        serviceLabel.setBackground(new Color(216, 235, 243));
+        serviceLabel.setFont(new Font("Play", 1, 12));
         serviceLabel.setText("SERVICE");
 
-        therapistLabel.setBackground(new java.awt.Color(216, 235, 243));
-        therapistLabel.setFont(new java.awt.Font("Play", 1, 12)); 
+        therapistLabel.setBackground(new Color(216, 235, 243));
+        therapistLabel.setFont(new Font("Play", 1, 12));
         therapistLabel.setText("THERAPIST NAME");
 
-        appointmentDateLabel.setBackground(new java.awt.Color(216, 235, 243));
-        appointmentDateLabel.setFont(new java.awt.Font("Play", 1, 12)); 
-        appointmentDateLabel.setText("APPOINTMENT DATE");
+        appointmentDateLabel.setBackground(new Color(216, 235, 243));
+        appointmentDateLabel.setFont(new Font("Play", 1, 12));
+        appointmentDateLabel.setText("APPOINTMENT DATE (dd-mm-yyyy)");
 
-        appointmentTimeLabel.setBackground(new java.awt.Color(216, 235, 243));
-        appointmentTimeLabel.setFont(new java.awt.Font("Play", 1, 12)); 
-        appointmentTimeLabel.setText("APPOINTMENT TIME");
+        appointmentTimeLabel.setBackground(new Color(216, 235, 243));
+        appointmentTimeLabel.setFont(new Font("Play", 1, 12));
+        appointmentTimeLabel.setText("APPOINTMENT TIME (HH:MM)");
 
         boolean foundTherapist = false;
         for (int i = 0; i < allTherapist.size(); i++) {
@@ -133,6 +134,7 @@ public class AppointmentPanel extends JPanel {
                 foundTherapist = true;
             }
         }
+        // To show Inactive therapist in the dropdown list in the view and update appointment page
         if (!foundTherapist && appointment != null) {
             therapistListSelector.addItem(selectedTherapist);
             selectedTherapistIndex = allTherapist.size();
@@ -145,6 +147,7 @@ public class AppointmentPanel extends JPanel {
                 foundService = true;
             }
         }
+        // To show Inactive service in the dropdown list in the view and update appointment page
         if (!foundService && appointment != null) {
             serviceListSelector.addItem(selectedService);
             selectedServiceIndex = allServices.size();
@@ -152,6 +155,7 @@ public class AppointmentPanel extends JPanel {
 
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
+        // Viewing and Updating the Appointments
         if (appointment != null) {
             appointmentTimeTxt.setValue(appointment.getAppointmentTime());
             appointmentDateTxt.setDate(appointment.getAppointmentDate());
@@ -159,7 +163,7 @@ public class AppointmentPanel extends JPanel {
             phoneNumberTxt.setText(appointment.getClientPhoneNumber());
             serviceListSelector.setSelectedIndex(selectedServiceIndex);
             therapistListSelector.setSelectedIndex(selectedTherapistIndex);
-
+            // Updating the Appointments
             if (isEditable) {
                 submitLabel.setText("UPDATE");
                 addAppointmentLabel.setText("UPDATE APPOINTMENT DETAILS");
@@ -205,35 +209,36 @@ public class AppointmentPanel extends JPanel {
                                         .addGap(10, 10, 10)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(addAppointmentLabel))
-                                        .addGap(33, 33, 33)
+                                        .addGap(44,44,44)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(clientNameLabel)
                                                 .addComponent(clientNameTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(44, 44, 44)
+                                        .addGap(30,30,30)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(phoneNumberLabel)
                                                 .addComponent(phoneNumberTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(37, 37, 37)
+                                        .addGap(30,30,30)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(serviceLabel)
                                                 .addComponent(serviceListSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(38, 38, 38)
+                                        .addGap(30,30,30)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addComponent(therapistLabel)
                                                 .addComponent(therapistListSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(26, 26, 26)
+                                        .addGap(30,30,30)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addComponent(appointmentDateLabel)
                                                 .addComponent(appointmentDateTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(25, 25, 25)
+                                        .addGap(30,30,30)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(appointmentTimeLabel)
                                                 .addComponent(appointmentTimeTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(33, 33, 33)
+                                        .addGap(40, 40, 40)
                                         .addComponent(submitLabel)
                                 )
                 );
             }
+            // Viewing the Appointments
             else {
                 appointmentDateTxt.setEnabled(false);
                 appointmentTimeTxt.setEnabled(false);
@@ -284,27 +289,27 @@ public class AppointmentPanel extends JPanel {
                                         .addGap(10, 10, 10)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(addAppointmentLabel))
-                                        .addGap(33, 33, 33)
+                                        .addGap(44,44,44)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(clientNameLabel)
                                                 .addComponent(clientNameTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(44, 44, 44)
+                                        .addGap(30,30,30)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(phoneNumberLabel)
                                                 .addComponent(phoneNumberTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(37, 37, 37)
+                                        .addGap(30,30,30)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(serviceLabel)
                                                 .addComponent(serviceListSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(38, 38, 38)
+                                        .addGap(30,30,30)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addComponent(therapistLabel)
                                                 .addComponent(therapistListSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(26, 26, 26)
+                                        .addGap(30,30,30)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addComponent(appointmentDateLabel)
                                                 .addComponent(appointmentDateTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                        .addGap(25, 25, 25)
+                                        .addGap(30,30,30)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(appointmentTimeLabel)
                                                 .addComponent(appointmentTimeTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -313,6 +318,7 @@ public class AppointmentPanel extends JPanel {
 
             }
         }
+        // Creating Appointments
         else {
             layout.setHorizontalGroup(
                     layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -355,31 +361,31 @@ public class AppointmentPanel extends JPanel {
                                     .addGap(10, 10, 10)
                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(addAppointmentLabel))
-                                    .addGap(33, 33, 33)
+                                    .addGap(44,44,44)
                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(clientNameLabel)
                                             .addComponent(clientNameTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                    .addGap(44, 44, 44)
+                                    .addGap(30,30,30)
                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(phoneNumberLabel)
                                             .addComponent(phoneNumberTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                    .addGap(37, 37, 37)
+                                    .addGap(30,30,30)
                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(serviceLabel)
                                             .addComponent(serviceListSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                    .addGap(38, 38, 38)
+                                    .addGap(30,30,30)
                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addComponent(therapistLabel)
                                             .addComponent(therapistListSelector, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                    .addGap(26, 26, 26)
+                                    .addGap(30,30,30)
                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                             .addComponent(appointmentDateLabel)
                                             .addComponent(appointmentDateTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                    .addGap(25, 25, 25)
+                                    .addGap(30,30,30)
                                     .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                             .addComponent(appointmentTimeLabel)
                                             .addComponent(appointmentTimeTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                    .addGap(33, 33, 33)
+                                    .addGap(40,40,40)
                                     .addComponent(submitLabel))
             );
         }
@@ -387,14 +393,16 @@ public class AppointmentPanel extends JPanel {
 
     }
 
-    private void backLabelActionPerformed(java.awt.event.ActionEvent evt) {
+    //This method navigates to Appointment Table page when back button is clicked
+    private void backLabelActionPerformed(ActionEvent evt) {
         JViewport container = (JViewport) getParent();
         container.setView(new AppointmentsPanel());
         container.validate();
         container.repaint();
     }
 
-    private void submitLabelActionPerformed(java.awt.event.ActionEvent evt) {
+    // This method get execute when submit button is clicked while updating and creating appointment details
+    private void submitLabelActionPerformed(ActionEvent evt) {
         Database db = new Database();
         if (appointment == null) {
             if (clientNameTxt.getText() != null && !clientNameTxt.getText().trim().equals("") && phoneNumberTxt.getText() != null && appointmentDateTxt.getDate() != null && !phoneNumberTxt.getText().trim().equals("") && serviceListSelector.getSelectedItem() != null && therapistListSelector.getSelectedItem() != null) {
@@ -453,6 +461,7 @@ public class AppointmentPanel extends JPanel {
             }
         }
     }
+    // fetching active Therapists and Services details
     private void updateDropdownDetails() {
         try {
             Database db = new Database();
@@ -470,7 +479,7 @@ public class AppointmentPanel extends JPanel {
             e.printStackTrace();
         }
     }
-
+    // This method fetches the Appointment details when Appointment form page is opened in the update or edit mode
     private Appointment getAppointmentDetails(Integer appointmentId) {
         Appointment currentAppointment = null;
         try {

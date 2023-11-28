@@ -19,7 +19,7 @@ public class TherapistPanel extends javax.swing.JPanel {
     Therapist therapist;
     ArrayList<TherapistAttendance> therapistAttendances;
     SimpleDateFormat requiredDateFormate = new java.text.SimpleDateFormat("yyyy-MM-dd");
-    SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MMM-yyyy");
+    SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy");
     String sqlDateFormate;
     // Variables declaration - do not modify
     private javax.swing.JLabel addTherapistLabel;
@@ -204,6 +204,7 @@ public class TherapistPanel extends javax.swing.JPanel {
         currentActiveLabel.setFont(new Font("Play", Font.BOLD, 15));
         attendanceLabel.setFont(new Font("Play", Font.BOLD, 15));
         resignationDateLabel.setFont(new Font("Play", Font.BOLD, 15));
+        resignationDateTxt.setDateFormatString("dd-MM-yyyy");
 
         javax.swing.GroupLayout attendanceShowPanelLayout = new javax.swing.GroupLayout(attendanceShowPanel);
         attendanceShowPanel.setLayout(attendanceShowPanelLayout);

@@ -90,7 +90,7 @@ public class ServicePanel extends JPanel {
         isActive = new JCheckBox();
         submitLabel = new JButton();
         backLabel = new JButton();
-        SimpleDateFormat requiredDateFormate = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat requiredDateFormate = new SimpleDateFormat("dd-MM-yyyy");
         lastServiceDateTxt.setFormatterFactory(new DefaultFormatterFactory(new DateFormatter(requiredDateFormate)));
         setBackground(new Color(216, 235, 243));
         addServiceLabel.setText("CREATE SERVICE");
@@ -116,6 +116,7 @@ public class ServicePanel extends JPanel {
         activeLable.setFont(new Font("Play", Font.BOLD, 15));
         lastServiceDateLabel.setFont(new Font("Play", Font.BOLD, 15));
         serviceDurationTxt.setFont(new Font("Play", 0, 12));
+//        lastServiceDateTxt.setDateFormatString("dd-MM-yyyy");
         submitLabel.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 submitActionPerformed(evt);

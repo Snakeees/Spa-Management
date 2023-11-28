@@ -75,6 +75,7 @@ public class AccountPanel extends JPanel {
 
 
         GroupLayout contentLayout = new GroupLayout(content);
+        // Editing Account details
         if (userLogin != null && isEditable) {
             userNameTxt.setText(userLogin.getLoginName());
             passwordTxt.setText("");
@@ -126,7 +127,9 @@ public class AccountPanel extends JPanel {
                                     .addGap(97, 97, 97)
                                     .addComponent(submit, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
             );
-        } else if (isEditable) {
+        }
+        // Creating account details
+        else if (isEditable) {
             content.setLayout(contentLayout);
             contentLayout.setHorizontalGroup(
                     contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
