@@ -510,7 +510,7 @@ public class TherapistPanel extends JPanel {
         TherapistAttendance therapistAttendance;
         try {
             Database db = new Database();
-            ResultSet rs = db.executeQuery("Select * from TherapistAttendance where TherapistID=? order by Date asc limit 7", therapistId);
+            ResultSet rs = db.executeQuery("Select * from TherapistAttendance where TherapistID=? and CheckinTime IS NOT NULL order by Date asc limit 7", therapistId);
             while (rs.next()) {
                 therapistAttendance = new TherapistAttendance();
                 therapistAttendance.setTherapistId(rs.getInt("ID"));

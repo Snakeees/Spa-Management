@@ -62,19 +62,19 @@ public class TherapistsPanel extends JPanel {
                 return col == 3;
             }
         };
-        setBackground(new java.awt.Color(216, 235, 243));
-        addTherapist.setBackground(new java.awt.Color(53, 183, 234));
+        setBackground(new Color(216, 235, 243));
+        addTherapist.setBackground(new Color(53, 183, 234));
         addTherapist.setText("CREATE");
-        addTherapist.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        addTherapist.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 addTherapistActionPerformed(evt);
             }
         });
 
-        therapistTableListPane.setBackground(new java.awt.Color(216, 235, 243));
-        therapistTableListPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        therapistTableListPane.setBackground(new Color(216, 235, 243));
+        therapistTableListPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         therapistTableListPane.setInheritsPopupMenu(true);
-        therapistTableList.setBackground(new java.awt.Color(216, 235, 243));
+        therapistTableList.setBackground(new Color(216, 235, 243));
         therapistTableList.setPreferredScrollableViewportSize(therapistTableList.getPreferredSize());
         if (tableData != null && tableData.length > 0)
             therapistTableListPane.setViewportView(therapistTableList);
@@ -152,7 +152,7 @@ public class TherapistsPanel extends JPanel {
 
     }
 
-    private void addTherapistActionPerformed(java.awt.event.ActionEvent evt) {
+    private void addTherapistActionPerformed(ActionEvent evt) {
         JViewport container = (JViewport) getParent();
         container.setView(new TherapistPanel(null, true));
         container.validate();

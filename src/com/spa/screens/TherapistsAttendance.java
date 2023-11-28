@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.*;
+import java.awt.event.*;
 
 /**
  * @author satyanarayana.y
@@ -53,13 +55,13 @@ public class TherapistsAttendance extends JPanel {
         checkOutTime = new JCheckBox();
         submit = new JButton();
 
-        setBackground(new java.awt.Color(216, 235, 243));
+        setBackground(new Color(216, 235, 243));
 
-        therpaistNameLabel.setFont(new java.awt.Font("Play", 1, 14)); 
+        therpaistNameLabel.setFont(new Font("Play", 1, 14));
         therpaistNameLabel.setText("THERAPIST NAME");
 
 
-        therapistNameList.setFont(new java.awt.Font("Play", 0, 12));
+        therapistNameList.setFont(new Font("Play", 0, 12));
         List<Therapist> therapistList = getTherapists(true);
         this.therapists = therapistList;
         for (Therapist therapist : therapistList) {
@@ -68,20 +70,20 @@ public class TherapistsAttendance extends JPanel {
 
         updateTherapistAttendanceForm(null);
 
-        therapistNameList.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        therapistNameList.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 therapistNameListActionPerformed(evt);
             }
         });
-        checkInLabel.setFont(new java.awt.Font("Play", 1, 14)); 
+        checkInLabel.setFont(new Font("Play", 1, 14));
         checkInLabel.setText("CHECKIN TIME");
-        jLabel2.setFont(new java.awt.Font("Play", 1, 14)); 
+        jLabel2.setFont(new Font("Play", 1, 14));
         jLabel2.setText("CHECKOUT TIME");
-        submit.setBackground(new java.awt.Color(53, 183, 234));
-        submit.setFont(new java.awt.Font("Play", 1, 12)); 
+        submit.setBackground(new Color(53, 183, 234));
+        submit.setFont(new Font("Play", 1, 12));
         submit.setText("SUBMIT");
-        submit.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        submit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 submitActionPerformed(evt);
             }
         });
@@ -129,7 +131,7 @@ public class TherapistsAttendance extends JPanel {
                                 .addContainerGap(207, Short.MAX_VALUE))
         );
     }
-    private void therapistNameListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_therapistNameListActionPerformed
+    private void therapistNameListActionPerformed(ActionEvent evt) {//GEN-FIRST:event_therapistNameListActionPerformed
         Therapist therapist = (Therapist) therapistNameList.getSelectedItem();
         if (therapist != null) {
             updateTherapistAttendanceForm(therapist.getId());
@@ -170,7 +172,7 @@ public class TherapistsAttendance extends JPanel {
         }
     }
 
-    private void submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
+    private void submitActionPerformed(ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         Therapist therapist = (Therapist) therapistNameList.getSelectedItem();
         LocalTime now = LocalTime.now();
         Time currentTime = Time.valueOf(now);
@@ -214,6 +216,8 @@ public class TherapistsAttendance extends JPanel {
                 }
                 therapistAttendance.setDate(currentDate);
                 database.executeUpdate("INSERT INTO TherapistAttendance ( therapistid, checkintime, checkouttime, date) VALUES(?,?,?,?)", therapistAttendance.getTherapistId(), therapistAttendance.getCheckinTime(), therapistAttendance.getCheckoutTime(), therapistAttendance.getDate());
+                TherapistAttendance insertedAttendance= getTherapistAttendanceByCurrentDate(therapist.getId());
+                this.selectedTherapistAttendanceId=(insertedAttendance!=null)?insertedAttendance.getId():null;
                 JOptionPane.showMessageDialog(this, "Added attendance details successfully");
             }
         } catch (Exception e) {
@@ -224,7 +228,7 @@ public class TherapistsAttendance extends JPanel {
     private TherapistAttendance getTherapistAttendanceByCurrentDate(int therapistId) {
         Database db = new Database();
         try {
-            ResultSet rs = db.executeQuery("select * from TherapistAttendance where therapistID= ? and date = CURDATE() ", therapistId);
+            ResultSet rs = db.executeQuery("select * from TherapistAttendance where therapistID= ? and date = CURDATE() limit 1", therapistId);
             while (rs.next()) {
                 return new TherapistAttendance(rs.getInt("ID"),
                         rs.getInt("TherapistID"),

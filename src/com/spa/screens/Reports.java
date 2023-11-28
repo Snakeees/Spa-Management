@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author satyanarayana.y
@@ -43,9 +44,9 @@ public class Reports extends JPanel {
         incomeLabel = new JLabel();
         visitLabel = new JLabel();
 
-        setBackground(new java.awt.Color(216, 235, 243));
+        setBackground(new Color(216, 235, 243));
 
-        incomeValue.setFont(new java.awt.Font("Play", 1, 24)); 
+        incomeValue.setFont(new Font("Play", 1, 24));
         incomeValue.setText("₹ " + getIncome());
 
         GroupLayout incomePanelLayout = new GroupLayout(incomePanel);
@@ -65,7 +66,7 @@ public class Reports extends JPanel {
                                 .addContainerGap(90, Short.MAX_VALUE))
         );
 
-        visitValue.setFont(new java.awt.Font("Play", 1, 24)); 
+        visitValue.setFont(new Font("Play", 1, 24));
         visitValue.setText(Integer.toString(getVisits()));
 
         GroupLayout visitPanelLayout = new GroupLayout(visitPanel);
@@ -85,10 +86,10 @@ public class Reports extends JPanel {
                                 .addContainerGap(90, Short.MAX_VALUE))
         );
 
-        incomeLabel.setFont(new java.awt.Font("Play", 1, 18)); 
+        incomeLabel.setFont(new Font("Play", 1, 18));
         incomeLabel.setText("Current Month Income");
 
-        visitLabel.setFont(new java.awt.Font("Play", 1, 18)); 
+        visitLabel.setFont(new Font("Play", 1, 18));
         visitLabel.setText("Current Month Visits");
 
         GroupLayout layout = new GroupLayout(this);
