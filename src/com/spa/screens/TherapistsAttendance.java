@@ -91,7 +91,7 @@ public class TherapistsAttendance extends JPanel {
         layout.setHorizontalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                                .addGap(419, 419, 419)
+                                .addContainerGap(4, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addComponent(therpaistNameLabel, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
@@ -107,7 +107,7 @@ public class TherapistsAttendance extends JPanel {
                                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                                                 .addComponent(checkInTime)
                                                                 .addComponent(checkOutTime)))))
-                                .addContainerGap(229, Short.MAX_VALUE))
+                                .addContainerGap(4, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
