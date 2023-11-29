@@ -90,13 +90,8 @@ public class AppointmentsPanel extends JPanel {
         appointmentsDetailLabel.setFont(new Font("Play", 1, 18));
         appointmentsDetailLabel.setText("APPOINTMENTS LIST");
 
-        therapistNameList.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent evt) {
-                therapistNameListItemStateChanged(evt);
-            }
-        });
-        therapistNameList.addItem(new Therapist(0, "select"));
-        serviceList.addItem(new Service(0, "select"));
+        therapistNameList.addItem(new Therapist(0, "ALL"));
+        serviceList.addItem(new Service(0, "ALL"));
 
         // Inserting the active therapist list in the dropdown selector
         for (int j = 0; j < allTherapist.size(); j++) {
@@ -108,11 +103,6 @@ public class AppointmentsPanel extends JPanel {
             serviceList.addItem(allServices.get(j));
         }
 
-        serviceList.addItemListener(new ItemListener() {
-            public void itemStateChanged(ItemEvent evt) {
-                serviceListItemStateChanged(evt);
-            }
-        });
         therapistNameList.setBackground(Color.WHITE);
         serviceList.setBackground(Color.WHITE);
         therapistLabel.setBackground(new Color(216, 235, 243));
@@ -132,8 +122,8 @@ public class AppointmentsPanel extends JPanel {
                 searchLableActionPerformed(evt);
             }
         });
-        serviceList.setSelectedItem(null);
-        therapistNameList.setSelectedItem(null);
+        serviceList.setSelectedIndex(0);
+        therapistNameList.setSelectedIndex(0);
         dateSelectorTxt.setDate(new Date());
 
         GroupLayout layout = new GroupLayout(this);
@@ -203,20 +193,6 @@ public class AppointmentsPanel extends JPanel {
                                 .addComponent(appointmentListTablePane, GroupLayout.PREFERRED_SIZE, 390, GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(0, Short.MAX_VALUE))
         );
-    }
-
-    private void serviceListItemStateChanged(ItemEvent evt) {
-        if (serviceList.getSelectedItem() != null && ((Service) serviceList.getSelectedItem()).getServiceName().equals("select")) {
-            // removing the service filter for search by making the selected object to null when user select "select" in the dropdown
-            serviceList.setSelectedItem(null);
-        }
-    }
-
-    private void therapistNameListItemStateChanged(ItemEvent evt) {
-        if (therapistNameList.getSelectedItem() != null && ((Therapist) therapistNameList.getSelectedItem()).getFirstName().equals("select")) {
-            // removing the therapist filter for search by making the selected object to null when user select "select" in the dropdown
-            therapistNameList.setSelectedItem(null);
-        }
     }
 
     // updating the table details with the search details when search button is clicked
@@ -352,12 +328,12 @@ public class AppointmentsPanel extends JPanel {
             query.append("and a.AppointmentDate=? ");
         }
         Therapist therapist = (Therapist) therapistNameList.getSelectedItem();
-        if (therapist != null && !(therapist).getFirstName().equals("select")) {
+        if (therapist != null && !(therapist).getFirstName().equals("ALL")) {
             parameters.add(therapist.getId());
             query.append("and a.TherapistID=? ");
         }
         Service service = (Service) serviceList.getSelectedItem();
-        if (service != null && !(service).getServiceName().equals("select")) {
+        if (service != null && !(service).getServiceName().equals("ALL")) {
             parameters.add(service.getId());
             query.append("and a.ServiceID=? ");
         }
