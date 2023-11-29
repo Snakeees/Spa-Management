@@ -90,8 +90,8 @@ public class AppointmentsPanel extends JPanel {
         appointmentsDetailLabel.setFont(new Font("Play", 1, 18));
         appointmentsDetailLabel.setText("APPOINTMENTS LIST");
 
-        therapistNameList.addItem(new Therapist(0, "ALL"));
-        serviceList.addItem(new Service(0, "ALL"));
+        therapistNameList.addItem(new Therapist(0, "Select"));
+        serviceList.addItem(new Service(0, "Select"));
 
         // Inserting the active therapist list in the dropdown selector
         for (int j = 0; j < allTherapist.size(); j++) {
@@ -328,12 +328,12 @@ public class AppointmentsPanel extends JPanel {
             query.append("and a.AppointmentDate=? ");
         }
         Therapist therapist = (Therapist) therapistNameList.getSelectedItem();
-        if (therapist != null && !(therapist).getFirstName().equals("ALL")) {
+        if (therapist != null && !(therapist).getFirstName().equals("Select")) {
             parameters.add(therapist.getId());
             query.append("and a.TherapistID=? ");
         }
         Service service = (Service) serviceList.getSelectedItem();
-        if (service != null && !(service).getServiceName().equals("ALL")) {
+        if (service != null && !(service).getServiceName().equals("Select")) {
             parameters.add(service.getId());
             query.append("and a.ServiceID=? ");
         }
