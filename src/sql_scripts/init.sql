@@ -46,6 +46,8 @@ CREATE TABLE Appointment (
     TherapistID int,
     ServiceID int,
     IsActive boolean,
+    IsPaid boolean,
+    IsDone boolean,
     FOREIGN KEY (TherapistID) REFERENCES Therapist(ID),
     FOREIGN KEY (ServiceID) REFERENCES Service(ID)
 );
