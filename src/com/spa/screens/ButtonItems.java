@@ -1,6 +1,7 @@
 package com.spa.screens;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +13,7 @@ public class ButtonItems extends JPanel {
         setOpaque(true);
         for (String str : items) {
             JButton b = new JButton(str.toUpperCase());
+            b.setBackground(new Color(53, 183, 234));
             b.setFocusable(false);
             b.setRolloverEnabled(false);
             buttons.add(b);

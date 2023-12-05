@@ -41,6 +41,10 @@ public class AppointmentPanel extends JPanel {
     private JButton submitLabel;
     private JLabel therapistLabel;
     private JComboBox<Therapist> therapistListSelector;
+    private JLabel isPaidLabel;
+    private JCheckBox isPaid;
+    private JLabel isDoneLabel;
+    private JCheckBox isDone;
 
     public AppointmentPanel(Integer appointmentId, boolean isEditable) {
         appointment = getAppointmentDetails(appointmentId);
@@ -70,6 +74,10 @@ public class AppointmentPanel extends JPanel {
         serviceListSelector = new JComboBox<>();
         therapistListSelector = new JComboBox<>();
         appointmentDateTxt = new JDateChooser();
+        isPaidLabel = new JLabel();
+        isDoneLabel = new JLabel();
+        isDone=new JCheckBox();
+        isPaid=new JCheckBox();
         appointmentDateTxt.setDateFormatString("dd-MM-yyyy");
         Date date = new Date();
         SpinnerDateModel sm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
@@ -127,6 +135,19 @@ public class AppointmentPanel extends JPanel {
         appointmentTimeLabel.setBackground(new Color(216, 235, 243));
         appointmentTimeLabel.setFont(new Font("Play", 1, 12));
         appointmentTimeLabel.setText("APPOINTMENT TIME (HH:MM) (24 Hours Format)");
+
+        isPaidLabel.setFont(new Font("Play", 1, 12));
+        isPaidLabel.setText("PAID");
+        isPaidLabel.setBackground(new Color(216, 235, 243));
+
+        isDoneLabel.setBackground(new Color(216, 235, 243));
+        isDoneLabel.setFont(new Font("Play", 1, 12));
+        isDoneLabel.setText("DONE");
+
+        isDone.setBackground(new Color(216, 235, 243));
+        isPaid.setBackground(new Color(216, 235, 243));
+
+
         boolean foundTherapist = false;
         for (int i = 0; i < allTherapist.size(); i++) {
             therapistListSelector.addItem(allTherapist.get(i));
@@ -164,6 +185,8 @@ public class AppointmentPanel extends JPanel {
             phoneNumberTxt.setText(appointment.getClientPhoneNumber());
             serviceListSelector.setSelectedIndex(selectedServiceIndex);
             therapistListSelector.setSelectedIndex(selectedTherapistIndex);
+            isPaid.setSelected(appointment.isPaid());
+            isDone.setSelected(appointment.isDone());
             // Updating the Appointments
             if (isEditable) {
                 submitLabel.setText("UPDATE");
@@ -186,7 +209,10 @@ public class AppointmentPanel extends JPanel {
                                                                 .addComponent(clientNameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(therapistLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(appointmentDateLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(appointmentTimeLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                                .addComponent(appointmentTimeLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(isPaidLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(isDoneLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        )
                                                         .addGap(105, 105, 105)
                                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                                                 .addComponent(appointmentDateTxt)
@@ -194,6 +220,8 @@ public class AppointmentPanel extends JPanel {
                                                                 .addComponent(serviceListSelector, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(therapistListSelector, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(clientNameTxt)
+                                                                .addComponent(isPaid,GroupLayout.DEFAULT_SIZE,GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(isDone,GroupLayout.DEFAULT_SIZE,GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(phoneNumberTxt))))
                                         .addGap(300, 300, 300))
                                 .addGroup(layout.createSequentialGroup()
@@ -231,6 +259,14 @@ public class AppointmentPanel extends JPanel {
                                                 .addComponent(appointmentDateLabel)
                                                 .addComponent(appointmentDateTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGap(30,30,30)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                .addComponent(isPaidLabel)
+                                                .addComponent(isPaid, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(30,30,30)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                .addComponent(isDoneLabel)
+                                                .addComponent(isDone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(30,30,30)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(appointmentTimeLabel)
                                                 .addComponent(appointmentTimeTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -249,6 +285,8 @@ public class AppointmentPanel extends JPanel {
                 serviceListSelector.setEnabled(false);
                 therapistListSelector.setEnabled(false);
                 therapistListSelector.setEditable(false);
+                isDone.setEnabled(false);
+                isPaid.setEnabled(false);
                 addAppointmentLabel.setText("VIEW APPOINTMENT DETAILS");
                 layout.setHorizontalGroup(
                         layout.createParallelGroup(GroupLayout.Alignment.LEADING)
@@ -268,7 +306,8 @@ public class AppointmentPanel extends JPanel {
                                                                 .addComponent(clientNameLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(therapistLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(appointmentDateLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addComponent(appointmentTimeLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                                .addComponent(appointmentTimeLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addComponent(isPaidLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(isDoneLabel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                         .addGap(105, 105, 105)
                                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                                                 .addComponent(appointmentDateTxt)
@@ -276,6 +315,8 @@ public class AppointmentPanel extends JPanel {
                                                                 .addComponent(serviceListSelector, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(therapistListSelector, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(clientNameTxt)
+                                                                .addComponent(isPaid,GroupLayout.DEFAULT_SIZE,GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(isDone,GroupLayout.DEFAULT_SIZE,GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                                 .addComponent(phoneNumberTxt))))
                                         .addGap(435, 435, 435))
                                 .addGroup(layout.createSequentialGroup()
@@ -310,6 +351,14 @@ public class AppointmentPanel extends JPanel {
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                                 .addComponent(appointmentDateLabel)
                                                 .addComponent(appointmentDateTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(30,30,30)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                .addComponent(isPaidLabel)
+                                                .addComponent(isPaid, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                                        .addGap(30,30,30)
+                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                                                .addComponent(isDoneLabel)
+                                                .addComponent(isDone, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                                         .addGap(30,30,30)
                                         .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                                 .addComponent(appointmentTimeLabel)
@@ -409,7 +458,7 @@ public class AppointmentPanel extends JPanel {
             if (clientNameTxt.getText() != null && !clientNameTxt.getText().trim().equals("") && phoneNumberTxt.getText() != null && appointmentDateTxt.getDate() != null && !phoneNumberTxt.getText().trim().equals("") && serviceListSelector.getSelectedItem() != null && therapistListSelector.getSelectedItem() != null) {
                 try {
                     String modifiedDate = dateFormat.format(appointmentDateTxt.getDate().getTime());
-                    db.executeUpdate("INSERT INTO Appointment ( ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime,TherapistID, ServiceID, IsActive) VALUES(?,?,?,?,?,?,?)", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate, appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(), ((Service) serviceListSelector.getSelectedItem()).getId(), true);
+                    db.executeUpdate("INSERT INTO Appointment ( ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime,TherapistID, ServiceID, IsActive,IsPaid,IsDone) VALUES(?,?,?,?,?,?,?,?,?)", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate, appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(), ((Service) serviceListSelector.getSelectedItem()).getId(), true, isPaid.isSelected(), false);
                     JViewport container = (JViewport) getParent();
                     container.setView(new AppointmentsPanel());
                     container.validate();
@@ -440,7 +489,7 @@ public class AppointmentPanel extends JPanel {
                 if (result == JOptionPane.OK_OPTION) {
                     try {
                         String modifiedDate = dateFormat.format(appointmentDateTxt.getDate().getTime());
-                        db.executeUpdate("update Appointment set ClientName=?, ClientPhoneNumber=?, AppointmentDate=?, AppointmentTime=?,TherapistID=?, ServiceID=? where ID=? ;", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate, appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(), ((Service) serviceListSelector.getSelectedItem()).getId(), appointment.getId());
+                        db.executeUpdate("update Appointment set ClientName=?, ClientPhoneNumber=?, AppointmentDate=?, AppointmentTime=?,TherapistID=?, ServiceID=?, IsPaid=?, IsDone=? where ID=? ;", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate, appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(), ((Service) serviceListSelector.getSelectedItem()).getId(),isPaid.isSelected(),isDone.isSelected(), appointment.getId());
                         JViewport container = (JViewport) getParent();
                         container.setView(new AppointmentsPanel());
                         container.validate();
@@ -495,6 +544,8 @@ public class AppointmentPanel extends JPanel {
                 currentAppointment.setClientPhoneNumber(rs.getString("ClientPhoneNumber"));
                 currentAppointment.setAppointmentDate(rs.getDate("AppointmentDate"));
                 currentAppointment.setAppointmentTime(rs.getTime("AppointmentTime"));
+                currentAppointment.setDone(rs.getBoolean("IsDone"));
+                currentAppointment.setPaid(rs.getBoolean("IsPaid"));
             }
             if (rs1.next()) {
                 selectedService = new Service(rs1.getInt("serviceId"), rs1.getString("service"));

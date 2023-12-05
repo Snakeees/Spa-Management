@@ -99,6 +99,7 @@ public class ServicesPanel extends JPanel {
         }
         //Customizing default header cell render for good look
         serviceTableList.getTableHeader().setDefaultRenderer(new AppointmentsPanel.BoldAndCenteredHeaderRenderer());
+        serviceTableList.getTableHeader().setReorderingAllowed(false);
         JTableHeader header = serviceTableList.getTableHeader();
         Dimension headerSize = header.getPreferredSize();
         headerSize.height = 40;
@@ -110,7 +111,7 @@ public class ServicesPanel extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(addService)
+                                .addComponent(addService, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30))
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(4, Short.MAX_VALUE)
@@ -122,7 +123,7 @@ public class ServicesPanel extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(25, 25, 25)
-                                .addComponent(addService)
+                                .addComponent(addService, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
                                 .addGap(25, 25, 25)
                                 .addComponent(serviceTableListPane, GroupLayout.PREFERRED_SIZE, 532, GroupLayout.PREFERRED_SIZE))
         );

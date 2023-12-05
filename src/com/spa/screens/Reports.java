@@ -54,16 +54,16 @@ public class Reports extends JPanel {
         incomePanelLayout.setHorizontalGroup(
                 incomePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(incomePanelLayout.createSequentialGroup()
-                                .addContainerGap(134, Short.MAX_VALUE)
+                                .addContainerGap(130, Short.MAX_VALUE)
                                 .addComponent(incomeValue)
-                                .addGap(128, 128, 128))
+                                .addContainerGap(130, Short.MAX_VALUE))
         );
         incomePanelLayout.setVerticalGroup(
                 incomePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(incomePanelLayout.createSequentialGroup()
-                                .addGap(81, 81, 81)
+                                .addContainerGap(100, Short.MAX_VALUE)
                                 .addComponent(incomeValue)
-                                .addContainerGap(90, Short.MAX_VALUE))
+                                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         visitValue.setFont(new Font("Play", 1, 24));
@@ -74,16 +74,16 @@ public class Reports extends JPanel {
         visitPanelLayout.setHorizontalGroup(
                 visitPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(visitPanelLayout.createSequentialGroup()
-                                .addContainerGap(158, Short.MAX_VALUE)
+                                .addContainerGap(130, Short.MAX_VALUE)
                                 .addComponent(visitValue)
-                                .addGap(140, 140, 140))
+                                .addContainerGap(130, Short.MAX_VALUE))
         );
         visitPanelLayout.setVerticalGroup(
                 visitPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(visitPanelLayout.createSequentialGroup()
-                                .addGap(81, 81, 81)
+                                .addContainerGap(100, Short.MAX_VALUE)
                                 .addComponent(visitValue)
-                                .addContainerGap(90, Short.MAX_VALUE))
+                                .addContainerGap(100, Short.MAX_VALUE))
         );
 
         incomeLabel.setFont(new Font("Play", 1, 18));
@@ -95,25 +95,23 @@ public class Reports extends JPanel {
         GroupLayout layout = new GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(130, 130, 130)
+                layout.createSequentialGroup()
+                                .addContainerGap(0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(incomePanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(40, 40, 40)
-                                                .addComponent(incomeLabel, GroupLayout.PREFERRED_SIZE, 252, GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 299, Short.MAX_VALUE)
+                                                .addGap(50,50,50)
+                                                .addComponent(incomeLabel)
+                                        ))
+                                .addGap(130,130,130)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(layout.createSequentialGroup()
-                                                .addGap(60, 60, 60)
+                                                .addGap(50,50,50)
                                                 .addComponent(visitLabel)
                                         )
                                         .addGroup(layout.createSequentialGroup()
-                                                .addComponent(visitPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(130, 130, 130)
-                                        )))
-        );
+                                                .addComponent(visitPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+                                .addContainerGap(0, Short.MAX_VALUE));
         layout.setVerticalGroup(
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
@@ -125,7 +123,7 @@ public class Reports extends JPanel {
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                         .addComponent(incomePanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(visitPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(183, Short.MAX_VALUE))
+                                .addContainerGap(168, Short.MAX_VALUE))
         );
     }
     // fetching total income from 1st of the month from DB which is need to be displayed in UI
@@ -134,7 +132,8 @@ public class Reports extends JPanel {
         Date date = new Date();
         try {
             Date startDate = dateFormat.parse(date.getYear() + "-" + date.getMonth() + "-1");
-            ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and a.AppointmentDate>=? and a.IsActive=true and a.AppointmentDate<?", dateFormat.format(startDate), dateFormat.format(date));
+//            ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and a.AppointmentDate>=? and a.IsActive=true and a.AppointmentDate<?", dateFormat.format(startDate), dateFormat.format(date));
+            ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and IsPaid=true and IsDone=true");
             while (rs.next()) {
                 return rs.getInt("monthIncome");
             }
@@ -149,7 +148,9 @@ public class Reports extends JPanel {
         Date date = new Date();
         try {
             Date startDate = dateFormat.parse(date.getYear() + "-" + date.getMonth() + "-1");
-            ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where AppointmentDate>=? and IsActive=true and AppointmentDate<?", dateFormat.format(startDate), dateFormat.format(date));
+//            ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where AppointmentDate>=? and IsActive=true and AppointmentDate<?", dateFormat.format(startDate), dateFormat.format(date));
+            ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where IsPaid=true and IsDone=true");
+
             while (rs.next()) {
                 return rs.getInt("visits");
             }

@@ -88,6 +88,7 @@ public class AccountsPanel extends JPanel {
 
         //Customizing default header cell render for good look
         accountListTable.getTableHeader().setDefaultRenderer(new AppointmentsPanel.BoldAndCenteredHeaderRenderer());
+        accountListTable.getTableHeader().setReorderingAllowed(false);
         JTableHeader header = accountListTable.getTableHeader();
         Dimension headerSize = header.getPreferredSize();
         headerSize.height = 40;
@@ -111,7 +112,7 @@ public class AccountsPanel extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(addAccount)
+                                .addComponent(addAccount, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30))
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(4, Short.MAX_VALUE)
@@ -122,7 +123,7 @@ public class AccountsPanel extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(25, 25, 25)
-                                .addComponent(addAccount)
+                                .addComponent(addAccount, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
                                 .addGap(25, 25, 25)
                                 .addComponent(accountListTablePane, GroupLayout.PREFERRED_SIZE, 532, GroupLayout.PREFERRED_SIZE))
         );

@@ -12,10 +12,12 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
     JButton therapists;
     JButton services;
     JButton accounts;
-    JButton changePassword;
-    JButton logout;
+    JButton profile;
     JPanel content;
     ArrayList<JButton> navButtons;
+    JPopupMenu popupMenu;
+    JMenuItem changePassword;
+    JMenuItem logout;
     int userId;
     public int getUserId() {
         return userId;
@@ -31,7 +33,6 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         createHeaderPanel().setLocation(0, 0);
         setSize(500, 400);
         getContentPane().add(createHeaderPanel(), BorderLayout.NORTH, 0);
-
         // Displaying Reports page as default when admin login
         content = new Reports();
         // Making Reports navigation button active at the time of admin login
@@ -54,6 +55,8 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
 
     // Creating the Header panel with navigation buttons
     private JPanel createHeaderPanel() {
+
+
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new GridLayout(1, 4));
         headerPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
@@ -71,24 +74,57 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         if (accounts == null) {
             accounts = getButton("Account");
         }
-        if (changePassword == null) {
-            changePassword = getButton("Reset Password");
+        if (profile == null) {
+            ImageIcon icon = new ImageIcon("src/images/user6.png");
+            Image image = icon.getImage().getScaledInstance(60, 55, Image.SCALE_SMOOTH);
+            ImageIcon resizedIcon = new ImageIcon(image);
+            profile = new JButton(resizedIcon);
+            profile.setBackground(new Color(53, 183, 234));
+            profile.addActionListener(this);
         }
-        if (logout == null) {
-            logout = getButton("Logout");
+        if(changePassword==null){
+            changePassword = new JMenuItem("Change Password");
+            changePassword.setPreferredSize(new Dimension(250,35));
+            changePassword.setMaximumSize(new Dimension(250,35));
+            changePassword.setMinimumSize(new Dimension(250,35));
+            changePassword.setBorder(BorderFactory.createLineBorder(new Color(128, 148, 158),1));
+            changePassword.setBackground(new Color(53, 183, 234));
+            changePassword.addActionListener(this);
         }
+        if(logout==null){
+            logout = new JMenuItem("Logout");
+            logout.setPreferredSize(new Dimension(250,35));
+            logout.setMaximumSize(new Dimension(250,35));
+            logout.setMinimumSize(new Dimension(250,35));
+            logout.setBorder(BorderFactory.createLineBorder(new Color(128, 148, 158),1));
+            logout.setBackground(new Color(53, 183, 234));
+            logout.addActionListener(this);
+        }
+
+        if(popupMenu==null){
+            popupMenu = new JPopupMenu();
+            popupMenu.add(changePassword);
+            popupMenu.add(logout);
+            popupMenu.setMaximumSize(new Dimension(250,72));
+            popupMenu.setPreferredSize(new Dimension(250,72));
+            popupMenu.setMinimumSize(new Dimension(250,72));
+            popupMenu.setBorder(BorderFactory.createLineBorder(new Color(128, 148, 158),1));
+            popupMenu.setBackground(new Color(53, 183, 234));
+        }
+
+
         headerPanel.add(reports);
         headerPanel.add(therapists);
         headerPanel.add(services);
         headerPanel.add(accounts);
-        headerPanel.add(changePassword);
-        headerPanel.add(logout);
+        headerPanel.add(profile);
+
         navButtons.add(reports);
         navButtons.add(therapists);
         navButtons.add(services);
         navButtons.add(accounts);
-        navButtons.add(changePassword);
-        navButtons.add(logout);
+        navButtons.add(profile);
+
         headerPanel.setLocation(0, 0);
         headerPanel.setSize(MAXIMIZED_HORIZ, 40);
         headerPanel.setBackground(new Color(53, 183, 234));
@@ -156,7 +192,10 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             getContentPane().add(body, BorderLayout.CENTER, 1);
             makeActive(services);
         }
-        else if (e.getSource() == changePassword) {
+        else if (e.getSource() == profile) {
+            popupMenu.show(profile, 0, profile.getHeight());
+        }
+        else if(e.getSource()==changePassword){
             updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
@@ -166,8 +205,8 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             body.setViewportView(content);
             body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
-            makeActive(changePassword);
         }
+
         else if (e.getSource() == logout) {
             int confirm = JOptionPane.showConfirmDialog(this,
                     "Are you sure you want to logout?",

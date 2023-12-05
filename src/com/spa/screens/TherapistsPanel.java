@@ -92,6 +92,7 @@ public class TherapistsPanel extends JPanel {
             therapistTableList.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
         therapistTableList.getTableHeader().setDefaultRenderer(new AppointmentsPanel.BoldAndCenteredHeaderRenderer());
+        therapistTableList.getTableHeader().setReorderingAllowed(false);
         JTableHeader header = therapistTableList.getTableHeader();
         Dimension headerSize = header.getPreferredSize();
         headerSize.height = 40;
@@ -102,7 +103,7 @@ public class TherapistsPanel extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(addTherapist)
+                                .addComponent(addTherapist, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                                 .addGap(30, 30, 30))
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(4, Short.MAX_VALUE)
@@ -114,7 +115,7 @@ public class TherapistsPanel extends JPanel {
                 layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                                 .addGap(25, 25, 25)
-                                .addComponent(addTherapist)
+                                .addComponent(addTherapist, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
                                 .addGap(25, 25, 25)
                                 .addComponent(therapistTableListPane, GroupLayout.PREFERRED_SIZE, 532, GroupLayout.PREFERRED_SIZE))
         );

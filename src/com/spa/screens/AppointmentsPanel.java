@@ -134,7 +134,7 @@ public class AppointmentsPanel extends JPanel {
                                 .addGap(600,600,600)
                                 .addComponent(appointmentsDetailLabel, GroupLayout.PREFERRED_SIZE, 519, GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(addAppointment, GroupLayout.PREFERRED_SIZE, 84, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(addAppointment, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
                                 .addGap(70, 70, 70))
                         .addGroup(layout.createSequentialGroup()
                                 .addContainerGap(4, Short.MAX_VALUE)
@@ -168,7 +168,7 @@ public class AppointmentsPanel extends JPanel {
                                         .addComponent(appointmentsDetailLabel, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
                                         .addGroup(layout.createSequentialGroup()
                                                 .addGap(17, 17, 17)
-                                                .addComponent(addAppointment, GroupLayout.PREFERRED_SIZE, 30, GroupLayout.PREFERRED_SIZE)))
+                                                .addComponent(addAppointment, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
                                 .addGap(10,10,10)
                                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addComponent(therapistNameList, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
@@ -197,43 +197,54 @@ public class AppointmentsPanel extends JPanel {
 
     // updating the table details with the search details when search button is clicked
     private void searchLableActionPerformed(ActionEvent evt) {
-        tableData = getAppointmentsWithRestriction();
-       updateTable(tableData);
+       updateTable(getAppointmentsWithRestriction());
         validate();
     }
     public void updateTable(Object[][] data){
         appointmentsListTable = new JTable(new DefaultTableModel(
                 data,
                 new String[]{
-                        "APPOINTMENT ID", "CLIENT NAME", "SERVICE", "THERAPIST", "TIME", "OPTIONS"
+                        "APPOINTMENT ID", "CLIENT NAME", "SERVICE", "THERAPIST", "TIME", "PAID", "DONE", "OPTIONS"
                 }
-        )) {
+        ){
+            @Override
+            public Class<?> getColumnClass(int column) {
+                return getValueAt(0, column).getClass();
+            }
+        }) {
             @Override
             public void updateUI() {
                 super.updateUI();
                 setRowHeight(36);
                 setAutoCreateRowSorter(true);
-                TableColumn column = getColumnModel().getColumn(5);
-                column.setCellRenderer(new AppointmentsPanel.ButtonsRenderer());
-                column.setCellEditor(new AppointmentsPanel.ButtonsEditor(this));
+                TableColumn optionColumn = getColumnModel().getColumn(7);
+                optionColumn.setCellRenderer(new AppointmentsPanel.ButtonsRenderer());
+                optionColumn.setCellEditor(new AppointmentsPanel.ButtonsEditor(this));
+                TableColumn paidColumn = getColumnModel().getColumn(5);
+                TableColumn doneColumn = getColumnModel().getColumn(6);
+                paidColumn.setCellEditor(new AppointmentsPanel.PaidEditor(this));
+                doneColumn.setCellEditor(new AppointmentsPanel.DoneEditor(this));
             }
 
             @Override
             public boolean isCellEditable(int row, int col) {
-                return col == 5;
+                return col == 7 | col == 5 | col == 6;
             }
         };
         //Customizing default cell render for good look
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
-        for (int i = 0; i < appointmentsListTable.getColumnCount() - 1; i++) {
+        for (int i = 0; i < appointmentsListTable.getColumnCount() - 3; i++) {
             appointmentsListTable.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
-            appointmentsListTable.getColumnModel().getColumn(i).setMaxWidth(200);
-            appointmentsListTable.getColumnModel().getColumn(i).setWidth(180);
-            appointmentsListTable.getColumnModel().getColumn(i).setPreferredWidth(180);
+        }
+        for(int i=0;i<appointmentsListTable.getColumnCount()-1;i++){
+            appointmentsListTable.getColumnModel().getColumn(i).setMaxWidth(170);
+            appointmentsListTable.getColumnModel().getColumn(i).setWidth(150);
+            appointmentsListTable.getColumnModel().getColumn(i).setPreferredWidth(150);
         }
         //Customizing default header cell render for good look
         appointmentsListTable.getTableHeader().setDefaultRenderer(new BoldAndCenteredHeaderRenderer());
+        appointmentsListTable.getTableHeader().setReorderingAllowed(false);
         JTableHeader header = appointmentsListTable.getTableHeader();
         Dimension headerSize = header.getPreferredSize();
         headerSize.height = 40;
@@ -282,30 +293,35 @@ public class AppointmentsPanel extends JPanel {
         List<List<Object>> cells = new ArrayList<>();
         java.util.Date d = new java.util.Date();
         try {
-            ResultSet rs = db.executeQuery("select a.ID, a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t, Service s where AppointmentDate=? and a.IsActive=? and t.ID=a.TherapistID and a.ServiceID=s.ID ORDER BY a.AppointmentTime", new java.sql.Date(d.getYear(), d.getMonth(), d.getDate()), true);
+            ResultSet rs = db.executeQuery("select a.ID, a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time, a.IsPaid as paid, a.IsDone as done from Appointment a, Therapist t, Service s where AppointmentDate=? and a.IsActive=? and t.ID=a.TherapistID and a.ServiceID=s.ID ORDER BY a.AppointmentTime", new java.sql.Date(d.getYear(), d.getMonth(), d.getDate()), true);
             while (rs.next()) {
                 int id = rs.getInt("ID");
                 String clientName = rs.getString("clientName");
                 String service = rs.getString("service");
                 String therapist = rs.getString("therapist");
                 String time = timeFormater.format(rs.getTime("time"));
-
+                boolean paid = rs.getBoolean("paid");
+                boolean done = rs.getBoolean("done");
                 ArrayList<Object> arr = new ArrayList<>();
                 arr.add(id);
                 arr.add(clientName);
                 arr.add(service);
                 arr.add(therapist);
                 arr.add(time);
+                arr.add(paid);
+                arr.add(done);
                 arr.add("");
                 cells.add(arr);
             }
-            Object[][] obj = new Object[cells.size()][5];
+            Object[][] obj = new Object[cells.size()][7];
             for (int i = 0; i < cells.size(); i++) {
                 obj[i][0] = cells.get(i).get(0);
                 obj[i][1] = cells.get(i).get(1);
                 obj[i][2] = cells.get(i).get(2);
                 obj[i][3] = cells.get(i).get(3);
                 obj[i][4] = cells.get(i).get(4);
+                obj[i][5] = cells.get(i).get(5);
+                obj[i][6] = cells.get(i).get(6);
             }
             return obj;
 
@@ -321,7 +337,7 @@ public class AppointmentsPanel extends JPanel {
         List<List<Object>> cells = new ArrayList<>();
         ResultSet rs;
         List<Object> parameters = new ArrayList<>();
-        StringBuilder query = new StringBuilder("select a.ID,a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t, Service s where a.IsActive=true and t.ID=a.TherapistID and a.ServiceID=s.ID  ");
+        StringBuilder query = new StringBuilder("select a.ID,a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time, a.IsPaid as paid, a.IsDone as done from Appointment a, Therapist t, Service s where a.IsActive=true and t.ID=a.TherapistID and a.ServiceID=s.ID  ");
         Date date = dateSelectorTxt.getDate();
         if (date != null) {
             parameters.add(new java.sql.Date(date.getYear(), date.getMonth(), date.getDate()));
@@ -351,23 +367,28 @@ public class AppointmentsPanel extends JPanel {
                 String clientName = rs.getString("clientName");
                 String therapistName = rs.getString("therapist");
                 String time = timeFormater.format(rs.getTime("time"));
-
+                boolean paid = rs.getBoolean("paid");
+                boolean done = rs.getBoolean("done");
                 ArrayList<Object> arr = new ArrayList<>();
                 arr.add(id);
                 arr.add(clientName);
                 arr.add(serviceName);
                 arr.add(therapistName);
                 arr.add(time);
+                arr.add(paid);
+                arr.add(done);
                 arr.add("");
                 cells.add(arr);
             }
-            Object[][] obj = new Object[cells.size()][5];
+            Object[][] obj = new Object[cells.size()][7];
             for (int i = 0; i < cells.size(); i++) {
                 obj[i][0] = cells.get(i).get(0);
                 obj[i][1] = cells.get(i).get(1);
                 obj[i][2] = cells.get(i).get(2);
                 obj[i][3] = cells.get(i).get(3);
                 obj[i][4] = cells.get(i).get(4);
+                obj[i][5] = cells.get(i).get(5);
+                obj[i][6] = cells.get(i).get(6);
             }
 
             return obj;
@@ -552,4 +573,160 @@ public class AppointmentsPanel extends JPanel {
         }
     }
 
+
+    class DoneEditor extends AbstractCellEditor implements TableCellEditor {
+        protected final JTable table;
+        private JCheckBox checkBox = new JCheckBox();
+        protected DoneEditor(JTable table) {
+            super();
+            this.table = table;
+            this.checkBox.setAction(new UpdatePaidAndDoneAction(table,"done"));
+            AppointmentsPanel.DoneEditor.EditingStopHandler handler = new AppointmentsPanel.DoneEditor.EditingStopHandler();
+            checkBox.addMouseListener(handler);
+            checkBox.addActionListener(handler);
+        }
+        @Override
+        public Object getCellEditorValue() {
+            return checkBox.isSelected();
+        }
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            checkBox.setSelected((Boolean) value);
+            return checkBox;
+        }
+        private class EditingStopHandler extends MouseAdapter implements ActionListener {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Object o = e.getSource();
+                if (o instanceof TableCellEditor) {
+                    actionPerformed(new ActionEvent(o, ActionEvent.ACTION_PERFORMED, ""));
+                }
+                else if (o instanceof JButton) {
+                    ButtonModel m = ((JButton) e.getComponent()).getModel();
+                    if (m.isPressed() && table.isRowSelected(table.getEditingRow()) && e.isControlDown()) {
+                        checkBox.setBackground(table.getBackground());
+                    }
+                }
+            }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EventQueue.invokeLater(AppointmentsPanel.DoneEditor.this::fireEditingStopped);
+            }
+        }
+    }
+    class PaidEditor extends AbstractCellEditor implements TableCellEditor {
+        protected final JTable table;
+        private JCheckBox checkBox = new JCheckBox();
+        protected PaidEditor(JTable table) {
+            super();
+            this.table = table;
+            this.checkBox.setAction(new UpdatePaidAndDoneAction(table,"paid"));
+            AppointmentsPanel.PaidEditor.EditingStopHandler handler = new AppointmentsPanel.PaidEditor.EditingStopHandler();
+            checkBox.addMouseListener(handler);
+            checkBox.addActionListener(handler);
+        }
+        @Override
+        public Object getCellEditorValue() {
+            return checkBox.isSelected();
+        }
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
+            checkBox.setSelected((Boolean) value);
+            return checkBox;
+        }
+        private class EditingStopHandler extends MouseAdapter implements ActionListener {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Object o = e.getSource();
+                if (o instanceof TableCellEditor) {
+                    actionPerformed(new ActionEvent(o, ActionEvent.ACTION_PERFORMED, ""));
+                }
+                else if (o instanceof JButton) {
+                    ButtonModel m = ((JButton) e.getComponent()).getModel();
+                    if (m.isPressed() && table.isRowSelected(table.getEditingRow()) && e.isControlDown()) {
+                        checkBox.setBackground(table.getBackground());
+                    }
+                }
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                EventQueue.invokeLater(AppointmentsPanel.PaidEditor.this::fireEditingStopped);
+            }
+        }
+    }
+    class UpdatePaidAndDoneAction extends AbstractAction {
+        private final JTable table;
+        String value;
+
+        protected UpdatePaidAndDoneAction(JTable table,String value) {
+            super();
+            this.value=value;
+            this.table = table;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int row = table.convertRowIndexToModel(table.getEditingRow());
+            int o = (int) table.getModel().getValueAt(row, 0);
+            boolean paid = (boolean) table.getModel().getValueAt(row,5);
+            boolean done = (boolean) table.getModel().getValueAt(row,6);
+            if(value.equals("paid")){
+                int result = JOptionPane.showOptionDialog(
+                        getParent(),
+                        "Do you want to update the payment details of " + ((String) table.getModel().getValueAt(row, 1) + " APPOINTMENT?"),
+                        "Update Waring",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        new Object[]{"YES", "NO"},
+                        "YES");
+                if (result == JOptionPane.OK_OPTION) {
+                    try {
+                        Database db = new Database();
+                        db.executeUpdate("Update Appointment set IsPaid=? where ID=?", !paid, o);
+                        updateTable(getAppointmentsWithRestriction());
+                        validate();
+                        repaint();
+                    }catch (Exception exception){
+                        exception.printStackTrace();
+                        JOptionPane.showMessageDialog(getParent(),"Failed to update the payment details of Appointment");
+                    }
+                }
+                else{
+                    updateTable(getAppointmentsWithRestriction());
+                    validate();
+                    repaint();
+                }
+            }
+            else if(value.equals("done")){
+                int result = JOptionPane.showOptionDialog(
+                        getParent(),
+                        "Do you want to update the status of " + ((String) table.getModel().getValueAt(row, 1) + " the APPOINTMENT?"),
+                        "Update Waring",
+                        JOptionPane.OK_CANCEL_OPTION,
+                        JOptionPane.INFORMATION_MESSAGE,
+                        null,
+                        new Object[]{"YES", "NO"},
+                        "YES");
+                if (result == JOptionPane.OK_OPTION) {
+                    try {
+                        Database db = new Database();
+                        db.executeUpdate("Update Appointment set IsDone=? where ID=?", !done, o);
+                        updateTable(getAppointmentsWithRestriction());
+                        validate();
+                        repaint();
+                    }catch (Exception exception){
+                        exception.printStackTrace();
+                        JOptionPane.showMessageDialog(getParent(),"Failed to update the status Appointment");
+                    }
+                }
+                else{
+                    updateTable(getAppointmentsWithRestriction());
+                    validate();
+                    repaint();
+                }
+            }
+        }
+    }
 }

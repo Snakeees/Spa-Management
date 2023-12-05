@@ -11,6 +11,8 @@ public class Appointment {
     private int therapistId;
     private int serviceId;
     private boolean isActive;
+    private boolean isDone;
+    private boolean isPaid;
 
     public Appointment() {
     }
@@ -77,5 +79,21 @@ public class Appointment {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public void setPaid(boolean paid) {
+        isPaid = paid;
     }
 }
