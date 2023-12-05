@@ -13,6 +13,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
     JButton services;
     JButton accounts;
     JButton changePassword;
+    JButton logout;
     JPanel content;
     ArrayList<JButton> navButtons;
     int userId;
@@ -73,16 +74,21 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         if (changePassword == null) {
             changePassword = getButton("Reset Password");
         }
+        if (logout == null) {
+            logout = getButton("Logout");
+        }
         headerPanel.add(reports);
         headerPanel.add(therapists);
         headerPanel.add(services);
         headerPanel.add(accounts);
         headerPanel.add(changePassword);
+        headerPanel.add(logout);
         navButtons.add(reports);
         navButtons.add(therapists);
         navButtons.add(services);
         navButtons.add(accounts);
         navButtons.add(changePassword);
+        navButtons.add(logout);
         headerPanel.setLocation(0, 0);
         headerPanel.setSize(MAXIMIZED_HORIZ, 40);
         headerPanel.setBackground(new Color(53, 183, 234));
@@ -161,6 +167,17 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
             makeActive(changePassword);
+        }
+        else if (e.getSource() == logout) {
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "Are you sure you want to logout?",
+                    "Logout Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                LoginScreen loginScreen = new LoginScreen(null);
+                loginScreen.setVisible(true);
+                dispose();
+            }
         }
         validate();
     }

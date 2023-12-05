@@ -12,6 +12,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
     JButton appointments;
     JButton changePassword;
     JButton attendance;
+    JButton logout;
     JPanel content;
     int userId;
     ArrayList<JButton> navButtons;
@@ -57,12 +58,16 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             attendance = getButton("Attendance");
         if(changePassword==null)
             changePassword = getButton("Reset Password");
+        if(logout==null)
+            logout = getButton("Logout");
         headerPanel.add(appointments);
         headerPanel.add(attendance);
         headerPanel.add(changePassword);
+        headerPanel.add(logout);
         navButtons.add(appointments);
         navButtons.add(attendance);
         navButtons.add(changePassword);
+        navButtons.add(logout);
         headerPanel.setLocation(0, 0);
         headerPanel.setSize(MAXIMIZED_HORIZ, 40);
         headerPanel.setBackground(new Color(53, 183, 234));
@@ -122,6 +127,17 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
             makeActive(changePassword);
+        }
+        else if (e.getSource() == logout) {
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "Are you sure you want to logout?",
+                    "Logout Confirmation",
+                    JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                LoginScreen loginScreen = new LoginScreen(null);
+                loginScreen.setVisible(true);
+                dispose();
+            }
         }
         validate();
     }
