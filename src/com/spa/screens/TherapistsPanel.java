@@ -64,6 +64,7 @@ public class TherapistsPanel extends JPanel {
         };
         setBackground(new Color(216, 235, 243));
         addTherapist.setBackground(new Color(53, 183, 234));
+        addTherapist.setFont(new Font("Play",1,14));
         addTherapist.setText("CREATE");
         addTherapist.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {

@@ -66,6 +66,7 @@ public class ServicesPanel extends JPanel {
         };
 
         addService.setBackground(new Color(53, 183, 234));
+        addService.setFont(new Font("Play",1,14));
         addService.setText("CREATE");
         addService.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {

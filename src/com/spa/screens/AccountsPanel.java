@@ -66,6 +66,7 @@ public class AccountsPanel extends JPanel {
         };
 
         addAccount.setBackground(new Color(53, 183, 234));
+        addAccount.setFont(new Font("Play",1,14));
         addAccount.setText("CREATE");
         addAccount.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {

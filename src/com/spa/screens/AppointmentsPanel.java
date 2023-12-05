@@ -74,6 +74,7 @@ public class AppointmentsPanel extends JPanel {
         serviceList.setFont(new Font("Play", 0, 12));
 
         addAppointment.setBackground(new Color(53, 183, 234));
+        addAppointment.setFont(new Font("Play",1,14));
         addAppointment.setText("CREATE");
         addAppointment.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
