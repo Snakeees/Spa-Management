@@ -70,7 +70,7 @@ public class ChangePassword extends JPanel {
                         .addGroup(contentLayout.createSequentialGroup()
                                 .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                                         .addGroup(contentLayout.createSequentialGroup()
-                                                .addGap(400, 400, 400)
+                                                .addContainerGap(600, Short.MAX_VALUE)
                                                 .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
                                                         .addComponent(oldPasswordLabel)
                                                         .addComponent(newPasswordLabel)
@@ -81,18 +81,17 @@ public class ChangePassword extends JPanel {
                                                         .addComponent(confirmPasswordTxt, GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
                                                         .addComponent(oldPasswordTxt)
                                                         .addComponent(newPasswordTxt)
-                                                ))
+                                                )
+                                                .addContainerGap(600, Short.MAX_VALUE))
                                         .addGroup(contentLayout.createSequentialGroup()
-                                                .addGap(600, 600, 600)
-                                                .addComponent(submit, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)))
-                                .addContainerGap(100, Short.MAX_VALUE))
-        );
+                                                .addContainerGap(600, Short.MAX_VALUE)
+                                                .addComponent(submit, GroupLayout.PREFERRED_SIZE, 115, GroupLayout.PREFERRED_SIZE)
+                                                .addContainerGap(600, Short.MAX_VALUE)))));
+
         contentLayout.setVerticalGroup(
                 contentLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
                         .addGroup(contentLayout.createSequentialGroup()
-                                .addGap(200, 200, 200)
-                                .addGap(21, 21, 21)
-                                .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                                .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
                                         .addComponent(oldPasswordTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(oldPasswordLabel))
                                 .addGap(27, 27, 27)
@@ -103,10 +102,8 @@ public class ChangePassword extends JPanel {
                                 .addGroup(contentLayout.createParallelGroup(GroupLayout.Alignment.TRAILING)
                                         .addComponent(confirmPasswordTxt, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                                         .addComponent(confirmPasswordLabel))
-                                .addGap(27, 27, 27)
-                                .addGap(40, 40, 40)
-                                .addComponent(submit, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(962, Short.MAX_VALUE))
+                                .addGap(97, 97, 97)
+                                .addComponent(submit, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
         );
         GroupLayout containerLayout = new GroupLayout(container);
         container.setLayout(containerLayout);

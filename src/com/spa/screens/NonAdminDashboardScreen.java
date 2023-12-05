@@ -10,12 +10,14 @@ import java.util.ArrayList;
 
 public class NonAdminDashboardScreen extends JFrame implements ActionListener {
     JButton appointments;
-    JButton changePassword;
+    JButton profile;
     JButton attendance;
-    JButton logout;
     JPanel content;
     int userId;
     ArrayList<JButton> navButtons;
+    JPopupMenu popupMenu;
+    JMenuItem changePassword;
+    JMenuItem logout;
 
     public NonAdminDashboardScreen(int userId, String userName) {
         this.userId = userId;
@@ -56,18 +58,50 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             appointments = getButton("Appointments");
         if(attendance==null)
             attendance = getButton("Attendance");
-        if(changePassword==null)
-            changePassword = getButton("Reset Password");
-        if(logout==null)
-            logout = getButton("Logout");
+
+        if(profile==null){
+            ImageIcon icon = new ImageIcon("src/images/user6.png");
+            Image image = icon.getImage().getScaledInstance(60, 55, Image.SCALE_SMOOTH);
+            ImageIcon resizedIcon = new ImageIcon(image);
+            profile = new JButton(resizedIcon);
+            profile.setBackground(new Color(53, 183, 234));
+            profile.addActionListener(this);
+        }
+        if(changePassword==null){
+            changePassword = new JMenuItem("Change Password");
+            changePassword.setPreferredSize(new Dimension(250,35));
+            changePassword.setMaximumSize(new Dimension(250,35));
+            changePassword.setMinimumSize(new Dimension(250,35));
+            changePassword.setBorder(BorderFactory.createLineBorder(new Color(128, 148, 158),1));
+            changePassword.setBackground(new Color(53, 183, 234));
+            changePassword.addActionListener(this);
+        }
+        if(logout==null){
+            logout = new JMenuItem("Logout");
+            logout.setPreferredSize(new Dimension(250,35));
+            logout.setMaximumSize(new Dimension(250,35));
+            logout.setMinimumSize(new Dimension(250,35));
+            logout.setBorder(BorderFactory.createLineBorder(new Color(128, 148, 158),1));
+            logout.setBackground(new Color(53, 183, 234));
+            logout.addActionListener(this);
+        }
+        if(popupMenu==null){
+            popupMenu = new JPopupMenu();
+            popupMenu.add(changePassword);
+            popupMenu.add(logout);
+            popupMenu.setMaximumSize(new Dimension(250,72));
+            popupMenu.setPreferredSize(new Dimension(250,72));
+            popupMenu.setMinimumSize(new Dimension(250,72));
+            popupMenu.setBorder(BorderFactory.createLineBorder(new Color(128, 148, 158),1));
+            popupMenu.setBackground(new Color(53, 183, 234));
+        }
         headerPanel.add(appointments);
         headerPanel.add(attendance);
-        headerPanel.add(changePassword);
-        headerPanel.add(logout);
+        headerPanel.add(profile);
         navButtons.add(appointments);
         navButtons.add(attendance);
-        navButtons.add(changePassword);
-        navButtons.add(logout);
+        navButtons.add(profile);
+
         headerPanel.setLocation(0, 0);
         headerPanel.setSize(MAXIMIZED_HORIZ, 40);
         headerPanel.setBackground(new Color(53, 183, 234));
@@ -116,7 +150,10 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             getContentPane().add(body, BorderLayout.CENTER, 1);
             makeActive(attendance);
         }
-        else if (e.getSource() == changePassword) {
+        else if (e.getSource() == profile) {
+            popupMenu.show(profile, 0, profile.getHeight());
+        }
+        else if(e.getSource()==changePassword){
             updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
@@ -126,8 +163,8 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             body.setViewportView(content);
             body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
-            makeActive(changePassword);
         }
+
         else if (e.getSource() == logout) {
             int confirm = JOptionPane.showConfirmDialog(this,
                     "Are you sure you want to logout?",
@@ -139,6 +176,6 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
                 dispose();
             }
         }
-        validate();
+
     }
 }
