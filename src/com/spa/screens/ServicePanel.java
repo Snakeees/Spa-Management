@@ -336,7 +336,7 @@ public class ServicePanel extends JPanel {
         Date time = ((Date)serviceDurationTxt.getValue());
         int timeInMinutes = time.getHours()*60 + time.getMinutes();
         if (service == null) {
-            if (timeInMinutes>=5 && serviceNameTxt.getText() != null && !serviceNameTxt.getText().trim().equals("") && serviceDurationTxt.getValue() != null && costPerClientTxt.getText() != null && !costPerClientTxt.getText().trim().equals("") && !serviceDurationTxt.getValue().toString().equals("00:00")) {
+            if (timeInMinutes>0 && serviceNameTxt.getText() != null && !serviceNameTxt.getText().trim().equals("") && serviceDurationTxt.getValue() != null && costPerClientTxt.getText() != null && !costPerClientTxt.getText().trim().equals("") && !serviceDurationTxt.getValue().toString().equals("00:00")) {
                 try {
                     db.executeUpdate("INSERT INTO Service ( ServiceName, Duration, Cost,IsActive) VALUES(?,?,?,?)", serviceNameTxt.getText(), serviceDurationTxt.getValue(), costPerClientTxt.getText(), true);
                     JViewport container = (JViewport) getParent();
@@ -349,15 +349,15 @@ public class ServicePanel extends JPanel {
                     JOptionPane.showMessageDialog(this, "Failed create service");
                 }
             }
-            else if(timeInMinutes>=5){
+            else if(timeInMinutes>0){
                 JOptionPane.showMessageDialog(this, "All fields are required");
             }
             else{
-                JOptionPane.showMessageDialog(this, "service duration should be minimum 5 minutes");
+                JOptionPane.showMessageDialog(this, "service duration can't be 0 minutes");
             }
         }
         else {
-            if (timeInMinutes>=5 && serviceNameTxt.getText() != null && !serviceNameTxt.getText().trim().equals("") && serviceDurationTxt.getValue() != null && costPerClientTxt.getText() != null && !costPerClientTxt.getText().trim().equals("") && !serviceDurationTxt.getValue().toString().equals("00:00")) {
+            if (timeInMinutes>0 && serviceNameTxt.getText() != null && !serviceNameTxt.getText().trim().equals("") && serviceDurationTxt.getValue() != null && costPerClientTxt.getText() != null && !costPerClientTxt.getText().trim().equals("") && !serviceDurationTxt.getValue().toString().equals("00:00")) {
                 int result = JOptionPane.showOptionDialog(
                         getParent(),
                         "Do you want to update the Service Details?",
@@ -388,11 +388,11 @@ public class ServicePanel extends JPanel {
                     container.validate();
                 }
             }
-            else if(timeInMinutes>=5){
+            else if(timeInMinutes>0){
                 JOptionPane.showMessageDialog(this, "Required details can not be empty.");
             }
             else{
-                JOptionPane.showMessageDialog(this, "service duration should be minimum 5 minutes");
+                JOptionPane.showMessageDialog(this, "service duration can't be 0 minutes");
             }
         }
     }
