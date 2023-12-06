@@ -199,7 +199,6 @@ public class AppointmentsPanel extends JPanel {
     // updating the table details with the search details when search button is clicked
     private void searchLableActionPerformed(ActionEvent evt) {
        updateTable(getAppointmentsWithRestriction());
-        validate();
     }
     public void updateTable(Object[][] data){
         appointmentsListTable = new JTable(new DefaultTableModel(
@@ -251,7 +250,7 @@ public class AppointmentsPanel extends JPanel {
         headerSize.height = 40;
         header.setPreferredSize(headerSize);
         appointmentsListTable.setBackground(new Color(216, 235, 243));
-        if (tableData != null && tableData.length > 0)
+        if (data != null && data.length > 0)
             appointmentListTablePane.setViewportView(appointmentsListTable);
         else {
             //if data is empty, showing "No data Panel"
@@ -262,6 +261,8 @@ public class AppointmentsPanel extends JPanel {
             noDataPanel.add(messageLabel);
             appointmentListTablePane.setViewportView(noDataPanel);
         }
+        appointmentListTablePane.validate();
+        appointmentListTablePane.repaint();
     }
     //navigate to create appointment page when create appointment button is clicked
     private void addAppointmentActionPerformed(ActionEvent evt) {
@@ -506,8 +507,6 @@ public class AppointmentsPanel extends JPanel {
                     Database db = new Database();
                     db.executeUpdate("Update Appointment set IsActive=false where ID=?", o);
                     updateTable(getAppointmentsWithRestriction());
-                    validate();
-                    repaint();
                 }catch (Exception exception){
                     exception.printStackTrace();
                     JOptionPane.showMessageDialog(getParent(),"Failed to cancel Appointment");
@@ -687,8 +686,6 @@ public class AppointmentsPanel extends JPanel {
                         Database db = new Database();
                         db.executeUpdate("Update Appointment set IsPaid=? where ID=?", !paid, o);
                         updateTable(getAppointmentsWithRestriction());
-                        validate();
-                        repaint();
                     }catch (Exception exception){
                         exception.printStackTrace();
                         JOptionPane.showMessageDialog(getParent(),"Failed to update the payment details of Appointment");
@@ -696,8 +693,6 @@ public class AppointmentsPanel extends JPanel {
                 }
                 else{
                     updateTable(getAppointmentsWithRestriction());
-                    validate();
-                    repaint();
                 }
             }
             else if(value.equals("done")){
@@ -715,8 +710,6 @@ public class AppointmentsPanel extends JPanel {
                         Database db = new Database();
                         db.executeUpdate("Update Appointment set IsDone=? where ID=?", !done, o);
                         updateTable(getAppointmentsWithRestriction());
-                        validate();
-                        repaint();
                     }catch (Exception exception){
                         exception.printStackTrace();
                         JOptionPane.showMessageDialog(getParent(),"Failed to update the status Appointment");
@@ -724,8 +717,6 @@ public class AppointmentsPanel extends JPanel {
                 }
                 else{
                     updateTable(getAppointmentsWithRestriction());
-                    validate();
-                    repaint();
                 }
             }
         }
