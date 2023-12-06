@@ -47,6 +47,16 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
     public void makeInActive(JButton button) {
         button.setFont(new Font("Play", Font.PLAIN, 20));
     }
+    private void makeActiveProfile() {
+        ImageIcon icon = new ImageIcon("src/images/user6.png");
+        Image image = icon.getImage().getScaledInstance(48, 43, Image.SCALE_SMOOTH);
+        profile.setIcon(new ImageIcon(image));
+    }
+    private void makeInActiveProfile() {
+        ImageIcon icon = new ImageIcon("src/images/user6.png");
+        Image image = icon.getImage().getScaledInstance(40, 43, Image.SCALE_SMOOTH);
+        profile.setIcon(new ImageIcon(image));
+    }
     // Creating the Header panel with navigation buttons
     private JPanel createHeaderPanel() {
         navButtons = new ArrayList<>();
@@ -61,7 +71,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
 
         if(profile==null){
             ImageIcon icon = new ImageIcon("src/images/user6.png");
-            Image image = icon.getImage().getScaledInstance(60, 55, Image.SCALE_SMOOTH);
+            Image image = icon.getImage().getScaledInstance(40, 43, Image.SCALE_SMOOTH);
             ImageIcon resizedIcon = new ImageIcon(image);
             profile = new JButton(resizedIcon);
             profile.setFont(new Font("Play", Font.PLAIN, 20));
@@ -128,6 +138,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JScrollPane body = new JScrollPane();
         if (e.getSource() == appointments) {
+            makeInActiveProfile();
             updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
@@ -140,6 +151,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             makeActive(appointments);
         }
         else if (e.getSource() == attendance) {
+            makeInActiveProfile();
             updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
@@ -164,7 +176,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             body.setViewportView(content);
             body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
-            makeActive(profile);
+            makeActiveProfile();
         }
 
         else if (e.getSource() == logout) {

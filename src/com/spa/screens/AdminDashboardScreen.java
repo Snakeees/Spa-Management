@@ -52,7 +52,21 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
     public void makeInActive(JButton button) {
         button.setFont(new Font("Play", Font.PLAIN, 20));
     }
-
+    private void makeActiveProfile() {
+        ImageIcon icon = new ImageIcon("src/images/user6.png");
+        Image image = icon.getImage().getScaledInstance(48, 43, Image.SCALE_SMOOTH);
+        profile.setIcon(new ImageIcon(image));
+    }
+    private void makeInActiveProfile() {
+        ImageIcon icon = new ImageIcon("src/images/user6.png");
+        Image image = icon.getImage().getScaledInstance(40, 43, Image.SCALE_SMOOTH);
+        profile.setIcon(new ImageIcon(image));
+    }
+    public ImageIcon getImageIcon(){
+        ImageIcon icon = new ImageIcon("src/images/user6.png");
+        Image image = icon.getImage().getScaledInstance(40, 43, Image.SCALE_SMOOTH);
+        return new ImageIcon(image);
+    }
     // Creating the Header panel with navigation buttons
     private JPanel createHeaderPanel() {
 
@@ -75,9 +89,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             accounts = getButton("Account");
         }
         if (profile == null) {
-            ImageIcon icon = new ImageIcon("src/images/user6.png");
-            Image image = icon.getImage().getScaledInstance(60, 55, Image.SCALE_SMOOTH);
-            ImageIcon resizedIcon = new ImageIcon(image);
+            ImageIcon resizedIcon=getImageIcon();
             profile = new JButton(resizedIcon);
             profile.setFont(new Font("Play", Font.PLAIN, 20));
             profile.setBackground(new Color(53, 183, 234));
@@ -146,6 +158,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JScrollPane body = new JScrollPane();
         if (e.getSource() == reports) {
+            makeInActiveProfile();
             updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
@@ -158,6 +171,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             makeActive(reports);
         }
         else if (e.getSource() == therapists) {
+            makeInActiveProfile();
             updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
@@ -170,6 +184,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             makeActive(therapists);
         }
         else if (e.getSource() == accounts) {
+            makeInActiveProfile();
             updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
@@ -182,6 +197,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             makeActive(accounts);
         }
         else if (e.getSource() == services) {
+            makeInActiveProfile();
             updateOtherButtons();
             getContentPane().remove(1);
             setLayout(new BorderLayout());
@@ -206,7 +222,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             body.setViewportView(content);
             body.setBorder(BorderFactory.createEmptyBorder());
             getContentPane().add(body, BorderLayout.CENTER, 1);
-            makeActive(profile);
+            makeActiveProfile();
         }
 
         else if (e.getSource() == logout) {
@@ -222,6 +238,9 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         }
         validate();
     }
+
+
+
     // diminish all the buttons
     private void updateOtherButtons() {
         for (JButton button : navButtons) {
