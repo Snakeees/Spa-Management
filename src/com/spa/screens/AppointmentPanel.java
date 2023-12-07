@@ -446,7 +446,7 @@ public class AppointmentPanel extends JPanel {
     //This method navigates to Appointment Table page when back button is clicked
     private void backLabelActionPerformed(ActionEvent evt) {
         JViewport container = (JViewport) getParent();
-        container.setView(new AppointmentsPanel());
+        container.setView(new AppointmentsPanel(appointment.getAppointmentDate()));
         container.validate();
         container.repaint();
     }
@@ -460,7 +460,7 @@ public class AppointmentPanel extends JPanel {
                     String modifiedDate = dateFormat.format(appointmentDateTxt.getDate().getTime());
                     db.executeUpdate("INSERT INTO Appointment ( ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime,TherapistID, ServiceID, IsActive,IsPaid,IsDone) VALUES(?,?,?,?,?,?,?,?,?)", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate, appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(), ((Service) serviceListSelector.getSelectedItem()).getId(), true, isPaid.isSelected(), false);
                     JViewport container = (JViewport) getParent();
-                    container.setView(new AppointmentsPanel());
+                    container.setView(new AppointmentsPanel(appointmentDateTxt.getDate()));
                     container.validate();
                     container.repaint();
                     JOptionPane.showMessageDialog(this, "Appointment created successfully!");
@@ -491,7 +491,7 @@ public class AppointmentPanel extends JPanel {
                         String modifiedDate = dateFormat.format(appointmentDateTxt.getDate().getTime());
                         db.executeUpdate("update Appointment set ClientName=?, ClientPhoneNumber=?, AppointmentDate=?, AppointmentTime=?,TherapistID=?, ServiceID=?, IsPaid=?, IsDone=? where ID=? ;", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate, appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(), ((Service) serviceListSelector.getSelectedItem()).getId(),isPaid.isSelected(),isDone.isSelected(), appointment.getId());
                         JViewport container = (JViewport) getParent();
-                        container.setView(new AppointmentsPanel());
+                        container.setView(new AppointmentsPanel(appointmentDateTxt.getDate()));
                         container.validate();
                         container.repaint();
                         JOptionPane.showMessageDialog(this, "Appointment details updated successfully!");
@@ -502,7 +502,7 @@ public class AppointmentPanel extends JPanel {
                 }
                 else if (result == JOptionPane.CANCEL_OPTION) {
                     JViewport container = (JViewport) getParent();
-                    container.setView(new AppointmentsPanel());
+                    container.setView(new AppointmentsPanel(appointment.getAppointmentDate()));
                     container.validate();
                 }
             }

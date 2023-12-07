@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class NonAdminDashboardScreen extends JFrame implements ActionListener {
@@ -29,7 +30,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
         setSize(500, 400);
         getContentPane().add(createHeaderPanel(), BorderLayout.NORTH, 0);
         // Displaying Appointment page as default when nonAdmin login
-        content = new AppointmentsPanel();
+        content = new AppointmentsPanel(new Date());
         // Making Appointment navigation button active at the time of admin login
         makeActive(appointments);
         content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
@@ -142,7 +143,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
             updateOtherButtons();
             content.invalidate();
             getContentPane().remove(1);
-            content = new AppointmentsPanel();
+            content = new AppointmentsPanel(new Date());
             content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
             getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
             body.setViewportView(content);

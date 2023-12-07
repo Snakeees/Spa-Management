@@ -133,7 +133,7 @@ public class Reports extends JPanel {
         try {
             Date startDate = dateFormat.parse(date.getYear() + "-" + date.getMonth() + "-1");
 //            ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and a.AppointmentDate>=? and a.IsActive=true and a.AppointmentDate<?", dateFormat.format(startDate), dateFormat.format(date));
-            ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and IsPaid=true and IsDone=true");
+            ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and IsPaid=true and IsDone=true and a.IsActive=true");
             while (rs.next()) {
                 return rs.getInt("monthIncome");
             }
@@ -149,7 +149,7 @@ public class Reports extends JPanel {
         try {
             Date startDate = dateFormat.parse(date.getYear() + "-" + date.getMonth() + "-1");
 //            ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where AppointmentDate>=? and IsActive=true and AppointmentDate<?", dateFormat.format(startDate), dateFormat.format(date));
-            ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where IsPaid=true and IsDone=true");
+            ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where IsPaid=true and IsDone=true and IsActive=true");
 
             while (rs.next()) {
                 return rs.getInt("visits");
