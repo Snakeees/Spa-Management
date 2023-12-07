@@ -698,7 +698,7 @@ public class AppointmentsPanel extends JPanel {
             else if(value.equals("done")){
                 int result = JOptionPane.showOptionDialog(
                         getParent(),
-                        "Do you want to update the status of " + ((String) table.getModel().getValueAt(row, 1) + " the APPOINTMENT?"),
+                        "Do you want to update the status of " + ((String) table.getModel().getValueAt(row, 1) + " APPOINTMENT?"),
                         "Update Waring",
                         JOptionPane.OK_CANCEL_OPTION,
                         JOptionPane.INFORMATION_MESSAGE,
