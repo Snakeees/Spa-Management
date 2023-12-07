@@ -198,7 +198,10 @@ public class AppointmentsPanel extends JPanel {
 
     // updating the table details with the search details when search button is clicked
     private void searchLableActionPerformed(ActionEvent evt) {
-       updateTable(getAppointmentsWithRestriction());
+        if(dateSelectorTxt.getDate()!=null)
+            updateTable(getAppointmentsWithRestriction());
+        else
+            JOptionPane.showMessageDialog(getParent(),"Invalid Date.");;
     }
     public void updateTable(Object[][] data){
         appointmentsListTable = new JTable(new DefaultTableModel(
