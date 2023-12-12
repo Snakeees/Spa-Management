@@ -27,12 +27,7 @@ public class AccountPanel extends JPanel {
         this.userLogin = getAccount(id);
         initComponents(userLogin, isEditable);
     }
-    /**
-     *
-     * @param userLogin
-     * @param isEditable
-     */
-    private void initComponents(UserLogin userLogin, boolean isEditable) {
+        private void initComponents(UserLogin userLogin, boolean isEditable) {
         setBackground(new Color(216, 235, 243));
 
         container = new JPanel();
