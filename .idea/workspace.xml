@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="nested loop, 2d array">
+    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="Attendance fixed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/LoginScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AppointmentsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AppointmentsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +83,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.SpaManagement.executor": "Run",
+    "Application.SpaManagement.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
@@ -218,7 +218,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702349532266</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Attendance fixed">
+      <option name="closed" value="true" />
+      <created>1702353043651</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1702353043651</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -258,7 +266,8 @@
     <MESSAGE value="some comments removed" />
     <MESSAGE value="some comments removed 2" />
     <MESSAGE value="nested loop, 2d array" />
-    <option name="LAST_COMMIT_MESSAGE" value="nested loop, 2d array" />
+    <MESSAGE value="Attendance fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Attendance fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -392,6 +401,66 @@
           <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
           <line>180</line>
           <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
+          <line>134</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
+          <line>135</line>
+          <option name="timeStamp" value="67" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
+          <line>136</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
+          <line>137</line>
+          <option name="timeStamp" value="69" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
+          <line>138</line>
+          <option name="timeStamp" value="70" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
+          <line>139</line>
+          <option name="timeStamp" value="71" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
+          <line>119</line>
+          <option name="timeStamp" value="72" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
+          <line>121</line>
+          <option name="timeStamp" value="74" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
+          <line>122</line>
+          <option name="timeStamp" value="75" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
+          <line>123</line>
+          <option name="timeStamp" value="76" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
+          <line>124</line>
+          <option name="timeStamp" value="77" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java</url>
+          <line>403</line>
+          <option name="timeStamp" value="80" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

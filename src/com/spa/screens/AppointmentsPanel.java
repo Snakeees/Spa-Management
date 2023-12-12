@@ -17,6 +17,7 @@ public class AppointmentsPanel extends JPanel {
         ArrayList<Service> allServices;
     ArrayList<Therapist> allTherapist;
     SimpleDateFormat timeFormater = new SimpleDateFormat("HH:mm");
+    SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy");
     private Object[][] tableData;
     private JScrollPane appointmentListTablePane;
     private JButton addAppointment;
@@ -194,25 +195,26 @@ public class AppointmentsPanel extends JPanel {
         validate();
     }
     public void updateTable(Object[][] data){
-        appointmentsListTable = new JTable(new DefaultTableModel(
-                data,
-                new String[]{
-                        "APPOINTMENT ID", "CLIENT NAME", "SERVICE", "THERAPIST", "TIME", "OPTIONS"
-                }
-        )) {
+        String[] headers = new String[]{
+                "APPOINTMENT ID", "CLIENT NAME", "SERVICE", "THERAPIST", "DATE", "TIME", "OPTIONS"
+        };
+        int optionsIndex = Arrays.asList(headers).indexOf("OPTIONS");
+
+        appointmentsListTable = new JTable(new DefaultTableModel(data, headers))
+        {
             @Override
             public void updateUI() {
                 super.updateUI();
                 setRowHeight(36);
                 setAutoCreateRowSorter(true);
-                TableColumn column = getColumnModel().getColumn(5);
+                TableColumn column = getColumnModel().getColumn(optionsIndex);
                 column.setCellRenderer(new AppointmentsPanel.ButtonsRenderer());
                 column.setCellEditor(new AppointmentsPanel.ButtonsEditor(this));
             }
 
             @Override
             public boolean isCellEditable(int row, int col) {
-                return col == 5;
+                return col == optionsIndex;
             }
         };
         //Customizing default cell render for good look
@@ -274,12 +276,13 @@ public class AppointmentsPanel extends JPanel {
         List<List<Object>> cells = new ArrayList<>();
         java.util.Date d = new java.util.Date();
         try {
-            ResultSet rs = db.executeQuery("select a.ID, a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t, Service s where AppointmentDate=? and a.IsActive=? and t.ID=a.TherapistID and a.ServiceID=s.ID ORDER BY a.AppointmentTime", new java.sql.Date(d.getYear(), d.getMonth(), d.getDate()), true);
+            ResultSet rs = db.executeQuery("select a.ID, a.ClientName as clientName, s.ServiceName as service, t.FirstName as therapist, a.AppointmentDate as date,a.AppointmentTime as time from Appointment a, Therapist t, Service s where AppointmentDate=? and a.IsActive=? and t.ID=a.TherapistID and a.ServiceID=s.ID ORDER BY a.AppointmentDate, a.AppointmentTime", new java.sql.Date(d.getYear(), d.getMonth(), d.getDate()), true);
             while (rs.next()) {
                 int id = rs.getInt("ID");
                 String clientName = rs.getString("clientName");
                 String service = rs.getString("service");
                 String therapist = rs.getString("therapist");
+                String appdate = dateFormater.format(rs.getDate("date"));
                 String time = timeFormater.format(rs.getTime("time"));
 
                 ArrayList<Object> arr = new ArrayList<>();
@@ -287,13 +290,14 @@ public class AppointmentsPanel extends JPanel {
                 arr.add(clientName);
                 arr.add(service);
                 arr.add(therapist);
+                arr.add(appdate);
                 arr.add(time);
                 arr.add("");
                 cells.add(arr);
             }
-            Object[][] obj = new Object[cells.size()][5];
+            Object[][] obj = new Object[cells.size()][6];
             for (int i = 0; i < cells.size(); i++) {
-                for (int j = 0; j < 5; j++) {
+                for (int j = 0; j < obj[0].length; j++) {
                     obj[i][j] = cells.get(i).get(j);
                 }
             }
@@ -311,7 +315,7 @@ public class AppointmentsPanel extends JPanel {
         List<List<Object>> cells = new ArrayList<>();
         ResultSet rs;
         List<Object> parameters = new ArrayList<>();
-        StringBuilder query = new StringBuilder("select a.ID,a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentTime as time from Appointment a, Therapist t, Service s where a.IsActive=true and t.ID=a.TherapistID and a.ServiceID=s.ID  ");
+        StringBuilder query = new StringBuilder("select a.ID,a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentDate as date,a.AppointmentTime as time from Appointment a, Therapist t, Service s where a.IsActive=true and t.ID=a.TherapistID and a.ServiceID=s.ID  ");
         Date date = dateSelectorTxt.getDate();
         if (date != null) {
             parameters.add(new java.sql.Date(date.getYear(), date.getMonth(), date.getDate()));
@@ -331,7 +335,7 @@ public class AppointmentsPanel extends JPanel {
             parameters.add("%" + clientNameTxt.getText() + "%");
             query.append("and a.ClientName LIKE ?");
         }
-        query.append(" ORDER BY a.AppointmentTime");
+        query.append(" ORDER BY a.AppointmentDate DESC, a.AppointmentTime DESC");
 
         try {
             rs = db.executeQuery(query.toString(), parameters.toArray());
@@ -340,6 +344,7 @@ public class AppointmentsPanel extends JPanel {
                 String serviceName = rs.getString("service");
                 String clientName = rs.getString("clientName");
                 String therapistName = rs.getString("therapist");
+                String appdate = dateFormater.format(rs.getDate("date"));
                 String time = timeFormater.format(rs.getTime("time"));
 
                 ArrayList<Object> arr = new ArrayList<>();
@@ -347,17 +352,16 @@ public class AppointmentsPanel extends JPanel {
                 arr.add(clientName);
                 arr.add(serviceName);
                 arr.add(therapistName);
+                arr.add(appdate);
                 arr.add(time);
                 arr.add("");
                 cells.add(arr);
             }
-            Object[][] obj = new Object[cells.size()][5];
+            Object[][] obj = new Object[cells.size()][6];
             for (int i = 0; i < cells.size(); i++) {
-                obj[i][0] = cells.get(i).get(0);
-                obj[i][1] = cells.get(i).get(1);
-                obj[i][2] = cells.get(i).get(2);
-                obj[i][3] = cells.get(i).get(3);
-                obj[i][4] = cells.get(i).get(4);
+                for (int j = 0; j < obj[0].length; j++) {
+                    obj[i][j] = cells.get(i).get(j);
+                }
             }
 
             return obj;

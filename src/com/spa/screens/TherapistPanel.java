@@ -484,7 +484,7 @@ public class TherapistPanel extends JPanel {
                 if (result == JOptionPane.OK_OPTION) {
                     try {
                         if (resignationDateTxt.getDate() == null) {
-                            db.executeUpdate("update Therapist set FirstName=?, PhoneNumber=?, Address=?, IsActive=? where ID=? ;", therapistNameTxt.getText(), phoneNumberTxt.getText(), addressTxt.getText(), isActive.isSelected(), therapist.getId());
+                            db.executeUpdate("update Therapist set FirstName=?, PhoneNumber=?, Address=?, IsActive=?, ResignationDate=? where ID=? ;", therapistNameTxt.getText(), phoneNumberTxt.getText(), addressTxt.getText(), isActive.isSelected(), null, therapist.getId());
                         }
                         else {
                             String modifiedDate = requiredDateFormate.format(resignationDateTxt.getDate().getTime());

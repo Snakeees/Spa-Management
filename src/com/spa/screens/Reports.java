@@ -2,6 +2,7 @@ package com.spa.screens;
 
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import javax.swing.*;
 import java.awt.*;
@@ -117,10 +118,10 @@ public class Reports extends JPanel {
     // fetching total income from 1st of the month from DB which is need to be displayed in UI
     public int getIncome() {
         Database db = new Database();
-        Date date = new Date();
+        LocalDate date = LocalDate.now();
         try {
-            Date startDate = dateFormat.parse(date.getYear() + "-" + date.getMonth() + "-1");
-            ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and a.AppointmentDate>=? and a.IsActive=true and a.AppointmentDate<?", dateFormat.format(startDate), dateFormat.format(date));
+            Date startDate = dateFormat.parse(date.getYear() + "-" + date.getMonthValue() + "-1");
+            ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and a.AppointmentDate>=? and a.IsActive=true and a.AppointmentDate<=?", dateFormat.format(startDate), dateFormat.format(new Date()));
             while (rs.next()) {
                 return rs.getInt("monthIncome");
             }
@@ -132,10 +133,10 @@ public class Reports extends JPanel {
     // fetching no of visits from 1st of the month from DB which is need to be displayed in UI
     public int getVisits() {
         Database db = new Database();
-        Date date = new Date();
+        LocalDate date = LocalDate.now();
         try {
-            Date startDate = dateFormat.parse(date.getYear() + "-" + date.getMonth() + "-1");
-            ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where AppointmentDate>=? and IsActive=true and AppointmentDate<?", dateFormat.format(startDate), dateFormat.format(date));
+            Date startDate = dateFormat.parse(date.getYear() + "-" + date.getMonthValue() + "-1");
+            ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where AppointmentDate>=? and IsActive=true and AppointmentDate<=?", dateFormat.format(startDate), dateFormat.format(new Date()));
             while (rs.next()) {
                 return rs.getInt("visits");
             }
