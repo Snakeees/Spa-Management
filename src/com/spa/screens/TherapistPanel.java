@@ -410,6 +410,20 @@ public class TherapistPanel extends JPanel {
             d.setDate(d.getDate() - (x - k));
             attendanceList.get(i).setToolTipText(dateFormater.format(d));
             currentDate = requiredDateFormate.format(d);
+            Database db = new Database();
+            try {
+                ResultSet rs = db.executeQuery("SELECT CheckinTime FROM TherapistAttendance WHERE TherapistID = ? AND Date = ? AND CheckinTime IS NOT NULL limit 1", therapist.getId(), currentDate);
+                if (rs.next()) {
+                    attendanceList.get(i).setBackground(new Color(27, 112, 38));
+                } else {
+                    attendanceList.get(i).setBackground(new Color(166, 7, 7));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+/*
             if (j >= 0) {
                 listDate = requiredDateFormate.format(therapistAttendances.get(j).getDate());
                 if (currentDate.equals(listDate)) {
@@ -423,6 +437,7 @@ public class TherapistPanel extends JPanel {
             else {
                 attendanceList.get(i).setBackground(new Color(166, 7, 7));
             }
+*/
         }
     }
     //This method navigates to Therapist Table page when back button is clicked

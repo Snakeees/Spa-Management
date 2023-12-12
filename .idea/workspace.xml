@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="some comments removed 2">
+    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="nested loop, 2d array">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AppointmentsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AppointmentsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/LoginScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -209,7 +210,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702348598791</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="nested loop, 2d array">
+      <option name="closed" value="true" />
+      <created>1702349532266</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1702349532266</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -248,30 +257,141 @@
     <MESSAGE value="Logout button added" />
     <MESSAGE value="some comments removed" />
     <MESSAGE value="some comments removed 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="some comments removed 2" />
+    <MESSAGE value="nested loop, 2d array" />
+    <option name="LAST_COMMIT_MESSAGE" value="nested loop, 2d array" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>118</line>
-          <option name="timeStamp" value="1" />
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java</url>
+          <line>404</line>
+          <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>119</line>
-          <option name="timeStamp" value="2" />
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java</url>
+          <line>406</line>
+          <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>123</line>
-          <option name="timeStamp" value="3" />
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java</url>
+          <line>405</line>
+          <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>124</line>
-          <option name="timeStamp" value="5" />
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java</url>
+          <line>407</line>
+          <option name="timeStamp" value="20" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java</url>
+          <line>408</line>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java</url>
+          <line>409</line>
+          <option name="timeStamp" value="22" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java</url>
+          <line>411</line>
+          <option name="timeStamp" value="23" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java</url>
+          <line>410</line>
+          <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>167</line>
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>169</line>
+          <option name="timeStamp" value="43" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>168</line>
+          <option name="timeStamp" value="44" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>171</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>170</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>174</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>173</line>
+          <option name="timeStamp" value="48" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>165</line>
+          <option name="timeStamp" value="51" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>166</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>164</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>163</line>
+          <option name="timeStamp" value="54" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>172</line>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>175</line>
+          <option name="timeStamp" value="56" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>177</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>176</line>
+          <option name="timeStamp" value="59" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>178</line>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>179</line>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java</url>
+          <line>180</line>
+          <option name="timeStamp" value="65" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

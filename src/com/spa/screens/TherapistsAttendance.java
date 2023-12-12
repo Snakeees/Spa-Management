@@ -174,14 +174,8 @@ public class TherapistsAttendance extends JPanel {
                     if (checkInTime.isSelected() && therapistsAttendance.getCheckinTime() == null) {
                         therapistsAttendance.setCheckinTime(currentTime);
                     }
-                    else if (!checkInTime.isSelected()) {
-                        therapistsAttendance.setCheckinTime(null);
-                    }
                     if (checkOutTime.isSelected() && therapistsAttendance.getCheckoutTime() == null) {
                         therapistsAttendance.setCheckoutTime(currentTime);
-                    }
-                    else if (!checkOutTime.isSelected()) {
-                        therapistsAttendance.setCheckoutTime(null);
                     }
                     database.executeUpdate("update TherapistAttendance set checkIntime=? , checkouttime=?, date=? where ID=? ;", therapistsAttendance.getCheckinTime(), therapistsAttendance.getCheckoutTime(), therapistsAttendance.getDate(), this.selectedTherapistAttendanceId);
                     JOptionPane.showMessageDialog(this, "Updated attendance details successfully");
