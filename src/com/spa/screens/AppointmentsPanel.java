@@ -293,11 +293,9 @@ public class AppointmentsPanel extends JPanel {
             }
             Object[][] obj = new Object[cells.size()][5];
             for (int i = 0; i < cells.size(); i++) {
-                obj[i][0] = cells.get(i).get(0);
-                obj[i][1] = cells.get(i).get(1);
-                obj[i][2] = cells.get(i).get(2);
-                obj[i][3] = cells.get(i).get(3);
-                obj[i][4] = cells.get(i).get(4);
+                for (int j = 0; j < 5; j++) {
+                    obj[i][j] = cells.get(i).get(j);
+                }
             }
             return obj;
 

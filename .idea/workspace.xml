@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="Logout button added">
+    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="some comments removed 2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AppointmentsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AppointmentsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -191,7 +193,23 @@
       <option name="project" value="LOCAL" />
       <updated>1701689929028</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="some comments removed">
+      <option name="closed" value="true" />
+      <created>1702348375237</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1702348375237</updated>
+    </task>
+    <task id="LOCAL-00009" summary="some comments removed 2">
+      <option name="closed" value="true" />
+      <created>1702348598791</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1702348598791</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -228,29 +246,31 @@
     <MESSAGE value="more" />
     <MESSAGE value="fixed comment in sql file" />
     <MESSAGE value="Logout button added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Logout button added" />
+    <MESSAGE value="some comments removed" />
+    <MESSAGE value="some comments removed 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="some comments removed 2" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>132</line>
+          <line>118</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>133</line>
+          <line>119</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>137</line>
+          <line>123</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>138</line>
+          <line>124</line>
           <option name="timeStamp" value="5" />
         </line-breakpoint>
       </breakpoints>
