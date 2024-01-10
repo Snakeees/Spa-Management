@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="Attendance fixed">
+    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="appointments fixed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AppointmentsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AppointmentsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,7 +80,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.SpaManagement.executor": "Debug",
+    "Application.SpaManagement.executor": "Run",
+    "Notification.DisplayName-DoNotAsk-Vcs Important Messages": "VCS important messages",
+    "Notification.DoNotAsk-Vcs Important Messages": "true",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
@@ -100,7 +99,7 @@
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
     "settings.build.tools.auto.reload": "ALL",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui"
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -226,7 +225,15 @@
       <option name="project" value="LOCAL" />
       <updated>1702353043651</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="appointments fixed">
+      <option name="closed" value="true" />
+      <created>1702364942255</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1702364942255</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -267,7 +274,8 @@
     <MESSAGE value="some comments removed 2" />
     <MESSAGE value="nested loop, 2d array" />
     <MESSAGE value="Attendance fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="Attendance fixed" />
+    <MESSAGE value="appointments fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="appointments fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
