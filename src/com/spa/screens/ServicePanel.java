@@ -14,7 +14,7 @@ import java.util.Date;
 
 public class ServicePanel extends JPanel {
 
-        Service service;
+    Service service;
     private JLabel activeLable;
     private JLabel addServiceLabel;
     private JLabel costLabel;
