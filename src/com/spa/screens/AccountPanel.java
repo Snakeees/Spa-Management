@@ -70,6 +70,7 @@ public class AccountPanel extends JPanel {
 
 
         GroupLayout contentLayout = new GroupLayout(content);
+
         // Editing Account details
         if (userLogin != null && isEditable) {
             userNameTxt.setText(userLogin.getLoginName());
