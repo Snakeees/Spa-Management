@@ -1,5 +1,7 @@
 package com.spa.screens;
 
+import com.spa.dto.*;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -8,8 +10,9 @@ import java.util.Objects;
 
 public class LoginScreen extends JFrame {
 
-    private JTextField userField;
+    private MyTextField userField;
     private JPasswordField passField;
+
 
     public LoginScreen(String message) {
         if (message != null) {
@@ -18,6 +21,7 @@ public class LoginScreen extends JFrame {
         createFrame();
         JPanel mainPanel = createMainPanel();
         getContentPane().add(mainPanel, BorderLayout.CENTER); // Use BorderLayout for JFrame
+        UIManager.put("Button.select", new Color(250, 105, 192));
     }
 
     private void createFrame() {
@@ -28,7 +32,7 @@ public class LoginScreen extends JFrame {
 
     private JPanel createMainPanel() {
         JPanel panel = new JPanel(new GridBagLayout()); // Use GridBagLayout for auto-spacing
-        panel.setBackground(Color.decode("#d8ebf3"));
+        panel.setBackground(new Color(255, 220, 241));
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -45,25 +49,36 @@ public class LoginScreen extends JFrame {
 
     private JPanel createHeader() {
         JPanel headerPanel = new JPanel();
-        headerPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
         headerPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
         headerPanel.setOpaque(false);
 
         JLabel heading = new JLabel("Serenity SPA");
         heading.setFont(new Font("Play", Font.BOLD, 40));
-        headerPanel.add(heading);
+        heading.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        // Load and resize the image
+        NoScalingIcon imgIcon = new NoScalingIcon(getClass().getResource("../../../images/logo.bak.png"));
+        imgIcon.Scale(0.4);
+        JLabel imageLabel = new JLabel(imgIcon);
+        imageLabel.setOpaque(false);
+        imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Add components to headerPanel
+        headerPanel.add(heading);
+        headerPanel.add(imageLabel);
         return headerPanel;
     }
 
     private JPanel createUsernamePanel() {
         JPanel userPanel = new JPanel();
+        userPanel.setBackground(new Color(0,0,0));
         userPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         userPanel.setOpaque(false);
 
         JLabel userLabel = new JLabel("USERNAME ");
         userLabel.setFont(new Font("Play", Font.PLAIN, 20));
-        userField = new JTextField(20);
+        userField = new MyTextField(20);
         userPanel.add(userLabel);
         userPanel.add(userField);
 
@@ -78,6 +93,7 @@ public class LoginScreen extends JFrame {
         JLabel passLabel = new JLabel("PASSWORD ");
         passLabel.setFont(new Font("Play", Font.PLAIN, 20));
         passField = new JPasswordField(20);
+        passField.setBorder(BorderFactory.createLineBorder(new Color(255, 89, 149), 3));
         passPanel.add(passLabel);
         passPanel.add(passField);
 
@@ -90,10 +106,10 @@ public class LoginScreen extends JFrame {
         submitPanel.setOpaque(false);
         submitPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
 
-        JButton submitButton = new JButton("SUBMIT");
+        MyButton submitButton = new MyButton("SUBMIT");
         submitButton.setFocusPainted(false);
         submitButton.setFont(new Font("Play", Font.BOLD, 20));
-        submitButton.setBackground(Color.decode("#1e8ab8"));
+        submitButton.setBackground(new Color(145, 73, 116));
         submitButton.setForeground(Color.WHITE);
 
         submitButton.addActionListener(action -> {

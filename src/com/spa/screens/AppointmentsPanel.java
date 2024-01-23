@@ -1,7 +1,6 @@
 package com.spa.screens;
 
-import com.spa.dto.Service;
-import com.spa.dto.Therapist;
+import com.spa.dto.*;
 
 import javax.swing.*;
 import javax.swing.table.*;
@@ -11,6 +10,7 @@ import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
+import java.util.Timer;
 
 public class AppointmentsPanel extends JPanel {
 
@@ -20,7 +20,7 @@ public class AppointmentsPanel extends JPanel {
     SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy");
     private Object[][] tableData;
     private JScrollPane appointmentListTablePane;
-    private JButton addAppointment;
+    private MyButton addAppointment;
     private JLabel appointmentsDetailLabel;
     private JTable appointmentsListTable;
     private JLabel serviceLabel;
@@ -30,8 +30,9 @@ public class AppointmentsPanel extends JPanel {
     private JLabel dateLabel;
     private com.toedter.calendar.JDateChooser dateSelectorTxt;
     private JLabel clientNameLabel;
-    private JTextField clientNameTxt;
-    private JButton searchLable;
+    private MyTextField clientNameTxt;
+    private MyButton searchLable;
+    private Timer timer;
 
 
 
@@ -39,14 +40,15 @@ public class AppointmentsPanel extends JPanel {
         updateDropdownDetails();
         tableData = getAppointments();
         initComponents();
+        UIManager.put("Button.select", new Color(250, 105, 192));
     }
 
-        @SuppressWarnings("unchecked")
     private void initComponents() {
-        setBackground(new Color(216, 235, 243));
+        setBackground(new Color(255, 220, 241));
         appointmentListTablePane = new JScrollPane();
+        appointmentListTablePane.getViewport().setBackground(new Color(255, 220, 241));
         updateTable(tableData);
-        addAppointment = new JButton();
+        addAppointment = new MyButton();
         appointmentsDetailLabel = new JLabel();
         therapistNameList = new JComboBox<>();
         serviceList = new JComboBox<>();
@@ -56,17 +58,17 @@ public class AppointmentsPanel extends JPanel {
         dateSelectorTxt = new com.toedter.calendar.JDateChooser();
         dateSelectorTxt.setDateFormatString("dd-MM-yyyy");
         dateSelectorTxt.setToolTipText("DD-MM-YYYY");
-        dateLabel.setBackground(new Color(216, 235, 243));
+        dateLabel.setBackground(new Color(255, 220, 241));
         dateLabel.setFont(new Font("Play", 1, 14));
         dateLabel.setText("DATE (DD-MM-YYYY)");
         clientNameLabel = new JLabel();
-        clientNameTxt = new JTextField();
+        clientNameTxt = new MyTextField();
         clientNameLabel.setFont(new Font("Play", 1, 14));
         clientNameLabel.setText("CLIENT NAME");
         therapistNameList.setFont(new Font("Play", 0, 12));
         serviceList.setFont(new Font("Play", 0, 12));
 
-        addAppointment.setBackground(new Color(53, 183, 234));
+        addAppointment.setBackground(new Color(145, 73, 116));
         addAppointment.setText("CREATE");
         addAppointment.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -74,12 +76,12 @@ public class AppointmentsPanel extends JPanel {
             }
         });
 
-        appointmentListTablePane.setBackground(new Color(216, 235, 243));
+        appointmentListTablePane.setBackground(new Color(255, 220, 241));
         appointmentListTablePane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         appointmentListTablePane.setInheritsPopupMenu(true);
 
-        appointmentsListTable.setBackground(new Color(216, 235, 243));
-        appointmentsDetailLabel.setBackground(new Color(216, 235, 243));
+        appointmentsListTable.setBackground(new Color(255, 220, 241));
+        appointmentsDetailLabel.setBackground(new Color(255, 220, 241));
         appointmentsDetailLabel.setFont(new Font("Play", 1, 18));
         appointmentsDetailLabel.setText("APPOINTMENTS LIST");
 
@@ -98,16 +100,16 @@ public class AppointmentsPanel extends JPanel {
 
         therapistNameList.setBackground(Color.WHITE);
         serviceList.setBackground(Color.WHITE);
-        therapistLabel.setBackground(new Color(216, 235, 243));
+        therapistLabel.setBackground(new Color(255, 220, 241));
         therapistLabel.setFont(new Font("Play", 1, 14));
         therapistLabel.setText("THERAPIST NAME");
 
-        serviceLabel.setBackground(new Color(216, 235, 243));
+        serviceLabel.setBackground(new Color(255, 220, 241));
         serviceLabel.setFont(new Font("Play", 1, 14));
         serviceLabel.setText("SERVICE");
 
-        searchLable = new JButton();
-        searchLable.setBackground(new Color(53, 183, 234));
+        searchLable = new MyButton();
+        searchLable.setBackground(new Color(145, 73, 116));
         searchLable.setFont(new Font("Play", 1, 12));
         searchLable.setText("SEARCH");
         searchLable.addActionListener(new ActionListener() {
@@ -232,7 +234,7 @@ public class AppointmentsPanel extends JPanel {
         Dimension headerSize = header.getPreferredSize();
         headerSize.height = 40;
         header.setPreferredSize(headerSize);
-        appointmentsListTable.setBackground(new Color(216, 235, 243));
+        appointmentsListTable.setBackground(new Color(255, 220, 241));
         if (tableData != null && tableData.length > 0)
             appointmentListTablePane.setViewportView(appointmentsListTable);
         else {
@@ -408,7 +410,7 @@ public class AppointmentsPanel extends JPanel {
 
             if (comp instanceof JLabel) {
                 ((JLabel) comp).setFont(boldFont);
-                ((JLabel) comp).setBorder(BorderFactory.createLineBorder(Color.decode("#969999")));
+                ((JLabel) comp).setBorder(BorderFactory.createLineBorder(new Color(150, 153, 153)));
             }
             return comp;
         }
@@ -500,13 +502,13 @@ public class AppointmentsPanel extends JPanel {
             options.add("Cancel");
             this.panel = new ButtonItems(options);
             this.table = table;
-            List<JButton> list = panel.getButtons();
+            List<MyButton> list = panel.getButtons();
             list.get(2).setAction(new AppointmentsPanel.CancelAction(table));
             list.get(1).setAction(new AppointmentsPanel.EditAction(table));
             list.get(0).setAction(new AppointmentsPanel.ViewAction(table));
 
             AppointmentsPanel.ButtonsEditor.EditingStopHandler handler = new AppointmentsPanel.ButtonsEditor.EditingStopHandler();
-            for (JButton b : list) {
+            for (MyButton b : list) {
                 b.addMouseListener(handler);
                 b.addActionListener(handler);
             }
@@ -531,8 +533,8 @@ public class AppointmentsPanel extends JPanel {
                 if (o instanceof TableCellEditor) {
                     actionPerformed(new ActionEvent(o, ActionEvent.ACTION_PERFORMED, ""));
                 }
-                else if (o instanceof JButton) {
-                    ButtonModel m = ((JButton) e.getComponent()).getModel();
+                else if (o instanceof MyButton) {
+                    ButtonModel m = ((MyButton) e.getComponent()).getModel();
                     if (m.isPressed() && table.isRowSelected(table.getEditingRow()) && e.isControlDown()) {
                         panel.setBackground(table.getBackground());
                     }
@@ -542,6 +544,39 @@ public class AppointmentsPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 EventQueue.invokeLater(AppointmentsPanel.ButtonsEditor.this::fireEditingStopped);
+            }
+        }
+    }
+
+    private void startBackgroundTask() {
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                checkAppointments();
+            }
+        }, 0, 60000);
+    }
+
+    private void checkAppointments() {
+        Calendar now = Calendar.getInstance();
+        SimpleDateFormat dateTimeFormatter = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+
+        for (int row = 0; row < appointmentsListTable.getRowCount(); row++) {
+            String appointmentDate = (String) appointmentsListTable.getValueAt(row, 4); // Assuming date is in column 4
+            String appointmentTime = (String) appointmentsListTable.getValueAt(row, 5); // Assuming time is in column 5
+
+            String appointmentDateTimeStr = appointmentDate + " " + appointmentTime;
+            try {
+                Date appointmentDateTime = dateTimeFormatter.parse(appointmentDateTimeStr);
+
+                if (now.getTime().equals(appointmentDateTime)) {
+                    String clientName = (String) appointmentsListTable.getValueAt(row, 1); // Assuming client name is in column 1
+                    // Trigger notification
+                    JOptionPane.showMessageDialog(this, "Appointment now for " + clientName, "Appointment Notification", JOptionPane.INFORMATION_MESSAGE);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

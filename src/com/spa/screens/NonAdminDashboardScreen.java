@@ -1,5 +1,7 @@
 package com.spa.screens;
 
+import com.spa.dto.*;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -9,20 +11,20 @@ import java.util.ArrayList;
 
 
 public class NonAdminDashboardScreen extends JFrame implements ActionListener {
-    JButton appointments;
-    JButton changePassword;
-    JButton attendance;
-    JButton logout;
+    MyButton appointments;
+    MyButton changePassword;
+    MyButton attendance;
+    MyButton logout;
     JPanel content;
     int userId;
-    ArrayList<JButton> navButtons;
+    ArrayList<MyButton> navButtons;
 
     public NonAdminDashboardScreen(int userId, String userName) {
         this.userId = userId;
         setTitle("Serenity SPA: " + userName);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        getContentPane().setBackground(Color.decode("#d8ebf3"));
+        getContentPane().setBackground(new Color(255, 220, 241));
         createHeaderPanel().setLocation(0, 0);
         setSize(500, 400);
         getContentPane().add(createHeaderPanel(), BorderLayout.NORTH, 0);
@@ -33,16 +35,18 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
         content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
 
         JScrollPane body = new JScrollPane();
+        body.getViewport().setBackground(new Color(255, 220, 241));
         body.setBorder(BorderFactory.createEmptyBorder());
         body.setViewportView(content);
         getContentPane().add(body, BorderLayout.CENTER, 1);
+        UIManager.put("Button.select", new Color(250, 105, 192));
     }
 // Highlight the navigation button upon navigation to the page.
-    public void makeActive(JButton button) {
+    public void makeActive(MyButton button) {
         button.setFont(new Font("Play", Font.BOLD, 25));
     }
 // diminish the navigation button upon navigation away from the page.
-    public void makeInActive(JButton button) {
+    public void makeInActive(MyButton button) {
         button.setFont(new Font("Play", Font.PLAIN, 20));
     }
     // Creating the Header panel with navigation buttons
@@ -70,21 +74,24 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
         navButtons.add(logout);
         headerPanel.setLocation(0, 0);
         headerPanel.setSize(MAXIMIZED_HORIZ, 40);
-        headerPanel.setBackground(new Color(53, 183, 234));
+        headerPanel.setBackground(new Color(145, 73, 116));
         return headerPanel;
     }
     // To create navigation buttons
-    public JButton getButton(String label) {
-        JButton button;
-        button = new JButton(label);
+    public MyButton getButton(String label) {
+        MyButton button;
+        new JButton("String").setText("a");
+        button = new MyButton(label);
         button.setFont(new Font("Play", Font.PLAIN, 20));
-        button.setBackground(new Color(53, 183, 234));
+        button.setBackground(new Color(145, 73, 116));
         button.addActionListener(this);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
         return button;
     }
     // diminish all the buttons
     private void updateOtherButtons() {
-        for (JButton button : navButtons) {
+        for (MyButton button : navButtons) {
             makeInActive(button);
         }
     }
@@ -92,6 +99,7 @@ public class NonAdminDashboardScreen extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JScrollPane body = new JScrollPane();
+        body.getViewport().setBackground(new Color(255, 220, 241));
         if (e.getSource() == appointments) {
             updateOtherButtons();
             content.invalidate();

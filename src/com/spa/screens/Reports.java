@@ -3,147 +3,173 @@ package com.spa.screens;
 import java.sql.ResultSet;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.YearMonth;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 public class Reports extends JPanel {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private JLabel incomeLabel;
-    private JPanel incomePanel;
-    private JLabel incomeValue;
-    private JLabel visitLabel;
-    private JPanel visitPanel;
-    private JLabel visitValue;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
     public Reports() {
         initComponents();
+        UIManager.put("Button.select", new Color(250, 105, 192));
     }
 
-    
     private void initComponents() {
+        GridBagConstraints gbc = new GridBagConstraints();
+        GridBagLayout layout = new GridBagLayout();
+        setLayout(layout);
+        setBackground(new Color(255, 220, 241));
 
-        incomePanel = new JPanel();
-        incomeValue = new JLabel();
-        visitPanel = new JPanel();
-        visitValue = new JLabel();
-        incomeLabel = new JLabel();
-        visitLabel = new JLabel();
+        // Common padding
+        int padding = 10; // Adjust the padding as needed
+        gbc.insets = new Insets(padding, padding, padding, padding); // Top, left, bottom, right padding
 
-        setBackground(new Color(216, 235, 243));
+        // Scatter plot for monthly incomes
+        gbc.fill = GridBagConstraints.NONE;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1; // Set this to 1 to allow horizontal spacing to take effect
+        int[] dimen = {450,300};
+        add(new ScatterPlot(getMonthlyIncomes(), dimen, FetchMonthNames()), gbc);
 
-        incomeValue.setFont(new Font("Play", 1, 24));
-        incomeValue.setText("₹ " + getIncome());
+        // Scatter plot for monthly visits
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        add(new ScatterPlot(getMonthlyVisits(), dimen, FetchMonthNames()), gbc);
 
-        GroupLayout incomePanelLayout = new GroupLayout(incomePanel);
-        incomePanel.setLayout(incomePanelLayout);
-        incomePanelLayout.setHorizontalGroup(
-                incomePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(incomePanelLayout.createSequentialGroup()
-                                .addContainerGap(134, Short.MAX_VALUE)
-                                .addComponent(incomeValue)
-                                .addGap(128, 128, 128))
-        );
-        incomePanelLayout.setVerticalGroup(
-                incomePanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(incomePanelLayout.createSequentialGroup()
-                                .addGap(81, 81, 81)
-                                .addComponent(incomeValue)
-                                .addContainerGap(90, Short.MAX_VALUE))
-        );
+        // Labels
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.weightx = 0; // Set this back to 0 for the labels
+        JLabel incomeLabel = new JLabel("Monthly Incomes", SwingConstants.CENTER);
+        incomeLabel.setFont(new Font("Play", Font.BOLD, 20));
+        add(incomeLabel, gbc);
 
-        visitValue.setFont(new Font("Play", 1, 24));
-        visitValue.setText(Integer.toString(getVisits()));
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        JLabel visitLabel = new JLabel("Monthly Visits", SwingConstants.CENTER);
+        visitLabel.setFont(new Font("Play", Font.BOLD, 20));
+        add(visitLabel, gbc);
 
-        GroupLayout visitPanelLayout = new GroupLayout(visitPanel);
-        visitPanel.setLayout(visitPanelLayout);
-        visitPanelLayout.setHorizontalGroup(
-                visitPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(visitPanelLayout.createSequentialGroup()
-                                .addContainerGap(158, Short.MAX_VALUE)
-                                .addComponent(visitValue)
-                                .addGap(140, 140, 140))
-        );
-        visitPanelLayout.setVerticalGroup(
-                visitPanelLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(visitPanelLayout.createSequentialGroup()
-                                .addGap(81, 81, 81)
-                                .addComponent(visitValue)
-                                .addContainerGap(90, Short.MAX_VALUE))
-        );
 
-        incomeLabel.setFont(new Font("Play", 1, 18));
-        incomeLabel.setText("Current Month Income");
 
-        visitLabel.setFont(new Font("Play", 1, 18));
-        visitLabel.setText("Current Month Visits");
+        // Income panel
+        /*JPanel incomePanel = new JPanel(new BorderLayout());
+        incomePanel.add(new ScatterPlot(getMonthlyIncomes(), new int[]{300,300}), BorderLayout.CENTER);
 
-        GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(130, 130, 130)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(incomePanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(40, 40, 40)
-                                                .addComponent(incomeLabel, GroupLayout.PREFERRED_SIZE, 252, GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 299, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(60, 60, 60)
-                                                .addComponent(visitLabel)
-                                        )
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(visitPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(130, 130, 130)
-                                        )))
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(168, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addComponent(incomeLabel)
-                                        .addComponent(visitLabel))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                        .addComponent(incomePanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(visitPanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap(183, Short.MAX_VALUE))
-        );
+        JLabel incomeLabel = new JLabel("Monthly Incomes", SwingConstants.CENTER);
+        incomeLabel.setBorder(new EmptyBorder(10, 0, 0, 0));
+        incomePanel.add(incomeLabel, BorderLayout.SOUTH);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gridbag.setConstraints(incomePanel, gbc);
+        add(incomePanel);
+
+        // Visit panel
+        JPanel visitPanel = new JPanel(new BorderLayout());
+        visitPanel.add(new ScatterPlot(getMonthlyVisits(), new int[]{300,300}), BorderLayout.CENTER);
+
+        JLabel visitLabel = new JLabel("Monthly Visits", SwingConstants.CENTER);
+        visitPanel.add(visitLabel, BorderLayout.SOUTH);
+
+        gbc.gridx = 1;
+        gridbag.setConstraints(visitPanel, gbc);
+        add(visitPanel);*/
     }
+
     // fetching total income from 1st of the month from DB which is need to be displayed in UI
-    public int getIncome() {
+    public int[] getMonthlyIncomes() {
         Database db = new Database();
-        LocalDate date = LocalDate.now();
-        try {
-            Date startDate = dateFormat.parse(date.getYear() + "-" + date.getMonthValue() + "-1");
-            ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and a.AppointmentDate>=? and a.IsActive=true and a.AppointmentDate<=?", dateFormat.format(startDate), dateFormat.format(new Date()));
-            while (rs.next()) {
-                return rs.getInt("monthIncome");
+        LocalDate startDate = LocalDate.of(2023, 8, 1); // Starting from August 2023
+        LocalDate endDate = LocalDate.now(); // Until current month
+
+        ArrayList<Integer> monthlyIncomes = new ArrayList<>();
+
+        while (startDate.isBefore(endDate) || startDate.isEqual(endDate)) {
+            YearMonth yearMonth = YearMonth.from(startDate);
+            LocalDate firstDayOfMonth = yearMonth.atDay(1);
+            LocalDate lastDayOfMonth = yearMonth.atEndOfMonth();
+
+            try {
+                Date startOfMonth = dateFormat.parse(dateFormat.format(java.sql.Date.valueOf(firstDayOfMonth)));
+                Date endOfMonth = dateFormat.parse(dateFormat.format(java.sql.Date.valueOf(lastDayOfMonth)));
+
+                ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and a.AppointmentDate>=? and a.IsActive=true and a.AppointmentDate<=?", dateFormat.format(startOfMonth), dateFormat.format(endOfMonth));
+                if (rs.next()) {
+                    monthlyIncomes.add(rs.getInt("monthIncome"));
+                } else {
+                    monthlyIncomes.add(0);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                monthlyIncomes.add(0);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            startDate = startDate.plusMonths(1);
         }
-        return 0;
+        return monthlyIncomes.stream().mapToInt(i -> i).toArray();
     }
+
     // fetching no of visits from 1st of the month from DB which is need to be displayed in UI
-    public int getVisits() {
+    public int[] getMonthlyVisits() {
         Database db = new Database();
-        LocalDate date = LocalDate.now();
-        try {
-            Date startDate = dateFormat.parse(date.getYear() + "-" + date.getMonthValue() + "-1");
-            ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where AppointmentDate>=? and IsActive=true and AppointmentDate<=?", dateFormat.format(startDate), dateFormat.format(new Date()));
-            while (rs.next()) {
-                return rs.getInt("visits");
+        LocalDate startDate = LocalDate.of(2023, 8, 1); // Starting from August 2023
+        LocalDate endDate = LocalDate.now(); // Until current month
+
+        ArrayList<Integer> monthlyVisits = new ArrayList<>();
+
+        while (startDate.isBefore(endDate) || startDate.isEqual(endDate)) {
+            YearMonth yearMonth = YearMonth.from(startDate);
+            LocalDate firstDayOfMonth = yearMonth.atDay(1);
+            LocalDate lastDayOfMonth = yearMonth.atEndOfMonth();
+
+            try {
+                Date startOfMonth = dateFormat.parse(dateFormat.format(java.sql.Date.valueOf(firstDayOfMonth)));
+                Date endOfMonth = dateFormat.parse(dateFormat.format(java.sql.Date.valueOf(lastDayOfMonth)));
+
+                ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where AppointmentDate>=? and IsActive=true and AppointmentDate<=?", dateFormat.format(startOfMonth), dateFormat.format(endOfMonth));
+                if (rs.next()) {
+                    monthlyVisits.add(rs.getInt("visits"));
+                } else {
+                    monthlyVisits.add(0);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                monthlyVisits.add(0);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+            startDate = startDate.plusMonths(1);
         }
-        return 0;
+        return monthlyVisits.stream().mapToInt(i -> i).toArray();
+    }
+
+    public String[] FetchMonthNames() {
+        LocalDate startDate = LocalDate.of(2023, 8, 1); // Starting from August 2023
+        LocalDate endDate = LocalDate.now(); // Until current month
+
+        ArrayList<String> monthNames = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM"); // Abbreviated month name
+
+        while (startDate.isBefore(endDate) || startDate.isEqual(endDate)) {
+            String monthName = startDate.format(formatter);
+            monthNames.add(monthName);
+
+            // Move to the next month
+            startDate = startDate.plusMonths(1);
+        }
+
+        // Convert ArrayList to array
+        return monthNames.toArray(new String[0]);
     }
 
 }

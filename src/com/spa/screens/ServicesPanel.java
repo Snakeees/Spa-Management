@@ -1,5 +1,7 @@
 package com.spa.screens;
 
+import com.spa.dto.*;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
@@ -14,7 +16,7 @@ import java.util.List;
 
 public class ServicesPanel extends JPanel {
 
-        private JButton addService;
+    private MyButton addService;
     private JScrollPane serviceTableListPane;
     private JTable serviceTableList;
     private Object[][] tableData;
@@ -22,11 +24,12 @@ public class ServicesPanel extends JPanel {
     public ServicesPanel() {
         tableData = getUserServices();
         initComponents();
+        UIManager.put("Button.select", new Color(250, 105, 192));
     }
 
         private void initComponents() {
-        setBackground(new Color(216, 235, 243));
-        addService = new JButton();
+        setBackground(new Color(255, 220, 241));
+        addService = new MyButton();
         DefaultTableModel model = new DefaultTableModel(
                 tableData,
                 new String[]{
@@ -40,6 +43,7 @@ public class ServicesPanel extends JPanel {
         };
 
         serviceTableListPane = new JScrollPane();
+        serviceTableListPane.getViewport().setBackground(new Color(255, 220, 241));
         serviceTableList = new JTable(model) {
             @Override
             public void updateUI() {
@@ -57,7 +61,7 @@ public class ServicesPanel extends JPanel {
             }
         };
 
-        addService.setBackground(new Color(53, 183, 234));
+        addService.setBackground(new Color(145, 73, 116));
         addService.setText("CREATE");
         addService.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -65,11 +69,11 @@ public class ServicesPanel extends JPanel {
             }
         });
 
-        serviceTableListPane.setBackground(new Color(216, 235, 243));
+        serviceTableListPane.setBackground(new Color(255, 220, 241));
         serviceTableListPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         serviceTableListPane.setInheritsPopupMenu(true);
 
-        serviceTableList.setBackground(new Color(216, 235, 243));
+        serviceTableList.setBackground(new Color(255, 220, 241));
         serviceTableList.setPreferredScrollableViewportSize(serviceTableList.getPreferredSize());
 
         if (tableData != null && tableData.length > 0)
@@ -225,12 +229,12 @@ public class ServicesPanel extends JPanel {
             options.add("update");
             this.panel = new ButtonItems(options);
             this.table = table;
-            List<JButton> list = panel.getButtons();
+            List<MyButton> list = panel.getButtons();
             list.get(1).setAction(new ServicesPanel.EditAction(table));
             list.get(0).setAction(new ServicesPanel.ViewAction(table));
 
             ServicesPanel.ButtonsEditor.EditingStopHandler handler = new ServicesPanel.ButtonsEditor.EditingStopHandler();
-            for (JButton b : list) {
+            for (MyButton b : list) {
                 b.addMouseListener(handler);
                 b.addActionListener(handler);
             }
@@ -255,8 +259,8 @@ public class ServicesPanel extends JPanel {
                 if (o instanceof TableCellEditor) {
                     actionPerformed(new ActionEvent(o, ActionEvent.ACTION_PERFORMED, ""));
                 }
-                else if (o instanceof JButton) {
-                    ButtonModel m = ((JButton) e.getComponent()).getModel();
+                else if (o instanceof MyButton) {
+                    ButtonModel m = ((MyButton) e.getComponent()).getModel();
                     if (m.isPressed() && table.isRowSelected(table.getEditingRow()) && e.isControlDown()) {
                         panel.setBackground(table.getBackground());
                     }

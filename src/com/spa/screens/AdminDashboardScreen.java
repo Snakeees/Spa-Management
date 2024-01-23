@@ -1,21 +1,24 @@
 package com.spa.screens;
 
+import com.spa.dto.*;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.image.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class AdminDashboardScreen extends JFrame implements ActionListener {
-    JButton reports;
-    JButton therapists;
-    JButton services;
-    JButton accounts;
-    JButton changePassword;
-    JButton logout;
+    MyButton reports;
+    MyButton therapists;
+    MyButton services;
+    MyButton accounts;
+    MyButton changePassword;
+    MyButton logout;
     JPanel content;
-    ArrayList<JButton> navButtons;
+    ArrayList<MyButton> navButtons;
     int userId;
     public int getUserId() {
         return userId;
@@ -27,29 +30,24 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         setTitle("Serenity SPA: " + userName);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        getContentPane().setBackground(Color.decode("#d8ebf3"));
+        getContentPane().setBackground(new Color(255, 220, 241));
         createHeaderPanel().setLocation(0, 0);
         setSize(500, 400);
         getContentPane().add(createHeaderPanel(), BorderLayout.NORTH, 0);
 
         // Displaying Reports page as default when admin login
         content = new Reports();
-        // Making Reports navigation button active at the time of admin login
         makeActive(reports);
+        // Making Reports navigation button active at the time of admin login
         content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
 
+
         JScrollPane body = new JScrollPane();
+        body.getViewport().setBackground(new Color(255, 220, 241));
         body.setBorder(BorderFactory.createEmptyBorder());
         body.setViewportView(content);
         getContentPane().add(body, BorderLayout.CENTER, 1);
-    }
-// Highlight the navigation button upon navigation to the page.
-    public void makeActive(JButton button) {
-        button.setFont(new Font("Play", Font.BOLD, 25));
-    }
-// diminish the navigation button upon navigation away from the page.
-    public void makeInActive(JButton button) {
-        button.setFont(new Font("Play", Font.PLAIN, 20));
+        UIManager.put("Button.select", new Color(250, 105, 192));
     }
 
     // Creating the Header panel with navigation buttons
@@ -60,22 +58,22 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         headerPanel.setOpaque(false);
         navButtons = new ArrayList<>();
         if (reports == null) {
-            reports = getButton("Reports");
+            reports = getButton("report");
         }
         if (therapists == null) {
-            therapists = getButton("Therapist");
+            therapists = getButton("masseuse");
         }
         if (services == null) {
-            services = getButton("Service");
+            services = getButton("list");
         }
         if (accounts == null) {
-            accounts = getButton("Account");
+            accounts = getButton("accounts");
         }
         if (changePassword == null) {
-            changePassword = getButton("Reset Password");
+            changePassword = getButton("changepass");
         }
         if (logout == null) {
-            logout = getButton("Logout");
+            logout = getButton("logout");
         }
         headerPanel.add(reports);
         headerPanel.add(therapists);
@@ -91,16 +89,17 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         navButtons.add(logout);
         headerPanel.setLocation(0, 0);
         headerPanel.setSize(MAXIMIZED_HORIZ, 40);
-        headerPanel.setBackground(new Color(53, 183, 234));
+        headerPanel.setBackground(new Color(145, 73, 116));
         return headerPanel;
     }
     // To create navigation buttons
-    public JButton getButton(String label) {
-        JButton button;
-        button = new JButton(label);
-        button.setFont(new Font("Play", Font.PLAIN, 20));
-        button.setBackground(new Color(53, 183, 234));
+    public MyButton getButton(String path) {
+        NoScalingIcon icon = new NoScalingIcon(getClass().getResource("../../../images/" + path + "-48x48.png"), true);
+        MyButton button = new MyButton(icon);
+        button.setBackground(new Color(145, 73, 116));
         button.addActionListener(this);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
         return button;
     }
 
@@ -109,7 +108,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JScrollPane body = new JScrollPane();
         if (e.getSource() == reports) {
-            updateOtherButtons();
+            ClearButtons();
             content.invalidate();
             getContentPane().remove(1);
             content = new Reports();
@@ -121,7 +120,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             makeActive(reports);
         }
         else if (e.getSource() == therapists) {
-            updateOtherButtons();
+            ClearButtons();
             content.invalidate();
             getContentPane().remove(1);
             content = new TherapistsPanel();
@@ -133,7 +132,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             makeActive(therapists);
         }
         else if (e.getSource() == accounts) {
-            updateOtherButtons();
+            ClearButtons();
             content.invalidate();
             getContentPane().remove(1);
             content = new AccountsPanel();
@@ -145,7 +144,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             makeActive(accounts);
         }
         else if (e.getSource() == services) {
-            updateOtherButtons();
+            ClearButtons();
             getContentPane().remove(1);
             setLayout(new BorderLayout());
             content = new ServicesPanel();
@@ -157,7 +156,7 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
             makeActive(services);
         }
         else if (e.getSource() == changePassword) {
-            updateOtherButtons();
+            ClearButtons();
             content.invalidate();
             getContentPane().remove(1);
             content = new ChangePassword(getUserId());
@@ -181,10 +180,29 @@ public class AdminDashboardScreen extends JFrame implements ActionListener {
         }
         validate();
     }
-    // diminish all the buttons
-    private void updateOtherButtons() {
-        for (JButton button : navButtons) {
-            makeInActive(button);
+    private void ClearButtons() {
+        for (MyButton button : navButtons) {
+            makeInactive(button);
         }
     }
+    public BufferedImage toBufferedImage(ImageIcon icon) {
+        Image img = icon.getImage();
+        if (img instanceof BufferedImage) {
+            return (BufferedImage) img;
+        }
+        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+        Graphics2D bGr = bimage.createGraphics();
+        bGr.drawImage(img, 0, 0, null);
+        bGr.dispose();
+        return bimage;
+    }
+
+    public void makeActive(MyButton button) {
+        button.setBackground(new Color(250, 105, 192));
+    }
+    public void makeInactive(MyButton button) {
+        button.setBackground(new Color(145, 73, 116));
+    }
+
+
 }

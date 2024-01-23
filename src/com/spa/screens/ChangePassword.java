@@ -1,5 +1,7 @@
 package com.spa.screens;
 
+import com.spa.dto.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -16,10 +18,11 @@ public class ChangePassword extends JPanel {
     private JPasswordField oldPasswordTxt;
     private JLabel newPasswordLabel;
     private JPasswordField newPasswordTxt;
-    private JButton submit;
+    private MyButton submit;
     public ChangePassword(int userId) {
         this.userId = userId;
         initComponents();
+        UIManager.put("Button.select", new Color(250, 105, 192));
     }
 
     public int getUserId() {
@@ -27,7 +30,7 @@ public class ChangePassword extends JPanel {
     }
 
         private void initComponents() {
-        setBackground(new Color(216, 235, 243));
+        setBackground(new Color(255, 220, 241));
 
         container = new JPanel();
         content = new JPanel();
@@ -35,12 +38,15 @@ public class ChangePassword extends JPanel {
         confirmPasswordLabel = new JLabel();
         newPasswordLabel = new JLabel();
         confirmPasswordTxt = new JPasswordField();
+        confirmPasswordTxt.setBorder(BorderFactory.createLineBorder(new Color(255, 89, 149), 3));
         oldPasswordTxt = new JPasswordField();
+        oldPasswordTxt.setBorder(BorderFactory.createLineBorder(new Color(255, 89, 149), 3));
         newPasswordTxt = new JPasswordField();
-        submit = new JButton();
+        newPasswordTxt.setBorder(BorderFactory.createLineBorder(new Color(255, 89, 149), 3));
+        submit = new MyButton();
 
-        container.setBackground(new Color(216, 235, 243));
-        content.setBackground(new Color(216, 235, 243));
+        container.setBackground(new Color(255, 220, 241));
+        content.setBackground(new Color(255, 220, 241));
         oldPasswordLabel.setText("OLD PASSWORD");
         confirmPasswordLabel.setText("CONFIRM NEW PASSWORD");
         newPasswordLabel.setText("NEW PASSWORD");
@@ -49,7 +55,7 @@ public class ChangePassword extends JPanel {
         confirmPasswordLabel.setFont(new Font("Play", Font.BOLD, 15));
         newPasswordLabel.setFont(new Font("Play", Font.BOLD, 15));
         confirmPasswordTxt.setToolTipText("");
-        submit.setBackground(new Color(53, 183, 234));
+        submit.setBackground(new Color(145, 73, 116));
         submit.setBorder(BorderFactory.createLineBorder(null));
         submit.setLabel("UPDATE");
         submit.addActionListener(new ActionListener() {

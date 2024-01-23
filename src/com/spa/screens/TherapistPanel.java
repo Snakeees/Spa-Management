@@ -1,7 +1,6 @@
 package com.spa.screens;
 
-import com.spa.dto.Therapist;
-import com.spa.dto.TherapistAttendance;
+import com.spa.dto.*;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -14,7 +13,7 @@ import java.util.Date;
 
 public class TherapistPanel extends JPanel {
 
-        Therapist therapist;
+    Therapist therapist;
     ArrayList<TherapistAttendance> therapistAttendances;
     SimpleDateFormat requiredDateFormate = new java.text.SimpleDateFormat("yyyy-MM-dd");
     SimpleDateFormat dateFormater = new SimpleDateFormat("dd-MM-yyyy");
@@ -22,31 +21,32 @@ public class TherapistPanel extends JPanel {
     // Variables declaration - do not modify
     private JLabel addTherapistLabel;
     private JLabel addressLabel;
-    private JTextField addressTxt;
-    private ArrayList<JTextField> attendanceList;
-    private JTextField att1;
-    private JTextField att2;
-    private JTextField att3;
-    private JTextField att4;
-    private JTextField att5;
-    private JTextField att6;
-    private JTextField att7;
+    private MyTextField addressTxt;
+    private ArrayList<MyTextField> attendanceList;
+    private MyTextField att1;
+    private MyTextField att2;
+    private MyTextField att3;
+    private MyTextField att4;
+    private MyTextField att5;
+    private MyTextField att6;
+    private MyTextField att7;
     private JLabel attendanceLabel;
     private JPanel attendanceShowPanel;
-    private JButton backLable;
+    private MyButton backLable;
     private JLabel currentActiveLabel;
     private JCheckBox isActive;
     private JLabel phoneNumberLabel;
-    private JTextField phoneNumberTxt;
+    private MyTextField phoneNumberTxt;
     private JLabel resignationDateLabel;
     private com.toedter.calendar.JDateChooser resignationDateTxt;
-    private JButton submit;
+    private MyButton submit;
     private JLabel therapistNameLabel;
-    private JTextField therapistNameTxt;
+    private MyTextField therapistNameTxt;
     public TherapistPanel(Integer therapistId, boolean isEditable) {
         therapist = getTherapist(therapistId);
         therapistAttendances = getTherapistAttendance(therapistId);
         initComponents(isEditable);
+        UIManager.put("Button.select", new Color(250, 105, 192));
     }
 
         private void initComponents(boolean isEditable) {
@@ -54,24 +54,24 @@ public class TherapistPanel extends JPanel {
         therapistNameLabel = new JLabel();
         phoneNumberLabel = new JLabel();
         addressLabel = new JLabel();
-        phoneNumberTxt = new JTextField();
-        therapistNameTxt = new JTextField();
-        addressTxt = new JTextField();
-        submit = new JButton();
-        backLable = new JButton();
+        phoneNumberTxt = new MyTextField();
+        therapistNameTxt = new MyTextField();
+        addressTxt = new MyTextField();
+        submit = new MyButton();
+        backLable = new MyButton();
         currentActiveLabel = new JLabel();
         resignationDateLabel = new JLabel();
         attendanceLabel = new JLabel();
         isActive = new JCheckBox();
         attendanceShowPanel = new JPanel();
 
-        att3 = new JTextField();
-        att1 = new JTextField();
-        att2 = new JTextField();
-        att4 = new JTextField();
-        att5 = new JTextField();
-        att6 = new JTextField();
-        att7 = new JTextField();
+        att3 = new MyTextField();
+        att1 = new MyTextField();
+        att2 = new MyTextField();
+        att4 = new MyTextField();
+        att5 = new MyTextField();
+        att6 = new MyTextField();
+        att7 = new MyTextField();
         att1.setEnabled(false);
         att2.setEnabled(false);
         att3.setEnabled(false);
@@ -91,36 +91,36 @@ public class TherapistPanel extends JPanel {
 
         resignationDateTxt = new JDateChooser();
 
-        setBackground(new Color(216, 235, 243));
+        setBackground(new Color(255, 220, 241));
 
-        addTherapistLabel.setBackground(new Color(216, 235, 243));
+        addTherapistLabel.setBackground(new Color(255, 220, 241));
         addTherapistLabel.setText("CREATE THERAPIST");
 
-        therapistNameLabel.setBackground(new Color(216, 235, 243));
+        therapistNameLabel.setBackground(new Color(255, 220, 241));
         therapistNameLabel.setText("THERAPIST NAME");
 
-        phoneNumberLabel.setBackground(new Color(216, 235, 243));
+        phoneNumberLabel.setBackground(new Color(255, 220, 241));
         phoneNumberLabel.setText("PHONE NUMBER");
 
-        addressLabel.setBackground(new Color(216, 235, 243));
+        addressLabel.setBackground(new Color(255, 220, 241));
         addressLabel.setText("ADDRESS");
 
-        submit.setBackground(new Color(53, 183, 234));
+        submit.setBackground(new Color(145, 73, 116));
         submit.setText("CREATE");
 
-        backLable.setBackground(new Color(53, 183, 234));
+        backLable.setBackground(new Color(145, 73, 116));
         backLable.setText("BACK");
 
-        currentActiveLabel.setBackground(new Color(216, 235, 243));
+        currentActiveLabel.setBackground(new Color(255, 220, 241));
         currentActiveLabel.setText("CURRENTLY ACTIVE");
 
-        resignationDateLabel.setBackground(new Color(216, 235, 243));
+        resignationDateLabel.setBackground(new Color(255, 220, 241));
         resignationDateLabel.setText("RESIGNATION DATE  (DD-MM-YYYY)");
 
-        attendanceLabel.setBackground(new Color(216, 235, 243));
+        attendanceLabel.setBackground(new Color(255, 220, 241));
         attendanceLabel.setText("ATTENDANCE (For past 7 Days)");
 
-        isActive.setBackground(new Color(216, 235, 243));
+        isActive.setBackground(new Color(255, 220, 241));
         isActive.setToolTipText("");
 
         attendanceShowPanel.setBackground(new Color(255, 255, 255));

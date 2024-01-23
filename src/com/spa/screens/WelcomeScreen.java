@@ -1,5 +1,7 @@
 package com.spa.screens;
 
+import com.spa.dto.*;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -13,6 +15,7 @@ public class WelcomeScreen extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new FlowLayout(FlowLayout.CENTER));
         JPanel boxPanel = new JPanel();
+        UIManager.put("Button.select", new Color(250, 105, 192));
         boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
         boxPanel.setBorder(new EmptyBorder(30, 10, 30, 10));
         // Adding the Label
@@ -35,7 +38,7 @@ public class WelcomeScreen extends JFrame {
 
         // Adding the button
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        JButton continueButton = new JButton("Continue!");
+        MyButton continueButton = new MyButton("Continue!");
         continueButton.addActionListener(action -> {
             // Logic when button is clicked
             LoginScreen loginScreen = new LoginScreen(null);

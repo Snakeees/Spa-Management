@@ -1,8 +1,6 @@
 package com.spa.screens;
 
-import com.spa.dto.Appointment;
-import com.spa.dto.Service;
-import com.spa.dto.Therapist;
+import com.spa.dto.*;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -28,14 +26,14 @@ public class AppointmentPanel extends JPanel {
     private com.toedter.calendar.JDateChooser appointmentDateTxt;
     private JLabel appointmentTimeLabel;
     private JSpinner appointmentTimeTxt;
-    private JButton backLabel;
+    private MyButton backLabel;
     private JLabel clientNameLabel;
-    private JTextField clientNameTxt;
+    private MyTextField clientNameTxt;
     private JLabel phoneNumberLabel;
-    private JTextField phoneNumberTxt;
+    private MyTextField phoneNumberTxt;
     private JLabel serviceLabel;
     private JComboBox<Service> serviceListSelector;
-    private JButton submitLabel;
+    private MyButton submitLabel;
     private JLabel therapistLabel;
     private JComboBox<Therapist> therapistListSelector;
 
@@ -43,22 +41,23 @@ public class AppointmentPanel extends JPanel {
         appointment = getAppointmentDetails(appointmentId);
         updateDropdownDetails();
         initComponents(isEditable);
+        UIManager.put("Button.select", new Color(250, 105, 192));
     }
 
 
         @SuppressWarnings("unchecked")
     private void initComponents(boolean isEditable) {
-        backLabel = new JButton();
+        backLabel = new MyButton();
         addAppointmentLabel = new JLabel();
-        submitLabel = new JButton();
+        submitLabel = new MyButton();
         clientNameLabel = new JLabel();
         phoneNumberLabel = new JLabel();
         serviceLabel = new JLabel();
         therapistLabel = new JLabel();
         appointmentDateLabel = new JLabel();
         appointmentTimeLabel = new JLabel();
-        clientNameTxt = new JTextField();
-        phoneNumberTxt = new JTextField();
+        clientNameTxt = new MyTextField();
+        phoneNumberTxt = new MyTextField();
         serviceListSelector = new JComboBox<>();
         therapistListSelector = new JComboBox<>();
         appointmentDateTxt = new JDateChooser();
@@ -74,8 +73,8 @@ public class AppointmentPanel extends JPanel {
         therapistListSelector.setBackground(Color.WHITE);
         serviceListSelector.setBackground(Color.WHITE);
         serviceListSelector.setFont(new Font("Play", 0, 12));
-        setBackground(new Color(216, 235, 243));
-        backLabel.setBackground(new Color(53, 183, 234));
+        setBackground(new Color(255, 220, 241));
+        backLabel.setBackground(new Color(145, 73, 116));
         backLabel.setFont(new Font("Play", 1, 12));
         backLabel.setText("BACK");
         backLabel.addActionListener(new ActionListener() {
@@ -84,10 +83,10 @@ public class AppointmentPanel extends JPanel {
             }
         });
 
-        addAppointmentLabel.setBackground(new Color(216, 235, 243));
+        addAppointmentLabel.setBackground(new Color(255, 220, 241));
         addAppointmentLabel.setFont(new Font("Play", 1, 24));
         addAppointmentLabel.setText("CREATE APPOINTMENT");
-        submitLabel.setBackground(new Color(53, 183, 234));
+        submitLabel.setBackground(new Color(145, 73, 116));
         submitLabel.setFont(new Font("Play", 1, 12));
         submitLabel.setText("CREATE");
         submitLabel.addActionListener(new ActionListener() {
@@ -96,27 +95,27 @@ public class AppointmentPanel extends JPanel {
             }
         });
 
-        clientNameLabel.setBackground(new Color(216, 235, 243));
+        clientNameLabel.setBackground(new Color(255, 220, 241));
         clientNameLabel.setFont(new Font("Play", 1, 12));
         clientNameLabel.setText("CLIENT NAME");
 
-        phoneNumberLabel.setBackground(new Color(216, 235, 243));
+        phoneNumberLabel.setBackground(new Color(255, 220, 241));
         phoneNumberLabel.setFont(new Font("Play", 1, 12));
         phoneNumberLabel.setText("CLIENT PHONE NUMBER");
 
-        serviceLabel.setBackground(new Color(216, 235, 243));
+        serviceLabel.setBackground(new Color(255, 220, 241));
         serviceLabel.setFont(new Font("Play", 1, 12));
         serviceLabel.setText("SERVICE");
 
-        therapistLabel.setBackground(new Color(216, 235, 243));
+        therapistLabel.setBackground(new Color(255, 220, 241));
         therapistLabel.setFont(new Font("Play", 1, 12));
         therapistLabel.setText("THERAPIST NAME");
 
-        appointmentDateLabel.setBackground(new Color(216, 235, 243));
+        appointmentDateLabel.setBackground(new Color(255, 220, 241));
         appointmentDateLabel.setFont(new Font("Play", 1, 12));
         appointmentDateLabel.setText("APPOINTMENT DATE (DD-MM-YYYY)");
 
-        appointmentTimeLabel.setBackground(new Color(216, 235, 243));
+        appointmentTimeLabel.setBackground(new Color(255, 220, 241));
         appointmentTimeLabel.setFont(new Font("Play", 1, 12));
         appointmentTimeLabel.setText("APPOINTMENT TIME (HH:MM) (24 Hours Format)");
         boolean foundTherapist = false;

@@ -1,6 +1,6 @@
 package com.spa.screens;
 
-import com.spa.dto.Service;
+import com.spa.dto.*;
 
 import javax.swing.*;
 import javax.swing.text.DateFormatter;
@@ -18,20 +18,21 @@ public class ServicePanel extends JPanel {
     private JLabel activeLable;
     private JLabel addServiceLabel;
     private JLabel costLabel;
-    private JTextField costPerClientTxt;
+    private MyTextField costPerClientTxt;
     private JCheckBox isActive;
     private JLabel lastServiceDateLabel;
     private JFormattedTextField lastServiceDateTxt;
     private JLabel serviceDurationLabel;
     private JSpinner serviceDurationTxt;
     private JLabel serviceName;
-    private JTextField serviceNameTxt;
-    private JButton submitLabel;
-    private JButton backLabel;
+    private MyTextField serviceNameTxt;
+    private MyButton submitLabel;
+    private MyButton backLabel;
     private  SimpleDateFormat timeFormater=new SimpleDateFormat("HH:mm");
     public ServicePanel(Integer serviceId, boolean isEditable) {
         this.service = getService(serviceId);
         initComponents(service, isEditable);
+        UIManager.put("Button.select", new Color(250, 105, 192));
     }
 
 
@@ -44,7 +45,7 @@ public class ServicePanel extends JPanel {
         costLabel = new  JLabel();
         activeLable = new  JLabel();
         lastServiceDateLabel = new  JLabel();
-        serviceNameTxt = new  JTextField();
+        serviceNameTxt = new  MyTextField();
 
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 1);
@@ -55,29 +56,29 @@ public class ServicePanel extends JPanel {
         serviceDurationTxt = new  JSpinner(sm);
         JSpinner.DateEditor de = new JSpinner.DateEditor(serviceDurationTxt, "HH:mm");
         serviceDurationTxt.setEditor(de);
-        costPerClientTxt = new JTextField();
+        costPerClientTxt = new MyTextField();
         lastServiceDateTxt = new JFormattedTextField();
         isActive = new JCheckBox();
-        submitLabel = new JButton();
-        backLabel = new JButton();
+        submitLabel = new MyButton();
+        backLabel = new MyButton();
         SimpleDateFormat requiredDateFormate = new SimpleDateFormat("dd-MM-yyyy");
         lastServiceDateTxt.setFormatterFactory(new DefaultFormatterFactory(new DateFormatter(requiredDateFormate)));
-        setBackground(new Color(216, 235, 243));
+        setBackground(new Color(255, 220, 241));
         addServiceLabel.setText("CREATE SERVICE");
-        serviceName.setBackground(new Color(216, 235, 243));
+        serviceName.setBackground(new Color(255, 220, 241));
         serviceName.setText("SERVICE NAME");
-        serviceDurationLabel.setBackground(new Color(216, 235, 243));
+        serviceDurationLabel.setBackground(new Color(255, 220, 241));
         serviceDurationLabel.setText("SERVICE DURATION (HH:MM)");
-        costLabel.setBackground(new Color(216, 235, 243));
+        costLabel.setBackground(new Color(255, 220, 241));
         costLabel.setText("COST PER CLIENT");
-        activeLable.setBackground(new Color(216, 235, 243));
+        activeLable.setBackground(new Color(255, 220, 241));
         activeLable.setText("CURRENTLY ACTIVE");
-        lastServiceDateLabel.setBackground(new Color(216, 235, 243));
+        lastServiceDateLabel.setBackground(new Color(255, 220, 241));
         lastServiceDateLabel.setText("LAST SERVICE DATE");
-        isActive.setBackground(new Color(216, 235, 243));
-        submitLabel.setBackground(new Color(53, 183, 234));
+        isActive.setBackground(new Color(255, 220, 241));
+        submitLabel.setBackground(new Color(145, 73, 116));
         submitLabel.setText("CREATE");
-        backLabel.setBackground(new Color(53, 183, 234));
+        backLabel.setBackground(new Color(145, 73, 116));
         backLabel.setText("BACK");
         addServiceLabel.setFont(new Font("Play", Font.BOLD, 20));
         serviceDurationLabel.setFont(new Font("Play", Font.BOLD, 15));

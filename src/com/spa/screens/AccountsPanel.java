@@ -1,5 +1,7 @@
 package com.spa.screens;
 
+import com.spa.dto.*;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
@@ -14,21 +16,24 @@ import java.util.List;
 
 public class AccountsPanel extends JPanel {
 
-    private JButton addAccount;
+    private MyButton addAccount;
     private JScrollPane accountListTablePane;
     private JTable accountListTable;
     private Object[][] tableData;
 
-        public AccountsPanel() {
+    public AccountsPanel() {
         tableData = getUserAccounts();
         initComponents();
+        UIManager.put("Button.select", new Color(250, 105, 192));
     }
 
         private void initComponents() {
-        setBackground(new Color(216, 235, 243));
+        setBackground(new Color(255, 220, 241));
 
-        addAccount = new JButton();
+        addAccount = new MyButton();
         accountListTablePane = new JScrollPane();
+        accountListTablePane.getViewport().setBackground(new Color(255, 220, 241));
+        
         DefaultTableModel model = new DefaultTableModel(
                 tableData,
                 new String[]{
@@ -57,7 +62,7 @@ public class AccountsPanel extends JPanel {
             }
         };
 
-        addAccount.setBackground(new Color(53, 183, 234));
+        addAccount.setBackground(new Color(145, 73, 116));
         addAccount.setText("CREATE");
         addAccount.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -65,10 +70,10 @@ public class AccountsPanel extends JPanel {
             }
         });
 
-        accountListTablePane.setBackground(new Color(216, 235, 243));
+        accountListTablePane.setBackground(new Color(255, 220, 241));
         accountListTablePane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         accountListTablePane.setInheritsPopupMenu(true);
-        accountListTable.setBackground(new Color(216, 235, 243));
+        accountListTable.setBackground(new Color(255, 220, 241));
         accountListTable.setPreferredScrollableViewportSize(accountListTable.getPreferredSize());
 
         //Customizing default cell render for good look
@@ -245,12 +250,12 @@ public class AccountsPanel extends JPanel {
             options.add("Delete");
             this.panel = new ButtonItems(options);
             this.table = table;
-            List<JButton> list = panel.getButtons();
+            List<MyButton> list = panel.getButtons();
             list.get(1).setAction(new AccountsPanel.DeleteAction(table));
             list.get(0).setAction(new AccountsPanel.EditAction(table));
 
             EditingStopHandler handler = new EditingStopHandler();
-            for (JButton b : list) {
+            for (MyButton b : list) {
                 b.addMouseListener(handler);
                 b.addActionListener(handler);
             }
@@ -275,8 +280,8 @@ public class AccountsPanel extends JPanel {
                 if (o instanceof TableCellEditor) {
                     actionPerformed(new ActionEvent(o, ActionEvent.ACTION_PERFORMED, ""));
                 }
-                else if (o instanceof JButton) {
-                    ButtonModel m = ((JButton) e.getComponent()).getModel();
+                else if (o instanceof MyButton) {
+                    ButtonModel m = ((MyButton) e.getComponent()).getModel();
                     if (m.isPressed() && table.isRowSelected(table.getEditingRow()) && e.isControlDown()) {
                         panel.setBackground(table.getBackground());
                     }

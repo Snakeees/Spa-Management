@@ -1,6 +1,6 @@
 package com.spa.screens;
 
-import com.spa.dto.UserLogin;
+import com.spa.dto.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,38 +18,43 @@ public class AccountPanel extends JPanel {
     private JCheckBox isAdmin;
     private JLabel passwordLabel;
     private JPasswordField passwordTxt;
-    private JButton submit;
+    private MyButton submit;
     private JLabel userNameLabel;
-    private JTextField userNameTxt;
-    private JButton backButton;
+    private MyTextField userNameTxt;
+    private MyButton backButton;
     private JLabel addAccountLabel;
     public AccountPanel(Integer id, boolean isEditable) {
         this.userLogin = getAccount(id);
         initComponents(userLogin, isEditable);
+        UIManager.put("Button.select", new Color(250, 105, 192));
     }
         private void initComponents(UserLogin userLogin, boolean isEditable) {
-        setBackground(new Color(216, 235, 243));
+        setBackground(new Color(255, 220, 241));
 
         container = new JPanel();
         content = new JPanel();
         userNameLabel = new JLabel();
         passwordLabel = new JLabel();
         confirmPasswordLabel = new JLabel();
-        userNameTxt = new JTextField();
+        userNameTxt = new MyTextField();
         confirmPasswordTxt = new JPasswordField();
+        confirmPasswordTxt.setBorder(BorderFactory.createLineBorder(new Color(255, 89, 149), 3));
         passwordTxt = new JPasswordField();
-        submit = new JButton();
+        passwordTxt.setBorder(BorderFactory.createLineBorder(new Color(255, 89, 149), 3));
+        submit = new MyButton();
+        submit.setForeground(Color.WHITE);
         isAdminLabel = new JLabel();
         addAccountLabel = new JLabel();
         isAdmin = new JCheckBox();
-        backButton = new JButton();
+        backButton = new MyButton();
+        backButton.setForeground(Color.WHITE);
 
-        container.setBackground(new Color(216, 235, 243));
-        content.setBackground(new Color(216, 235, 243));
-        isAdmin.setBackground(new Color(216, 235, 243));
-        submit.setBackground(new Color(53, 183, 234));
+        container.setBackground(new Color(255, 220, 241));
+        content.setBackground(new Color(255, 220, 241));
+        isAdmin.setBackground(new Color(255, 220, 241));
+        submit.setBackground(new Color(145, 73, 116));
         submit.setBorder(BorderFactory.createLineBorder(null));
-        backButton.setBackground(new Color(53, 183, 234));
+        backButton.setBackground(new Color(145, 73, 116));
 
         addAccountLabel.setFont(new Font("Play", Font.BOLD, 20));
         userNameLabel.setFont(new Font("Play", Font.BOLD, 15));

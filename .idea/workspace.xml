@@ -4,7 +4,39 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="xml changes" />
+    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="spacing">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/wavefrontObj.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/spa/dto/MyButton.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/spa/dto/MyTextField.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/spa/dto/NoScalingIcon.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/spa/screens/ScatterPlot.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/images/logo.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/SpaManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/SpaManagement.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AccountPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AccountPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AccountsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AccountsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AdminDashboardScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AdminDashboardScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AppointmentsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AppointmentsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/ButtonItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/ButtonItems.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/ChangePassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/ChangePassword.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/LoginScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/NonAdminDashboardScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/NonAdminDashboardScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/ServicePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/ServicePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/ServicesPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/ServicesPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/WelcomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/WelcomeScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/images/arrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/images/edit (3).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/images/incorrect.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/images/plus.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/images/search-icon.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/images/user.png" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -76,32 +108,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.SpaManagement.executor&quot;: &quot;Run&quot;,
-    &quot;Notification.DisplayName-DoNotAsk-Vcs Important Messages&quot;: &quot;VCS important messages&quot;,
-    &quot;Notification.DoNotAsk-Vcs Important Messages&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW&quot;: &quot;true&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.PaletteManager.STATE&quot;: &quot;right&quot;,
-    &quot;UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.STATE&quot;: &quot;left&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;other&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-21&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/siddh/IntelliJavaProjects/Spa-Management/jars/jcalendar-1.4.jar&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.build.tools.auto.reload&quot;: &quot;ALL&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.NoScalingIcon.executor": "Run",
+    "Application.ScatterPlot.executor": "Run",
+    "Application.SimpleScatterPlot.executor": "Run",
+    "Application.SpaManagement.executor": "Run",
+    "Notification.DisplayName-DoNotAsk-Vcs Important Messages": "VCS important messages",
+    "Notification.DoNotAsk-Vcs Important Messages": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.SHOW": "true",
+    "UI_DESIGNER_EDITOR_MODE.PaletteManager.STATE": "right",
+    "UI_DESIGNER_EDITOR_MODE.UIDesignerToolWindowManager.STATE": "left",
+    "dart.analysis.tool.window.visible": "false",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "jdk.selected.JAVA_MODULE": "openjdk-21",
+    "last_opened_file_path": "C:/Users/siddh/IntelliJavaProjects/Spa-Management/src/images",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.build.tools.auto.reload": "ALL",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\siddh\IntelliJavaProjects\Spa-Management\src\images" />
+      <recent name="C:\Users\siddh\IntelliJavaProjects\Spa-Management\out\production\Spa-Management\images" />
       <recent name="C:\Users\siddh\IntelliJavaProjects\Spa-Management\src" />
     </key>
   </component>
@@ -121,7 +159,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.SpaManagement" />
         <item itemvalue="Application.SpaManagement" />
       </list>
     </recent_temporary>
@@ -239,7 +276,31 @@
       <option name="project" value="LOCAL" />
       <updated>1704867041862</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="xml">
+      <option name="closed" value="true" />
+      <created>1704869064791</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1704869064791</updated>
+    </task>
+    <task id="LOCAL-00015" summary="more xml">
+      <option name="closed" value="true" />
+      <created>1704869188234</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1704869188234</updated>
+    </task>
+    <task id="LOCAL-00016" summary="spacing">
+      <option name="closed" value="true" />
+      <created>1704869368360</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1704869368360</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -247,6 +308,21 @@
     <option featureType="dependencySupport" implementationName="executable:kubectl" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="main" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -282,7 +358,10 @@
     <MESSAGE value="Attendance fixed" />
     <MESSAGE value="appointments fixed" />
     <MESSAGE value="xml changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="xml changes" />
+    <MESSAGE value="xml" />
+    <MESSAGE value="more xml" />
+    <MESSAGE value="spacing" />
+    <option name="LAST_COMMIT_MESSAGE" value="spacing" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -418,67 +497,18 @@
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>134</line>
-          <option name="timeStamp" value="66" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>135</line>
-          <option name="timeStamp" value="67" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>136</line>
-          <option name="timeStamp" value="68" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>137</line>
-          <option name="timeStamp" value="69" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>138</line>
-          <option name="timeStamp" value="70" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>139</line>
-          <option name="timeStamp" value="71" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>119</line>
-          <option name="timeStamp" value="72" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>121</line>
-          <option name="timeStamp" value="74" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>122</line>
-          <option name="timeStamp" value="75" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>123</line>
-          <option name="timeStamp" value="76" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/Reports.java</url>
-          <line>124</line>
-          <option name="timeStamp" value="77" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java</url>
-          <line>403</line>
+          <line>402</line>
           <option name="timeStamp" value="80" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="icon" language="JAVA" />
+        <watch expression="getImage()" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

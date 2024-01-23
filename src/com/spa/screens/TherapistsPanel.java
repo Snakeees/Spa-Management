@@ -1,5 +1,7 @@
 package com.spa.screens;
 
+import com.spa.dto.*;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
@@ -13,7 +15,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TherapistsPanel extends JPanel {
-        private JButton addTherapist;
+    private MyButton addTherapist;
     private JScrollPane therapistTableListPane;
     private JTable therapistTableList;
     private Object[][] tableData;
@@ -21,16 +23,21 @@ public class TherapistsPanel extends JPanel {
     public TherapistsPanel() {
         tableData = getTherapist();
         initComponents();
+        UIManager.put("Button.select", new Color(250, 105, 192));
+        therapistTableList.getColumn("ID").setMinWidth(0);
+        therapistTableList.getColumn("ID").setMaxWidth(0);
+        therapistTableList.getColumn("ID").setWidth(0);
     }
 
-        private void initComponents() {
-        addTherapist = new JButton();
+    private void initComponents() {
+
+        addTherapist = new MyButton();
         Object[][] data = tableData;
+        String[] headers = {"ID", "THERAPIST NAME", "MOBILE", "OPTIONS"};
         DefaultTableModel model = new DefaultTableModel(
                 data,
-                new String[]{
-                        "ID", "THERAPIST NAME", "MOBILE", "OPTIONS"
-                }) {
+                headers)
+        {
             @Override
             public Class<?> getColumnClass(int column) {
                 return getValueAt(0, column).getClass();
@@ -38,6 +45,7 @@ public class TherapistsPanel extends JPanel {
         };
 
         therapistTableListPane = new JScrollPane();
+        therapistTableListPane.getViewport().setBackground(new Color(255, 220, 241));
         therapistTableList = new JTable(model) {
             @Override
             public void updateUI() {
@@ -54,8 +62,10 @@ public class TherapistsPanel extends JPanel {
                 return col == 3;
             }
         };
-        setBackground(new Color(216, 235, 243));
-        addTherapist.setBackground(new Color(53, 183, 234));
+
+
+        setBackground(new Color(255, 220, 241));
+        addTherapist.setBackground(new Color(145, 73, 116));
         addTherapist.setText("CREATE");
         addTherapist.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
@@ -63,10 +73,10 @@ public class TherapistsPanel extends JPanel {
             }
         });
 
-        therapistTableListPane.setBackground(new Color(216, 235, 243));
+        therapistTableListPane.setBackground(new Color(255, 220, 241));
         therapistTableListPane.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
         therapistTableListPane.setInheritsPopupMenu(true);
-        therapistTableList.setBackground(new Color(216, 235, 243));
+        therapistTableList.setBackground(new Color(255, 220, 241));
         therapistTableList.setPreferredScrollableViewportSize(therapistTableList.getPreferredSize());
         if (tableData != null && tableData.length > 0)
             therapistTableListPane.setViewportView(therapistTableList);
@@ -218,12 +228,12 @@ public class TherapistsPanel extends JPanel {
             options.add("update");
             this.panel = new ButtonItems(options);
             this.table = table;
-            List<JButton> list = panel.getButtons();
+            List<MyButton> list = panel.getButtons();
             list.get(1).setAction(new TherapistsPanel.EditAction(table));
             list.get(0).setAction(new TherapistsPanel.ViewAction(table));
 
             TherapistsPanel.ButtonsEditor.EditingStopHandler handler = new TherapistsPanel.ButtonsEditor.EditingStopHandler();
-            for (JButton b : list) {
+            for (MyButton b : list) {
                 b.addMouseListener(handler);
                 b.addActionListener(handler);
             }
@@ -248,8 +258,8 @@ public class TherapistsPanel extends JPanel {
                 if (o instanceof TableCellEditor) {
                     actionPerformed(new ActionEvent(o, ActionEvent.ACTION_PERFORMED, ""));
                 }
-                else if (o instanceof JButton) {
-                    ButtonModel m = ((JButton) e.getComponent()).getModel();
+                else if (o instanceof MyButton) {
+                    ButtonModel m = ((MyButton) e.getComponent()).getModel();
                     if (m.isPressed() && table.isRowSelected(table.getEditingRow()) && e.isControlDown()) {
                         panel.setBackground(table.getBackground());
                     }

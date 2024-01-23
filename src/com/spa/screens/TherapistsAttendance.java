@@ -1,7 +1,6 @@
 package com.spa.screens;
 
-import com.spa.dto.Therapist;
-import com.spa.dto.TherapistAttendance;
+import com.spa.dto.*;
 
 import javax.swing.*;
 import java.sql.Date;
@@ -23,13 +22,14 @@ public class TherapistsAttendance extends JPanel {
     private JCheckBox checkInTime;
     private JCheckBox checkOutTime;
     private JLabel jLabel2;
-    private JButton submit;
+    private MyButton submit;
     private JComboBox<Therapist> therapistNameList;
     private JLabel therpaistNameLabel;
 
 
-        public TherapistsAttendance() {
+    public TherapistsAttendance() {
         initComponents();
+        UIManager.put("Button.select", new Color(250, 105, 192));
     }
 
         private void initComponents() {
@@ -39,9 +39,9 @@ public class TherapistsAttendance extends JPanel {
         jLabel2 = new JLabel();
         checkInTime = new JCheckBox();
         checkOutTime = new JCheckBox();
-        submit = new JButton();
+        submit = new MyButton();
 
-        setBackground(new Color(216, 235, 243));
+        setBackground(new Color(255, 220, 241));
 
         therpaistNameLabel.setFont(new Font("Play", 1, 14));
         therpaistNameLabel.setText("THERAPIST NAME");
@@ -67,7 +67,7 @@ public class TherapistsAttendance extends JPanel {
         checkInLabel.setText("CHECKIN TIME");
         jLabel2.setFont(new Font("Play", 1, 14));
         jLabel2.setText("CHECKOUT TIME");
-        submit.setBackground(new Color(53, 183, 234));
+        submit.setBackground(new Color(145, 73, 116));
         submit.setFont(new Font("Play", 1, 12));
         submit.setText("SUBMIT");
         submit.addActionListener(new ActionListener() {
