@@ -4,30 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="">
+    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="1/31/24">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/SpaManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/SpaManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/dto/MyButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/dto/MyButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/dto/NoScalingIcon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/dto/NoScalingIcon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AccountPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AccountPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AccountsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AccountsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AdminDashboardScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AdminDashboardScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/LoginScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/NonAdminDashboardScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/NonAdminDashboardScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/ServicePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/ServicePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/ServicesPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/ServicesPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/accounts-48x48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/changepass-48x48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/list-48x48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/logo.bak.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/logo.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/images/logo.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/logout-48x48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/masseuse-48x48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/report-48x48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/tools-48x48.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/view-48x48.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -308,7 +287,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706035891948</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="1/31/24">
+      <option name="closed" value="true" />
+      <created>1706680704252</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1706680704252</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -370,7 +357,8 @@
     <MESSAGE value="more xml" />
     <MESSAGE value="spacing" />
     <MESSAGE value="I made way too many changes to list them all" />
-    <option name="LAST_COMMIT_MESSAGE" value="I made way too many changes to list them all" />
+    <MESSAGE value="1/31/24" />
+    <option name="LAST_COMMIT_MESSAGE" value="1/31/24" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
