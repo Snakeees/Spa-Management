@@ -11,6 +11,8 @@ public class MyButton extends JButton {
         setForeground(Color.WHITE);
         setBackground(BUTTON_COLOR);
         setFont(new Font("Play", Font.BOLD, this.getFont().getSize() + 1));
+        setFocusPainted(false);
+
     }
 
     public MyButton(String text) {
@@ -18,6 +20,7 @@ public class MyButton extends JButton {
         setForeground(Color.WHITE);
         setBackground(BUTTON_COLOR);
         setFont(new Font("Play", Font.BOLD, this.getFont().getSize() + 1));
+        setFocusPainted(false);
     }
 
     public MyButton(Icon icon) {
@@ -25,6 +28,7 @@ public class MyButton extends JButton {
         setForeground(Color.WHITE);
         setBackground(BUTTON_COLOR);
         setFont(new Font("Play", Font.BOLD, this.getFont().getSize() + 1));
+        setFocusPainted(false);
     }
 
 

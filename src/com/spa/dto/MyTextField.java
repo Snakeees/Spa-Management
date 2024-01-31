@@ -3,6 +3,10 @@ import javax.swing.*;
 import javax.swing.JTextField;
 import java.awt.Color;
 
+
+
+import static com.spa.SpaManagement.TEXTFIELD_BORDER_COLOR;
+
 public class MyTextField extends JTextField {
 
     public MyTextField(int columns) {
@@ -14,6 +18,6 @@ public class MyTextField extends JTextField {
         setCustomBorder();
     }
     private void setCustomBorder() {
-        this.setBorder(BorderFactory.createLineBorder(new Color(255, 89, 149), 3));
+        this.setBorder(BorderFactory.createLineBorder(TEXTFIELD_BORDER_COLOR, 3));
     }
 }

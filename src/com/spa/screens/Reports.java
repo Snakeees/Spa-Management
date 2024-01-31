@@ -58,35 +58,6 @@ public class Reports extends JPanel {
         JLabel visitLabel = new JLabel("Monthly Visits", SwingConstants.CENTER);
         visitLabel.setFont(new Font("Play", Font.BOLD, 20));
         add(visitLabel, gbc);
-
-
-
-        // Income panel
-        /*JPanel incomePanel = new JPanel(new BorderLayout());
-        incomePanel.add(new ScatterPlot(getMonthlyIncomes(), new int[]{300,300}), BorderLayout.CENTER);
-
-        JLabel incomeLabel = new JLabel("Monthly Incomes", SwingConstants.CENTER);
-        incomeLabel.setBorder(new EmptyBorder(10, 0, 0, 0));
-        incomePanel.add(incomeLabel, BorderLayout.SOUTH);
-
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.weightx = 1.0;
-        gbc.weighty = 1.0;
-        gridbag.setConstraints(incomePanel, gbc);
-        add(incomePanel);
-
-        // Visit panel
-        JPanel visitPanel = new JPanel(new BorderLayout());
-        visitPanel.add(new ScatterPlot(getMonthlyVisits(), new int[]{300,300}), BorderLayout.CENTER);
-
-        JLabel visitLabel = new JLabel("Monthly Visits", SwingConstants.CENTER);
-        visitPanel.add(visitLabel, BorderLayout.SOUTH);
-
-        gbc.gridx = 1;
-        gridbag.setConstraints(visitPanel, gbc);
-        add(visitPanel);*/
     }
 
     // fetching total income from 1st of the month from DB which is need to be displayed in UI

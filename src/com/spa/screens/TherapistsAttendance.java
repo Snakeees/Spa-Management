@@ -162,10 +162,8 @@ public class TherapistsAttendance extends JPanel {
 
     private void submitActionPerformed(ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
         Therapist therapist = (Therapist) therapistNameList.getSelectedItem();
-        LocalTime now = LocalTime.now();
-        Time currentTime = Time.valueOf(now);
-        LocalDate localDate = LocalDate.now();
-        Date currentDate = Date.valueOf(localDate);
+        Time currentTime = Time.valueOf(LocalTime.now());
+        Date currentDate = Date.valueOf(LocalDate.now());
         try {
             Database database = new Database();
             if (this.selectedTherapistAttendanceId != null) {
@@ -180,8 +178,7 @@ public class TherapistsAttendance extends JPanel {
                     database.executeUpdate("update TherapistAttendance set checkIntime=? , checkouttime=?, date=? where ID=? ;", therapistsAttendance.getCheckinTime(), therapistsAttendance.getCheckoutTime(), therapistsAttendance.getDate(), this.selectedTherapistAttendanceId);
                     JOptionPane.showMessageDialog(this, "Updated attendance details successfully");
                 }
-            }
-            else {
+            } else {
                 TherapistAttendance therapistAttendance = new TherapistAttendance();
                 therapistAttendance.setTherapistId(therapist.getId());
                 if (checkInTime.isSelected()) {
