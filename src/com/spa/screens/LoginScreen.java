@@ -1,5 +1,6 @@
 package com.spa.screens;
 
+import com.spa.SpaManagement;
 import com.spa.dto.*;
 
 import javax.swing.*;
@@ -58,8 +59,7 @@ public class LoginScreen extends JFrame {
         heading.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Load and resize the image
-        NoScalingIcon imgIcon = new NoScalingIcon(getClass().getResource("../../../images/logo.bak.png"));
-        imgIcon.Scale(0.4);
+        NoScalingIcon imgIcon = new NoScalingIcon(getClass().getResource("../../../images/logo.png"), 384, 384);
         JLabel imageLabel = new JLabel(imgIcon);
         imageLabel.setOpaque(false);
         imageLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

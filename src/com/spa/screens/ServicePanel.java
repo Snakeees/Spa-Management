@@ -28,7 +28,8 @@ public class ServicePanel extends JPanel {
     private MyTextField serviceNameTxt;
     private MyButton submitLabel;
     private MyButton backLabel;
-    private  SimpleDateFormat timeFormater=new SimpleDateFormat("HH:mm");
+    private  SimpleDateFormat timeFormater = new SimpleDateFormat("HH:mm");
+
     public ServicePanel(Integer serviceId, boolean isEditable) {
         this.service = getService(serviceId);
         initComponents(service, isEditable);
@@ -37,8 +38,7 @@ public class ServicePanel extends JPanel {
 
 
 
-        private void initComponents(Service service, boolean isEditable) {
-
+    private void initComponents(Service service, boolean isEditable) {
         addServiceLabel = new  JLabel();
         serviceName = new  JLabel();
         serviceDurationLabel = new  JLabel();

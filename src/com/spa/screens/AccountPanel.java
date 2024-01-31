@@ -23,7 +23,10 @@ public class AccountPanel extends JPanel {
     private MyTextField userNameTxt;
     private MyButton backButton;
     private JLabel addAccountLabel;
-    public AccountPanel(Integer id, boolean isEditable) {
+    private int CurrentUserId;
+
+    public AccountPanel(Integer id, boolean isEditable, int currentUserId) {
+        CurrentUserId = currentUserId;
         this.userLogin = getAccount(id);
         initComponents(userLogin, isEditable);
         UIManager.put("Button.select", new Color(250, 105, 192));
@@ -228,7 +231,7 @@ public class AccountPanel extends JPanel {
                     try {
                         db.executeUpdate("INSERT INTO UserLogin ( LoginName, Password, IsAdmin, IsActive) VALUES(?,?,?,?)", userNameTxt.getText(), passwordTxt.getText(), isAdmin.isSelected(), true);
                         JViewport parentContainer = (JViewport) getParent();
-                        parentContainer.setView(new AccountsPanel());
+                        parentContainer.setView(new AccountsPanel(CurrentUserId));
                         parentContainer.validate();
                         parentContainer.repaint();
                         JOptionPane.showMessageDialog(this, "Account created successfully!");
@@ -264,7 +267,7 @@ public class AccountPanel extends JPanel {
                     try {
                         db.executeUpdate("update UserLogin set LoginName=? , IsAdmin=? where ID=? ;", userLogin.getLoginName(), userLogin.isAdmin(), userLogin.getId());
                         JViewport container = (JViewport) getParent();
-                        container.setView(new AccountsPanel());
+                        container.setView(new AccountsPanel(CurrentUserId));
                         container.validate();
                         container.repaint();
                         JOptionPane.showMessageDialog(this, "Account details updated successfully!");
@@ -275,7 +278,7 @@ public class AccountPanel extends JPanel {
                 }
                 else if (result == JOptionPane.CANCEL_OPTION) {
                     JViewport container = (JViewport) getParent();
-                    container.setView(new AccountsPanel());
+                    container.setView(new AccountsPanel(CurrentUserId));
                     container.validate();
                 }
             }
@@ -290,7 +293,7 @@ public class AccountPanel extends JPanel {
     //This method navigates to Accounts Table page when back button is clicked
     private void backButtonActionPerformed(ActionEvent evt) {
         JViewport container = (JViewport) getParent();
-        container.setView(new AccountsPanel());
+        container.setView(new AccountsPanel(CurrentUserId));
         container.validate();
         container.repaint();
     }

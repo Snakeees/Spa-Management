@@ -10,44 +10,40 @@ import javax.swing.*;
 public class NoScalingIcon implements Icon
 {
     private Icon icon;
-    private Icon ScaledIcon;
 
 
     public NoScalingIcon(URL location)
     {
         this.icon = new ImageIcon(location);
-        SetScaled();
-    }
-    public NoScalingIcon(URL location, Boolean Invert)
-    {
-        this.icon = new ImageIcon(location);
-        if(Invert) {
-            invertIcon();
-        }
-        SetScaled();
     }
 
-    public void invertIcon() {
-        BufferedImage buffered = toBufferedImage();
-        for (int x = 0; x < buffered.getWidth(); x++) {
-            for (int y = 0; y < buffered.getHeight(); y++) {
-                int rgba = buffered.getRGB(x, y);
-                Color col = new Color(rgba, true);
-                if (col.getAlpha() != 0) {
-                    int p = buffered.getRGB(x, y);
-                    int a = (p >> 24) & 0xff;
-                    int r = (p >> 16) & 0xff;
-                    int g = (p >> 8) & 0xff;
-                    int b = p & 0xff;
-                    r = 255 - r;
-                    g = 255 - g;
-                    b = 255 - b;
-                    p = (a << 24) | (r << 16) | (g << 8) | b;
-                    buffered.setRGB(x, y, p);
-                }
-            }
-        }
-        setImage(buffered);
+    public NoScalingIcon(Image image)
+    {
+        this.icon = new ImageIcon(image);
+    }
+
+    public NoScalingIcon(Image image, int iconWidth, int iconHeight)
+    {
+        this.icon = new ImageIcon(image);
+        scalePix(iconWidth, iconHeight);
+    }
+
+    public NoScalingIcon(ImageIcon imageIcon)
+    {
+        this.icon = imageIcon;
+    }
+
+    public NoScalingIcon(ImageIcon imageIcon, int iconWidth, int iconHeight)
+    {
+        this.icon = imageIcon;
+        scalePix(iconWidth, iconHeight);
+    }
+
+    public NoScalingIcon(URL location, int iconWidth, int iconHeight)
+    {
+        this.icon = new ImageIcon(location);
+        //scalePix(x,y);
+        scalePix(iconWidth, iconHeight);
     }
 
     public void Scale(double Scale) {
@@ -56,18 +52,12 @@ public class NoScalingIcon implements Icon
         setImage(scaledImage);
     }
 
-    private void SetScaled() {
+    public void scalePix(int iconWidth, int iconHeight) {
         Image image = getImage();
-        Image scaledImage = image.getScaledInstance((int) (getIconWidth()*1.5), (int) (getIconHeight()*1.5),  java.awt.Image.SCALE_SMOOTH);
-        ImageIcon imageIcon = new ImageIcon();
-        imageIcon.setImage(scaledImage);
-        this.ScaledIcon = imageIcon;
+        Image scaledImage = image.getScaledInstance(iconWidth, iconHeight,  java.awt.Image.SCALE_SMOOTH);
+        setImage(scaledImage);
     }
 
-    public Image getScaled() {
-        ImageIcon imageIcon = (ImageIcon) ScaledIcon;
-        return imageIcon.getImage();
-    }
     public void setImage(Image image) {
         ImageIcon imageIcon = new ImageIcon();
         imageIcon.setImage(image);
@@ -91,9 +81,9 @@ public class NoScalingIcon implements Icon
 
     public void paintIcon(Component c, Graphics g, int x, int y)
     {
-        Graphics2D g2d = (Graphics2D)g.create();
+        /*Graphics2D g2d = (Graphics2D)g.create();
 
-        /*AffineTransform at = g2d.getTransform();
+        AffineTransform at = g2d.getTransform();
         int scaleX = (int) (x * at.getScaleX());
         int scaleY = (int) (y * at.getScaleY());
 
@@ -102,23 +92,98 @@ public class NoScalingIcon implements Icon
         at.concatenate( scaled );
         g2d.setTransform( at );
 
-        g2d.drawImage(getScaled(), scaleX, scaleY, c);*/
+        g2d.drawImage(getScaled(), scaleX, scaleY, c);
 
-        g2d.drawImage(getImage(), x, y, c);
+        Image scaledImage = getImage().getScaledInstance((int) (getIconWidth()*1.5), (int) (getIconHeight()*1.5),  java.awt.Image.SCALE_SMOOTH);
+        g2d.drawImage(scaledImage, x, y, c);
+
+        g2d.dispose();*/
+
+        /*Graphics2D g2d = (Graphics2D)g.create();
+
+        AffineTransform at = g2d.getTransform();
+
+        AffineTransform scaled = AffineTransform.getScaleInstance(1.0 / at.getScaleX(), 1.0 / at.getScaleY());
+        at.concatenate( scaled );
+        g2d.setTransform( at );
+
+        MediaTracker tracker = new MediaTracker(c);
+
+        while ((invert && !invertComplete) || (scale && !scaleComplete)) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+
+
+        Image scaledImage = getImage().getScaledInstance(this.IconWidth, this.IconHeight, Image.SCALE_SMOOTH);
+        ImageIcon imageIcon = new ImageIcon(scaledImage);
+
+
+
+        // Using MediaTracker to wait for the image to load
+        tracker.addImage(scaledImage, 0);
+
+        try {
+            tracker.waitForAll();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            return;
+        }
+
+        System.out.println("");
+        System.out.println("Height: " + imageIcon.getIconHeight());
+        System.out.println("Width: " + imageIcon.getIconWidth());
+
+
+        System.out.println("x: " + x);
+        System.out.println("y: " + y);
+        //System.out.println("scaleX: " + scaleX);
+        //System.out.println("scaleY: " + scaleY);
+        if (!tracker.isErrorAny()) {
+            this.icon = imageIcon;
+            //this.icon.paintIcon(c, g2d, x, y);
+
+            g2d.drawImage(scaledImage, x, y, c);
+        } else {
+            this.icon.paintIcon(c, g2d, x, y);
+
+            //g2d.drawImage(getImage(), x, y, c);
+        }
+        g2d.dispose();*/
+
+        Graphics2D g2d = (Graphics2D)g.create();
+
+        AffineTransform at = g2d.getTransform();
+
+        double scaleX = at.getScaleX();
+        double scaleY =  at.getScaleY();
+        AffineTransform scaled = AffineTransform.getScaleInstance(1.0 / at.getScaleX(), 1.0 / at.getScaleY());
+        at.concatenate( scaled );
+        g2d.setTransform( at );
+
+
+        Image scaledImage = getImage().getScaledInstance((int) (getIconWidth() * 1.5), (int) (getIconHeight() * 1.5), Image.SCALE_SMOOTH);
+
+        // Using MediaTracker to wait for the image to load
+        MediaTracker tracker = new MediaTracker(c);
+        tracker.addImage(scaledImage, 0);
+        try {
+            tracker.waitForAll();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt(); // Restore the interrupted status
+            return; // Exit the method
+        }
+
+        // Check if the image loading was successful
+        if (!tracker.isErrorAny()) {
+            g2d.drawImage(scaledImage, (int)(x * scaleX), (int)(y * scaleY), c);
+        }
 
         g2d.dispose();
-    }
 
-    public BufferedImage toBufferedImage() {
-        Image img = getImage();
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
-        }
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-        return bimage;
     }
-
 }

@@ -5,204 +5,145 @@ import com.spa.dto.*;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.image.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+
+import static com.spa.SpaManagement.BACKGROUND_COLOR;
+import static com.spa.SpaManagement.BUTTON_COLOR;
+import static com.spa.SpaManagement.SELECTED_BUTTON_COLOR;
 
 public class AdminDashboardScreen extends JFrame implements ActionListener {
-    MyButton reports;
-    MyButton therapists;
-    MyButton services;
-    MyButton accounts;
-    MyButton changePassword;
-    MyButton logout;
+    MyButton reports, therapists, services, accounts, changePassword, logout;
     JPanel content;
     ArrayList<MyButton> navButtons;
     int userId;
-    public int getUserId() {
-        return userId;
-    }
 
     public AdminDashboardScreen(int userId, String userName) {
         this.userId = userId;
-        // setting title of the window
-        setTitle("Serenity SPA: " + userName);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
-        getContentPane().setBackground(new Color(255, 220, 241));
-        createHeaderPanel().setLocation(0, 0);
-        setSize(500, 400);
-        getContentPane().add(createHeaderPanel(), BorderLayout.NORTH, 0);
-
-        // Displaying Reports page as default when admin login
-        content = new Reports();
-        makeActive(reports);
-        // Making Reports navigation button active at the time of admin login
-        content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
-
-
-        JScrollPane body = new JScrollPane();
-        body.getViewport().setBackground(new Color(255, 220, 241));
-        body.setBorder(BorderFactory.createEmptyBorder());
-        body.setViewportView(content);
-        getContentPane().add(body, BorderLayout.CENTER, 1);
-        UIManager.put("Button.select", new Color(250, 105, 192));
+        createNavigationButtons();
+        setupFrame(userName);
+        setupContentPanel();
     }
 
-    // Creating the Header panel with navigation buttons
-    private JPanel createHeaderPanel() {
-        JPanel headerPanel = new JPanel();
-        headerPanel.setLayout(new GridLayout(1, 4));
-        headerPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
-        headerPanel.setOpaque(false);
-        navButtons = new ArrayList<>();
-        if (reports == null) {
-            reports = getButton("report");
-        }
-        if (therapists == null) {
-            therapists = getButton("masseuse");
-        }
-        if (services == null) {
-            services = getButton("list");
-        }
-        if (accounts == null) {
-            accounts = getButton("accounts");
-        }
-        if (changePassword == null) {
-            changePassword = getButton("changepass");
-        }
-        if (logout == null) {
-            logout = getButton("logout");
-        }
-        headerPanel.add(reports);
-        headerPanel.add(therapists);
-        headerPanel.add(services);
-        headerPanel.add(accounts);
-        headerPanel.add(changePassword);
-        headerPanel.add(logout);
-        navButtons.add(reports);
-        navButtons.add(therapists);
-        navButtons.add(services);
-        navButtons.add(accounts);
-        navButtons.add(changePassword);
-        navButtons.add(logout);
-        headerPanel.setLocation(0, 0);
-        headerPanel.setSize(MAXIMIZED_HORIZ, 40);
-        headerPanel.setBackground(new Color(145, 73, 116));
-        return headerPanel;
+    private void createNavigationButtons() {
+        reports = createNavButton("report");
+        therapists = createNavButton("masseuse");
+        services = createNavButton("list");
+        accounts = createNavButton("accounts");
+        changePassword = createNavButton("changepass");
+        logout = createNavButton("logout");
+
+        navButtons = new ArrayList<>(Arrays.asList(reports, therapists, services, accounts, changePassword, logout));
     }
-    // To create navigation buttons
-    public MyButton getButton(String path) {
-        NoScalingIcon icon = new NoScalingIcon(getClass().getResource("../../../images/" + path + "-48x48.png"), true);
+
+    private MyButton createNavButton(String path) {
+        NoScalingIcon icon = new NoScalingIcon(getClass().getResource("../../../images/" + path + "-inverted.png"), 48, 48);
         MyButton button = new MyButton(icon);
-        button.setBackground(new Color(145, 73, 116));
+        button.setBackground(BUTTON_COLOR);
         button.addActionListener(this);
         button.setForeground(Color.WHITE);
         button.setFocusPainted(false);
         return button;
     }
 
-    // This method helps in the navigation between pages by clicking navigation buttons
+    private void setupFrame(String userName) {
+        setTitle("Serenity SPA: " + userName);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        getContentPane().setBackground(BACKGROUND_COLOR);
+        setSize(500, 400);
+        getContentPane().add(createHeaderPanel(), BorderLayout.NORTH);
+    }
+
+    private void setupContentPanel() {
+        content = new Reports();
+        makeActive(reports);
+        content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
+
+        JScrollPane body = new JScrollPane(content);
+        body.setBorder(BorderFactory.createEmptyBorder());
+        getContentPane().add(body, BorderLayout.CENTER);
+    }
+
+
+
+    private JPanel createHeaderPanel() {
+        JPanel headerPanel = new JPanel(new GridLayout(1, 6, 0, 0));
+        headerPanel.setBorder(new EmptyBorder(10, 0, 10, 0));
+        headerPanel.setOpaque(false);
+
+        for (MyButton button : navButtons) {
+            headerPanel.add(button);
+        }
+        return headerPanel;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
-        JScrollPane body = new JScrollPane();
+        MyButton activeButton = null;
         if (e.getSource() == reports) {
-            ClearButtons();
-            content.invalidate();
-            getContentPane().remove(1);
             content = new Reports();
-            content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
-            getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            body.setViewportView(content);
-            body.setBorder(BorderFactory.createEmptyBorder());
-            getContentPane().add(body, BorderLayout.CENTER, 1);
-            makeActive(reports);
-        }
-        else if (e.getSource() == therapists) {
-            ClearButtons();
-            content.invalidate();
-            getContentPane().remove(1);
+            activeButton = reports;
+        } else if (e.getSource() == therapists) {
             content = new TherapistsPanel();
-            content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
-            getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            body.setViewportView(content);
-            body.setBorder(BorderFactory.createEmptyBorder());
-            getContentPane().add(body, BorderLayout.CENTER, 1);
-            makeActive(therapists);
-        }
-        else if (e.getSource() == accounts) {
-            ClearButtons();
-            content.invalidate();
-            getContentPane().remove(1);
-            content = new AccountsPanel();
-            content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
-            getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            body.setViewportView(content);
-            body.setBorder(BorderFactory.createEmptyBorder());
-            getContentPane().add(body, BorderLayout.CENTER, 1);
-            makeActive(accounts);
-        }
-        else if (e.getSource() == services) {
-            ClearButtons();
-            getContentPane().remove(1);
-            setLayout(new BorderLayout());
+            activeButton = therapists;
+        } else if (e.getSource() == services) {
             content = new ServicesPanel();
-            content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
-            getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            body.setViewportView(content);
-            body.setBorder(BorderFactory.createEmptyBorder());
-            getContentPane().add(body, BorderLayout.CENTER, 1);
-            makeActive(services);
+            activeButton = services;
+        } else if (e.getSource() == accounts) {
+            content = new AccountsPanel(userId);
+            activeButton = accounts;
+        } else if (e.getSource() == changePassword) {
+            content = new ChangePassword(userId);
+            activeButton = changePassword;
+        } else if (e.getSource() == logout) {
+            performLogout();
         }
-        else if (e.getSource() == changePassword) {
-            ClearButtons();
-            content.invalidate();
-            getContentPane().remove(1);
-            content = new ChangePassword(getUserId());
-            content.setSize(JFrame.MAXIMIZED_HORIZ, JFrame.MAXIMIZED_VERT);
-            getContentPane().add(createHeaderPanel(), BorderLayout.PAGE_START, 0);
-            body.setViewportView(content);
-            body.setBorder(BorderFactory.createEmptyBorder());
-            getContentPane().add(body, BorderLayout.CENTER, 1);
-            makeActive(changePassword);
+
+        if (activeButton != null) {
+            switchPanel(content, activeButton);
         }
-        else if (e.getSource() == logout) {
-            int confirm = JOptionPane.showConfirmDialog(this,
-                    "Are you sure you want to logout?",
-                    "Logout Confirmation",
-                    JOptionPane.YES_NO_OPTION);
-            if (confirm == JOptionPane.YES_OPTION) {
-                LoginScreen loginScreen = new LoginScreen(null);
-                loginScreen.setVisible(true);
-                dispose();
-            }
-        }
+
+    }
+
+    private void switchPanel(JPanel newPanel, MyButton activeButton) {
+        updateOtherButtons();
+        content = newPanel;
+        getContentPane().remove(1); // Remove the existing content panel
+
+        JScrollPane body = new JScrollPane(content);
+        body.setBorder(BorderFactory.createEmptyBorder());
+        getContentPane().add(body, BorderLayout.CENTER, 1);
+
+        makeActive(activeButton);
         validate();
     }
-    private void ClearButtons() {
+
+
+    private void performLogout() {
+        int confirm = JOptionPane.showConfirmDialog(this,
+                "Are you sure you want to logout?",
+                "Logout Confirmation",
+                JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            new LoginScreen(null).setVisible(true);
+            dispose();
+        }
+    }
+
+    private void updateOtherButtons() {
         for (MyButton button : navButtons) {
-            makeInactive(button);
+            makeInActive(button);
         }
     }
-    public BufferedImage toBufferedImage(ImageIcon icon) {
-        Image img = icon.getImage();
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
-        }
-        BufferedImage bimage = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-        Graphics2D bGr = bimage.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-        return bimage;
-    }
+
 
     public void makeActive(MyButton button) {
-        button.setBackground(new Color(250, 105, 192));
+        button.setBackground(SELECTED_BUTTON_COLOR);
     }
-    public void makeInactive(MyButton button) {
-        button.setBackground(new Color(145, 73, 116));
+    public void makeInActive(MyButton button) {
+        button.setBackground(BUTTON_COLOR);
     }
-
-
 }
