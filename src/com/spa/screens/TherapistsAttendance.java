@@ -9,43 +9,61 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
+
+import static com.spa.SpaManagement.BACKGROUND_COLOR;
+import static com.spa.SpaManagement.TEXTFIELD_BORDER_COLOR;
 
 public class TherapistsAttendance extends JPanel {
 
     private List<Therapist> therapists = new ArrayList<>();
 
     private Integer selectedTherapistAttendanceId = null;
-    private JLabel checkInLabel;
-    private JCheckBox checkInTime;
-    private JCheckBox checkOutTime;
-    private JLabel jLabel2;
+    private JLabel TitleLabel, therpaistNameLabel, checkInLabel, checkOutLabel;
+    private JCheckBox checkInTime, checkOutTime;
     private MyButton submit;
     private JComboBox<Therapist> therapistNameList;
-    private JLabel therpaistNameLabel;
-
 
     public TherapistsAttendance() {
         initComponents();
         UIManager.put("Button.select", new Color(250, 105, 192));
     }
 
-        private void initComponents() {
-        therpaistNameLabel = new JLabel();
-        therapistNameList = new JComboBox<>();
-        checkInLabel = new JLabel();
-        jLabel2 = new JLabel();
+    private void initComponents() {
+        setupLabelsAndFields();
+        ArrayList<ArrayList<Object>> items = new ArrayList<>();
+        items.add(new ArrayList<>(Arrays.asList(therpaistNameLabel, therapistNameList)));
+        items.add(new ArrayList<>(Arrays.asList(checkInLabel, checkInTime)));
+        items.add(new ArrayList<>(Arrays.asList(checkOutLabel, checkOutTime)));
+
+        Object[][] Items = items.stream().map(l -> l.toArray(new Object[0])).toArray(Object[][]::new);
+
+        InfoFunction backAction = (InfoPanel infoPanel) -> {};
+        InfoFunction submitAction = (InfoPanel infoPanel) -> handleSubmitAction();
+
+        InfoPanel infoPanel = new InfoPanel(TitleLabel, false, true, "SUBMIT", Items, backAction, submitAction);
+
+        setLayout(new BorderLayout());
+        add(infoPanel, BorderLayout.CENTER);
+    }
+
+
+    private void setupLabelsAndFields() {
+        TitleLabel = InfoPanel.createLabel("THERAPIST ATTENDANCE", 20);
+        therpaistNameLabel = InfoPanel.createLabel("THERAPIST NAME", 15);
+        checkInLabel = InfoPanel.createLabel("CHECKIN TIME", 15);
+        checkOutLabel = InfoPanel.createLabel("CHECKOUT TIME", 15);
         checkInTime = new JCheckBox();
+        checkInTime.setBackground(BACKGROUND_COLOR);
         checkOutTime = new JCheckBox();
-        submit = new MyButton();
+        checkOutTime.setBackground(BACKGROUND_COLOR);
 
-        setBackground(new Color(255, 220, 241));
-
-        therpaistNameLabel.setFont(new Font("Play", 1, 14));
-        therpaistNameLabel.setText("THERAPIST NAME");
-
+        therapistNameList = new JComboBox<>();
+        therapistNameList.setFont(new Font("Play", Font.PLAIN, therapistNameList.getFont().getSize()));
+        therapistNameList.setPreferredSize(new MyTextField(12).getPreferredSize());
 
         therapistNameList.setFont(new Font("Play", 0, 12));
         List<Therapist> therapistList = getTherapists(true);
@@ -56,70 +74,11 @@ public class TherapistsAttendance extends JPanel {
 
         updateTherapistAttendanceForm(null);
 
-        therapistNameList.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                therapistNameListActionPerformed(evt);
-            }
-        });
+        therapistNameList.addActionListener(this::therapistNameListActionPerformed);
         therapistNameList.setBackground(Color.WHITE);
-
-        checkInLabel.setFont(new Font("Play", 1, 14));
-        checkInLabel.setText("CHECKIN TIME");
-        jLabel2.setFont(new Font("Play", 1, 14));
-        jLabel2.setText("CHECKOUT TIME");
-        submit.setBackground(new Color(145, 73, 116));
-        submit.setFont(new Font("Play", 1, 12));
-        submit.setText("SUBMIT");
-        submit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                submitActionPerformed(evt);
-            }
-        });
-
-        GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap(4, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(therpaistNameLabel, GroupLayout.PREFERRED_SIZE, 144, GroupLayout.PREFERRED_SIZE)
-                                                .addGap(149, 149, 149)
-                                                .addComponent(therapistNameList, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                                .addComponent(submit, GroupLayout.PREFERRED_SIZE, 100, GroupLayout.PREFERRED_SIZE)
-                                                .addGroup(layout.createSequentialGroup()
-                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                                                                .addComponent(jLabel2)
-                                                                .addComponent(checkInLabel))
-                                                        .addGap(177, 177, 177)
-                                                        .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                                                .addComponent(checkInTime)
-                                                                .addComponent(checkOutTime)))))
-                                .addContainerGap(4, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(128, 128, 128)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(therpaistNameLabel, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(therapistNameList, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
-                                .addGap(40,40,40)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
-                                        .addComponent(checkInLabel)
-                                        .addComponent(checkInTime))
-                                .addGap(40, 40, 40)
-                                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel2)
-                                        .addComponent(checkOutTime, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE))
-                                .addGap(74, 74, 74)
-                                .addComponent(submit, GroupLayout.PREFERRED_SIZE, 33, GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(207, Short.MAX_VALUE))
-        );
     }
-    private void therapistNameListActionPerformed(ActionEvent evt) {//GEN-FIRST:event_therapistNameListActionPerformed
+
+    private void therapistNameListActionPerformed(ActionEvent evt) {
         Therapist therapist = (Therapist) therapistNameList.getSelectedItem();
         if (therapist != null) {
             updateTherapistAttendanceForm(therapist.getId());
@@ -160,7 +119,7 @@ public class TherapistsAttendance extends JPanel {
         }
     }
 
-    private void submitActionPerformed(ActionEvent evt) {//GEN-FIRST:event_submitActionPerformed
+    private void handleSubmitAction() {
         Therapist therapist = (Therapist) therapistNameList.getSelectedItem();
         Time currentTime = Time.valueOf(LocalTime.now());
         Date currentDate = Date.valueOf(LocalDate.now());

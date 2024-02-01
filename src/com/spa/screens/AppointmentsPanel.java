@@ -34,9 +34,9 @@ public class AppointmentsPanel extends JPanel {
     private TablePanel tablePanel;
 
     private static final String[] HEADERS = {"APPOINTMENT ID", "CLIENT NAME", "SERVICE", "THERAPIST", "DATE", "TIME", "OPTIONS"};
-    String[] buttonNames = {"View", "Update"};
-    TableFunction optionOneFunction = (JTable table) -> navigateToDetails(false, table);
-    TableFunction optionTwoFunction = (JTable table) -> navigateToDetails(true, table);
+    String[] buttonNames = {"Update", "Cancle"};
+    TableFunction optionOneFunction = (JTable table) -> navigateToDetails(table);
+    TableFunction optionTwoFunction = (JTable table) -> cancleAppointment(table);
 
 
     public AppointmentsPanel() {
@@ -125,13 +125,49 @@ public class AppointmentsPanel extends JPanel {
         container.repaint();
     }
 
-    private void navigateToDetails(boolean isEditMode, JTable table) {
+    private void navigateToDetails(JTable table) {
         int row = table.convertRowIndexToModel(table.getEditingRow());
         int Id = (int) table.getModel().getValueAt(row, 0);
         JViewport container = (JViewport) getParent();
-        container.setView(new AppointmentPanel(Id, isEditMode));
+        container.setView(new AppointmentPanel(Id, true));
         container.validate();
         container.repaint();
+    }
+
+    private void cancleAppointment(JTable table) {
+        int row = table.convertRowIndexToModel(table.getEditingRow());
+        int o = (int) table.getModel().getValueAt(row, 0);
+        String clientName = table.getModel().getValueAt(row, 1).toString();
+        String appointmentTime = table.getModel().getValueAt(row, 5).toString();
+        String appointmentDate = table.getModel().getValueAt(row, 4).toString();
+
+        String message = "<html>Do you want to cancel the appointment for " +
+                "<span style='color:red; font-size:10px;'>" + clientName + "</span>" +
+                " at " +
+                "<span style='color:blue; font-size:10px;'>" + appointmentTime + "</span>" +
+                " on " +
+                "<span style='color:green; font-size:10px;'>" + appointmentDate + "</span>" + "?</html>";
+
+        int result = JOptionPane.showOptionDialog(
+                getParent(),
+                message,
+                "Cancel Waring",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                new Object[]{"OK", "CANCEL"},
+                "OK");
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                Database db = new Database();
+                db.executeUpdate("Delete from Appointment where ID=?", o);
+                updateTable(getAppointmentsWithRestriction());
+            }catch (Exception exception){
+                exception.printStackTrace();
+                JOptionPane.showMessageDialog(getParent(),"Failed to cancel Appointment");
+            }
+        }
+
     }
 
 
@@ -181,7 +217,7 @@ public class AppointmentsPanel extends JPanel {
         List<List<Object>> cells = new ArrayList<>();
         java.util.Date d = new java.util.Date();
         try {
-            ResultSet rs = db.executeQuery("select a.ID, a.ClientName as clientName, s.ServiceName as service, t.FirstName as therapist, a.AppointmentDate as date,a.AppointmentTime as time from Appointment a, Therapist t, Service s where AppointmentDate=? and a.IsActive=? and t.ID=a.TherapistID and a.ServiceID=s.ID ORDER BY a.AppointmentDate, a.AppointmentTime", new java.sql.Date(d.getYear(), d.getMonth(), d.getDate()), true);
+            ResultSet rs = db.executeQuery("select a.ID, a.ClientName as clientName, s.ServiceName as service, t.FirstName as therapist, a.AppointmentDate as date,a.AppointmentTime as time from Appointment a, Therapist t, Service s where AppointmentDate=? and t.ID=a.TherapistID and a.ServiceID=s.ID ORDER BY a.AppointmentDate, a.AppointmentTime", new java.sql.Date(d.getYear(), d.getMonth(), d.getDate()));
             while (rs.next()) {
                 int id = rs.getInt("ID");
                 String clientName = rs.getString("clientName");
@@ -204,7 +240,7 @@ public class AppointmentsPanel extends JPanel {
         List<List<Object>> cells = new ArrayList<>();
         ResultSet rs;
         List<Object> parameters = new ArrayList<>();
-        StringBuilder query = new StringBuilder("select a.ID,a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentDate as date,a.AppointmentTime as time from Appointment a, Therapist t, Service s where a.IsActive=true and t.ID=a.TherapistID and a.ServiceID=s.ID  ");
+        StringBuilder query = new StringBuilder("select a.ID,a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentDate as date,a.AppointmentTime as time from Appointment a, Therapist t, Service s where t.ID=a.TherapistID and a.ServiceID=s.ID ");
         Date date = dateSelectorTxt.getDate();
         if (date != null) {
             parameters.add(new java.sql.Date(date.getYear(), date.getMonth(), date.getDate()));

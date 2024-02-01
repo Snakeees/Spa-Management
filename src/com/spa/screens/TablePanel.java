@@ -183,7 +183,7 @@ public class TablePanel extends JPanel {
             //if data is empty, showing "No data Panel"
             JPanel noDataPanel = new JPanel();
             noDataPanel.setLayout(new FlowLayout());
-            JLabel messageLabel = new JLabel("No "+ Title +" are available");
+            JLabel messageLabel = new JLabel("No "+ Title.toLowerCase() +" could be found");
             messageLabel.setFont(new Font("Play", Font.BOLD, 20));
             noDataPanel.add(messageLabel);
             noDataPanel.setBackground(BACKGROUND_COLOR);

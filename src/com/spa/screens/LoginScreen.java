@@ -170,7 +170,7 @@ public class LoginScreen extends JFrame {
         Database db = new Database();
         try {
             String hashedPassword = HashPassword.hashPassword(password);
-            ResultSet rs = db.executeQuery("SELECT IsAdmin FROM UserLogin WHERE LoginName = ? AND Password = ? AND IsActive = ? limit 1", username, hashedPassword, true);
+            ResultSet rs = db.executeQuery("SELECT IsAdmin FROM UserLogin WHERE LoginName = ? AND Password = ? limit 1", username, hashedPassword);
 
             if (rs.next()) {
                 boolean isAdmin = rs.getBoolean("IsAdmin");

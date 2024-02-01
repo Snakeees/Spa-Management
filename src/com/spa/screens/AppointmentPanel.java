@@ -86,9 +86,9 @@ public class AppointmentPanel extends JPanel {
         clientNameTxt = new MyTextField(20);
         phoneNumberTxt = new MyTextField(20);
 
-        Font SelectorFont = new Font("Play", Font.PLAIN, 14);
         serviceListSelector = new JComboBox<>();
         therapistListSelector = new JComboBox<>();
+        Font SelectorFont = new Font("Play", Font.PLAIN, serviceListSelector.getFont().getSize());
         serviceListSelector.setFont(SelectorFont);
         therapistListSelector.setFont(SelectorFont);
 
