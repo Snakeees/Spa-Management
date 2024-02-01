@@ -8,6 +8,8 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 
+import static com.spa.SpaManagement.BUTTON_COLOR;
+
 
 public class ScatterPlot extends JPanel implements MouseMotionListener {
 
@@ -43,7 +45,7 @@ public class ScatterPlot extends JPanel implements MouseMotionListener {
         this.originY = padY + graphHeight;
 
         calculateScale();
-        setBackground(new Color(145, 73, 116));
+        setBackground(BUTTON_COLOR);
         setSize(size[0], size[1]);
         this.addMouseMotionListener(this);
         ToolTipManager.sharedInstance().registerComponent(this);

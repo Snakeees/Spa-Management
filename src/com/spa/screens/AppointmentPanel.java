@@ -16,6 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static com.spa.SpaManagement.BACKGROUND_COLOR;
+import static com.spa.SpaManagement.SELECTED_BUTTON_COLOR;
 
 public class AppointmentPanel extends JPanel {
 
@@ -46,7 +47,7 @@ public class AppointmentPanel extends JPanel {
         appointment = getAppointmentDetails(appointmentId);
         updateDropdownDetails();
         initComponents(isEditable);
-        UIManager.put("Button.select", new Color(250, 105, 192));
+        UIManager.put("Button.select", SELECTED_BUTTON_COLOR);
     }
 
     private void initComponents(boolean isEditable) {

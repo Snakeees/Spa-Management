@@ -9,6 +9,8 @@ import java.awt.*;
 import java.sql.*;
 import java.util.Objects;
 
+import static com.spa.SpaManagement.*;
+
 public class LoginScreen extends JFrame {
 
     private MyTextField userField;
@@ -22,7 +24,7 @@ public class LoginScreen extends JFrame {
         createFrame();
         JPanel mainPanel = createMainPanel();
         getContentPane().add(mainPanel, BorderLayout.CENTER); // Use BorderLayout for JFrame
-        UIManager.put("Button.select", new Color(250, 105, 192));
+        UIManager.put("Button.select", SELECTED_BUTTON_COLOR);
     }
 
     private void createFrame() {
@@ -33,7 +35,7 @@ public class LoginScreen extends JFrame {
 
     private JPanel createMainPanel() {
         JPanel panel = new JPanel(new GridBagLayout()); // Use GridBagLayout for auto-spacing
-        panel.setBackground(new Color(255, 220, 241));
+        panel.setBackground(BACKGROUND_COLOR);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridwidth = GridBagConstraints.REMAINDER;
         gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -72,7 +74,6 @@ public class LoginScreen extends JFrame {
 
     private JPanel createUsernamePanel() {
         JPanel userPanel = new JPanel();
-        userPanel.setBackground(new Color(0,0,0));
         userPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         userPanel.setOpaque(false);
 
@@ -93,7 +94,7 @@ public class LoginScreen extends JFrame {
         JLabel passLabel = new JLabel("PASSWORD ");
         passLabel.setFont(new Font("Play", Font.PLAIN, 20));
         passField = new JPasswordField(20);
-        passField.setBorder(BorderFactory.createLineBorder(new Color(255, 89, 149), 3));
+        passField.setBorder(BorderFactory.createLineBorder(TEXTFIELD_BORDER_COLOR, 3));
         passPanel.add(passLabel);
         passPanel.add(passField);
 
@@ -109,8 +110,6 @@ public class LoginScreen extends JFrame {
         MyButton submitButton = new MyButton("SUBMIT");
         submitButton.setFocusPainted(false);
         submitButton.setFont(new Font("Play", Font.BOLD, 20));
-        submitButton.setBackground(new Color(145, 73, 116));
-        submitButton.setForeground(Color.WHITE);
 
         submitButton.addActionListener(action -> {
             String username = userField.getText();

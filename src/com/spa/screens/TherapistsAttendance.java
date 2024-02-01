@@ -14,8 +14,7 @@ import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
 
-import static com.spa.SpaManagement.BACKGROUND_COLOR;
-import static com.spa.SpaManagement.TEXTFIELD_BORDER_COLOR;
+import static com.spa.SpaManagement.*;
 
 public class TherapistsAttendance extends JPanel {
 
@@ -29,7 +28,7 @@ public class TherapistsAttendance extends JPanel {
 
     public TherapistsAttendance() {
         initComponents();
-        UIManager.put("Button.select", new Color(250, 105, 192));
+        UIManager.put("Button.select", SELECTED_BUTTON_COLOR);
     }
 
     private void initComponents() {

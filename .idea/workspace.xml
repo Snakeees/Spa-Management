@@ -4,19 +4,13 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="AppointmentPanel refactored">
+    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="fixed init.sql">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/SpaManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/SpaManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/dto/Appointment.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/dto/Appointment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/dto/UserLogin.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/dto/UserLogin.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AccountPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AccountPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/ChangePassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/ChangePassword.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/spa/screens/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/LoginScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/ServicePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/ServicePanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sql_scripts/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/sql_scripts/init.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/WelcomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/WelcomeScreen.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +68,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectCodeStyleSettingsMigration">
     <option name="version" value="2" />
@@ -330,7 +324,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706786183339</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="fixed init.sql">
+      <option name="closed" value="true" />
+      <created>1706788272510</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1706788272510</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -396,7 +398,8 @@
     <MESSAGE value="TherapistPanel Refactored" />
     <MESSAGE value="Refactored Services, Therapists and Appointments" />
     <MESSAGE value="AppointmentPanel refactored" />
-    <option name="LAST_COMMIT_MESSAGE" value="AppointmentPanel refactored" />
+    <MESSAGE value="fixed init.sql" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed init.sql" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

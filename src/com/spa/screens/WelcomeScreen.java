@@ -6,6 +6,8 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+import static com.spa.SpaManagement.SELECTED_BUTTON_COLOR;
+
 public class WelcomeScreen extends JFrame {
 
     public WelcomeScreen() {
@@ -15,7 +17,7 @@ public class WelcomeScreen extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new FlowLayout(FlowLayout.CENTER));
         JPanel boxPanel = new JPanel();
-        UIManager.put("Button.select", new Color(250, 105, 192));
+        UIManager.put("Button.select", SELECTED_BUTTON_COLOR);
         boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
         boxPanel.setBorder(new EmptyBorder(30, 10, 30, 10));
         // Adding the Label

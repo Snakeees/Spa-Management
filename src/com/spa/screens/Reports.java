@@ -11,20 +11,23 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+import static com.spa.SpaManagement.BACKGROUND_COLOR;
+import static com.spa.SpaManagement.SELECTED_BUTTON_COLOR;
+
 public class Reports extends JPanel {
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public Reports() {
         initComponents();
-        UIManager.put("Button.select", new Color(250, 105, 192));
+        UIManager.put("Button.select", SELECTED_BUTTON_COLOR);
     }
 
     private void initComponents() {
         GridBagConstraints gbc = new GridBagConstraints();
         GridBagLayout layout = new GridBagLayout();
         setLayout(layout);
-        setBackground(new Color(255, 220, 241));
+        setBackground(BACKGROUND_COLOR);
 
         // Common padding
         int padding = 10; // Adjust the padding as needed
