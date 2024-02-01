@@ -60,24 +60,24 @@ public class Reports extends JPanel {
         add(visitLabel, gbc);
     }
 
-    // fetching total income from 1st of the month from DB which is need to be displayed in UI
     public int[] getMonthlyIncomes() {
         Database db = new Database();
         LocalDate startDate = LocalDate.of(2023, 8, 1); // Starting from August 2023
-        LocalDate endDate = LocalDate.now(); // Until current month
+        LocalDate today = LocalDate.now();
+        LocalDate endDate = LocalDate.now(); // Until current date
 
         ArrayList<Integer> monthlyIncomes = new ArrayList<>();
 
         while (startDate.isBefore(endDate) || startDate.isEqual(endDate)) {
             YearMonth yearMonth = YearMonth.from(startDate);
             LocalDate firstDayOfMonth = yearMonth.atDay(1);
-            LocalDate lastDayOfMonth = yearMonth.atEndOfMonth();
+            LocalDate lastDayOfMonth = startDate.getMonth().equals(today.getMonth()) && startDate.getYear() == today.getYear() ? today : yearMonth.atEndOfMonth();
 
             try {
                 Date startOfMonth = dateFormat.parse(dateFormat.format(java.sql.Date.valueOf(firstDayOfMonth)));
                 Date endOfMonth = dateFormat.parse(dateFormat.format(java.sql.Date.valueOf(lastDayOfMonth)));
 
-                ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and a.AppointmentDate>=? and a.IsActive=true and a.AppointmentDate<=?", dateFormat.format(startOfMonth), dateFormat.format(endOfMonth));
+                ResultSet rs = db.executeQuery("select sum(s.Cost) as monthIncome from Service s, Appointment a where a.ServiceID=s.ID and a.AppointmentDate>=? and a.AppointmentDate<=?", dateFormat.format(startOfMonth), dateFormat.format(endOfMonth));
                 if (rs.next()) {
                     monthlyIncomes.add(rs.getInt("monthIncome"));
                 } else {
@@ -92,24 +92,24 @@ public class Reports extends JPanel {
         return monthlyIncomes.stream().mapToInt(i -> i).toArray();
     }
 
-    // fetching no of visits from 1st of the month from DB which is need to be displayed in UI
     public int[] getMonthlyVisits() {
         Database db = new Database();
         LocalDate startDate = LocalDate.of(2023, 8, 1); // Starting from August 2023
-        LocalDate endDate = LocalDate.now(); // Until current month
+        LocalDate today = LocalDate.now();
+        LocalDate endDate = LocalDate.now(); // Until current date
 
         ArrayList<Integer> monthlyVisits = new ArrayList<>();
 
         while (startDate.isBefore(endDate) || startDate.isEqual(endDate)) {
             YearMonth yearMonth = YearMonth.from(startDate);
             LocalDate firstDayOfMonth = yearMonth.atDay(1);
-            LocalDate lastDayOfMonth = yearMonth.atEndOfMonth();
+            LocalDate lastDayOfMonth = startDate.getMonth().equals(today.getMonth()) && startDate.getYear() == today.getYear() ? today : yearMonth.atEndOfMonth();
 
             try {
                 Date startOfMonth = dateFormat.parse(dateFormat.format(java.sql.Date.valueOf(firstDayOfMonth)));
                 Date endOfMonth = dateFormat.parse(dateFormat.format(java.sql.Date.valueOf(lastDayOfMonth)));
 
-                ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where AppointmentDate>=? and IsActive=true and AppointmentDate<=?", dateFormat.format(startOfMonth), dateFormat.format(endOfMonth));
+                ResultSet rs = db.executeQuery("select count(*) as visits from Appointment where AppointmentDate>=? and AppointmentDate<=?", dateFormat.format(startOfMonth), dateFormat.format(endOfMonth));
                 if (rs.next()) {
                     monthlyVisits.add(rs.getInt("visits"));
                 } else {

@@ -149,7 +149,7 @@ public class LoginScreen extends JFrame {
     public int getUserId(String username) {
         Database db = new Database();
         try {
-            ResultSet rs = db.executeQuery("SELECT ID FROM UserLogin WHERE LoginName = ? AND IsActive = ? limit 1", username, true);
+            ResultSet rs = db.executeQuery("SELECT ID FROM UserLogin WHERE LoginName = ? limit 1", username);
 
             if (rs.next()) {
                 int userId = rs.getInt("ID");

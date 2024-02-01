@@ -10,7 +10,6 @@ public class Appointment {
     private Date appointmentTime;
     private int therapistId;
     private int serviceId;
-    private boolean isActive;
 
     public Appointment() {
     }
@@ -69,13 +68,5 @@ public class Appointment {
 
     public void setClientPhoneNumber(String clientPhoneNumber) {
         this.clientPhoneNumber = clientPhoneNumber;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
     }
 }

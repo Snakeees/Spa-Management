@@ -5,7 +5,6 @@ public class UserLogin {
     private String loginName;
     private String password;
     private boolean isAdmin;
-    private boolean isActive;
 
     public UserLogin() {
     }
@@ -40,14 +39,6 @@ public class UserLogin {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
-    }
-
-    public boolean isActive() {
-        return isActive;
-    }
-
-    public void setActive(boolean active) {
-        isActive = active;
     }
 }
 

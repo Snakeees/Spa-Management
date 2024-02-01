@@ -168,7 +168,7 @@ public class AppointmentPanel extends JPanel {
             if (clientNameTxt.getText() != null && !clientNameTxt.getText().trim().equals("") && phoneNumberTxt.getText() != null && appointmentDateTxt.getDate() != null && !phoneNumberTxt.getText().trim().equals("") && serviceListSelector.getSelectedItem() != null && therapistListSelector.getSelectedItem() != null) {
                 try {
                     String modifiedDate = dateFormat.format(appointmentDateTxt.getDate().getTime());
-                    db.executeUpdate("INSERT INTO Appointment ( ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime,TherapistID, ServiceID, IsActive) VALUES(?,?,?,?,?,?,?)", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate, appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(), ((Service) serviceListSelector.getSelectedItem()).getId(), true);
+                    db.executeUpdate("INSERT INTO Appointment ( ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime,TherapistID, ServiceID) VALUES(?,?,?,?,?,?)", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate, appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(), ((Service) serviceListSelector.getSelectedItem()).getId());
                     JViewport container = (JViewport) getParent();
                     container.setView(new AppointmentsPanel());
                     container.validate();
@@ -248,7 +248,6 @@ public class AppointmentPanel extends JPanel {
             ResultSet rs1 = db.executeQuery("Select s.ID as serviceId, s.ServiceName as service, t.FirstName as therapist,t.ID as therapistId from Appointment a, Therapist t, Service s where a.ID=? and a.TherapistID=t.ID and a.ServiceID=s.ID;", appointmentId);
             while (rs.next()) {
                 currentAppointment = new Appointment();
-                currentAppointment.setActive(rs.getBoolean("IsActive"));
                 currentAppointment.setId(rs.getInt("ID"));
                 currentAppointment.setClientName(rs.getString("ClientName"));
                 currentAppointment.setClientPhoneNumber(rs.getString("ClientPhoneNumber"));

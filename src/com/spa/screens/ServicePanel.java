@@ -161,7 +161,7 @@ public class ServicePanel extends JPanel {
         try {
             Database db = new Database();
             ResultSet rs = db.executeQuery("Select * from Service where ID=?", serviceId);
-            ResultSet rs1 = db.executeQuery("Select AppointmentDate from Appointment where ServiceID=? and IsActive=true order by AppointmentDate desc limit 1;", serviceId);
+            ResultSet rs1 = db.executeQuery("Select AppointmentDate from Appointment where ServiceID=? order by AppointmentDate desc limit 1;", serviceId);
             while (rs.next()) {
                 currentService = new Service();
                 currentService.setActive(rs.getBoolean("IsActive"));

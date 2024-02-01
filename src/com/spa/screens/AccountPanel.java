@@ -83,7 +83,7 @@ public class AccountPanel extends JPanel {
                 if (passwordTxt.getText().equals(confirmPasswordTxt.getText())) {
                     passwordTxt.setText(HashPassword.hashPassword(passwordTxt.getText()));
                     try {
-                        db.executeUpdate("INSERT INTO UserLogin ( LoginName, Password, IsAdmin, IsActive) VALUES(?,?,?,?)", userNameTxt.getText(), passwordTxt.getText(), isAdmin.isSelected(), true);
+                        db.executeUpdate("INSERT INTO UserLogin ( LoginName, Password, IsAdmin) VALUES(?,?,?)", userNameTxt.getText(), passwordTxt.getText(), isAdmin.isSelected());
                         JViewport parentContainer = (JViewport) getParent();
                         parentContainer.setView(new AccountsPanel(CurrentUserId));
                         parentContainer.validate();
@@ -160,7 +160,6 @@ public class AccountPanel extends JPanel {
             ResultSet rs = db.executeQuery("Select * from UserLogin where ID=?", id);
             while (rs.next()) {
                 user = new UserLogin();
-                user.setActive(rs.getBoolean("IsActive"));
                 user.setId(rs.getInt("ID"));
                 user.setLoginName(rs.getString("LoginName"));
                 user.setPassword(rs.getString("Password"));

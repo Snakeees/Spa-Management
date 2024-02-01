@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TherapistsPanel extends JPanel {
-    private static final String[] HEADERS = {"ID", "THERAPIST NAME", "MOBILE", "OPTIONS"};
+    private static final String[] HEADERS = {"ID", "THERAPIST NAME", "MOBILE", "ACTIVE", "OPTIONS"};
 
     public TherapistsPanel() {
         String[] buttonNames = {"View", "Update"};
@@ -46,7 +46,8 @@ public class TherapistsPanel extends JPanel {
                 int id = rs.getInt("ID");
                 String therapistName = rs.getString("FirstName");
                 String mobile = rs.getString("PhoneNumber");
-                cells.add(Arrays.asList(id, therapistName, mobile, ""));
+                Boolean isActive = rs.getBoolean("IsActive");
+                cells.add(Arrays.asList(id, therapistName, mobile, isActive, ""));
             }
         } catch (Exception e) {
             e.printStackTrace();

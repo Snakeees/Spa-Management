@@ -58,7 +58,7 @@ CREATE TABLE TherapistAttendance (
 );
 
 INSERT INTO UserLogin (LoginName, Password, IsAdmin) VALUES ('owner', 'e6c3da5b206634d7f3f3586d747ffdb36b5c675757b380c6a5fe5c570c714349', True),
-('owner_wife', '1ba3d16e9881959f8c9a9762854f72c6e6321cdd44358a10a4e939033117eab9', True),
+('ownerwife', '1ba3d16e9881959f8c9a9762854f72c6e6321cdd44358a10a4e939033117eab9', True),
 ('receptionist1', '3acb59306ef6e660cf832d1d34c4fba3d88d616f0bb5c2a9e0f82d18ef6fc167', False),
 ('receptionist2', 'a417b5dc3d06d15d91c6687e27fc1705ebc56b3b2d813abe03066e5643fe4e74', False),
 ('deskstaff', '0eeac8171768d0cdef3a20fee6db4362d019c91e10662a6b55186336e1a42778', False);
@@ -74,7 +74,7 @@ INSERT INTO Service (ServiceName, Duration, Cost, IsActive, ServiceLastDate) VAL
 ('Pedicure', '00:45:00', 80, True, '2024-12-31'),
 ('Hair Styling', '01:00:00', 100, True, '2024-12-31'),
 ('Makeup Session', '00:30:00', 90, True, '2024-12-31'),
-('Yoga Class', '01:00:00', 50, True, '2024-12-31');
+('Therapeutic Body Wrap', '01:00:00', 50, True, '2024-12-31');
 
 INSERT INTO Therapist (FirstName, PhoneNumber, Address, IsActive, ResignationDate) VALUES ('Emily Johnson', '8713501649', '52581 Johnson Ridges Apt. 250 West Jessica, SC 38202', True, NULL),
 ('Michael Smith', '6458525109', '395 Laura Row Suite 476 Coltontown, FL 74872', True, NULL),
@@ -83,7 +83,7 @@ INSERT INTO Therapist (FirstName, PhoneNumber, Address, IsActive, ResignationDat
 ('Jennifer Moore', '7062912812', 'Unit 3682 Box 5940 DPO AA 49836', True, NULL),
 ('David Brown', '7265377437', '14291 Parker Stravenue Seanville, PA 63389', True, NULL),
 ('Sarah Jones', '6364121041', '41599 Brian Islands New Tammy, VI 14630', True, NULL),
-('John Miller', '6635968605', 'USS Zamora FPO AE 26761', True, '2024-01-21'),
+('John Miller', '6635968605', 'USS Zamora FPO AE 26761', False, '2024-01-21'),
 ('Ashley Martinez', '9936443707', '5530 Thomas Plains New Andrew, TN 36777', True, NULL),
 ('Daniel Garcia', '7192991670', '045 Lauren Ports Apt. 726 East Jessica, NJ 43615', True, NULL);
 
@@ -100,6 +100,7 @@ INSERT INTO Appointment (ClientName, ClientPhoneNumber, AppointmentDate, Appoint
 ('Justin Hoffman', '9869211404', '2023-11-25', '09:30:00', 8, 9),
 ('Tracy Perez', '9363175734', '2023-09-25', '17:45:00', 9, 11),
 ('Linda Bell', '6341826964', '2024-02-01', '18:00:00', 5, 3),
+('Thomas White', '9737460498', '2024-02-01', '12:00:00', 2, 5),
 ('Thomas White', '9737460498', '2023-09-18', '18:15:00', 6, 10),
 ('Jessica Greene', '7656523787', '2023-10-20', '11:45:00', 4, 7),
 ('Brittany Cook', '8500257140', '2023-09-14', '13:45:00', 8, 12),
@@ -244,7 +245,7 @@ INSERT INTO Appointment (ClientName, ClientPhoneNumber, AppointmentDate, Appoint
 ('Michael Wright', '8957736605', '2023-10-17', '10:45:00', 10, 1),
 ('Lawrence Sullivan', '7845111989', '2024-01-15', '15:15:00', 6, 7),
 ('Terry Gonzalez', '7750557023', '2023-08-09', '14:15:00', 6, 1),
-('Jessica Greene', '7216138479', '2024-01-26', '18:45:00', 3, 8),
+('Jessica Greene', '7216138479', '2024-01-26', '18:45:00', 5, 8),
 ('Heather Gomez', '9613759134', '2023-08-24', '16:15:00', 2, 2),
 ('Tyler Barber', '7183570692', '2024-02-18', '13:45:00', 8, 7),
 ('Gabriel Vasquez', '6931213119', '2024-02-22', '13:30:00', 6, 12),
@@ -401,6 +402,7 @@ INSERT INTO TherapistAttendance (TherapistID, Date, CheckinTime, CheckoutTime) V
 (8, '2023-11-25', '11:30:00', '13:00:00'),
 (9, '2023-09-25', '17:45:00', '12:30:00'),
 (5, '2024-02-01', '16:00:00', '12:30:00'),
+(2, '2024-02-01', '16:00:00', '12:30:00'),
 (6, '2023-09-18', '08:15:00', '11:30:00'),
 (4, '2023-10-20', '18:30:00', '13:30:00'),
 (8, '2023-09-14', '08:30:00', '09:30:00'),
@@ -545,7 +547,7 @@ INSERT INTO TherapistAttendance (TherapistID, Date, CheckinTime, CheckoutTime) V
 (10, '2023-10-17', '12:15:00', '08:30:00'),
 (6, '2024-01-15', '11:45:00', '12:15:00'),
 (6, '2023-08-09', '08:30:00', '10:45:00'),
-(3, '2024-01-26', '17:00:00', '08:30:00'),
+(5, '2024-01-26', '17:00:00', '08:30:00'),
 (2, '2023-08-24', '16:00:00', '14:00:00'),
 (8, '2024-02-18', '16:00:00', '16:30:00'),
 (6, '2024-02-22', '10:30:00', '10:15:00'),

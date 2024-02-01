@@ -67,7 +67,7 @@ public class ChangePassword extends JPanel {
             boolean userWithPasswordExist = false;
             String oldHashedPassword = HashPassword.hashPassword(oldPasswordTxt.getText());
             try {
-                ResultSet rs = db.executeQuery("SELECT id FROM UserLogin WHERE ID = ? AND Password = ? AND IsActive = ?", getUserId(), oldHashedPassword, true);
+                ResultSet rs = db.executeQuery("SELECT id FROM UserLogin WHERE ID = ? AND Password = ?", getUserId(), oldHashedPassword);
                 if (rs.next()) {
                     userWithPasswordExist = true;
 
