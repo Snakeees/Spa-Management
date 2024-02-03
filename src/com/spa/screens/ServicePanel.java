@@ -15,6 +15,7 @@ import java.util.Date;
 
 import static com.spa.SpaManagement.BACKGROUND_COLOR;
 import static com.spa.SpaManagement.SELECTED_BUTTON_COLOR;
+import static com.spa.screens.InfoPanel.createLabel;
 
 public class ServicePanel extends JPanel {
 
@@ -61,12 +62,12 @@ public class ServicePanel extends JPanel {
 
 
     private void setupLabelsAndFields(Boolean isEditable) {
-        TitleLabel = InfoPanel.createLabel("CREATE SERVICE", 20);
-        serviceName = InfoPanel.createLabel("SERVICE NAME", 15);
-        serviceDurationLabel = InfoPanel.createLabel("SERVICE DURATION (HH:MM)", 15);
-        costLabel = InfoPanel.createLabel("ADDRESS", 15);
-        activeLabel = InfoPanel.createLabel("CURRENTLY ACTIVE", 15);
-        lastServiceDateLabel = InfoPanel.createLabel("RESIGNATION DATE  (DD-MM-YYYY)", 15);
+        TitleLabel = createLabel("CREATE SERVICE", 20);
+        serviceName = createLabel("SERVICE NAME", 15);
+        serviceDurationLabel = createLabel("SERVICE DURATION (HH:MM)", 15);
+        costLabel = createLabel("COST PER CLIENT", 15);
+        activeLabel = createLabel("CURRENTLY ACTIVE", 15);
+        lastServiceDateLabel = createLabel("LAST SERVICE DATE", 15);
         isActive = new JCheckBox();
         isActive.setBackground(BACKGROUND_COLOR);
 
@@ -177,11 +178,5 @@ public class ServicePanel extends JPanel {
             e.printStackTrace();
         }
         return currentService;
-    }
-
-    private JLabel createLabel(String text, Font font) {
-        JLabel label = new JLabel(text);
-        label.setFont(font);
-        return label;
     }
 }

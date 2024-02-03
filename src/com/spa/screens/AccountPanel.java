@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import static com.spa.SpaManagement.*;
+import static com.spa.screens.InfoPanel.createLabel;
 
 public class AccountPanel extends JPanel {
 
@@ -51,11 +52,11 @@ public class AccountPanel extends JPanel {
 
 
     private void setupLabelsAndFields() {
-        TitleLabel = InfoPanel.createLabel("CREATE ACCOUNT", 20);
-        userNameLabel = InfoPanel.createLabel("USER NAME", 15);
-        passwordLabel = InfoPanel.createLabel("PASSWORD", 15);
-        confirmPasswordLabel = InfoPanel.createLabel("CONFIRM PASSWORD", 15);
-        isAdminLabel = InfoPanel.createLabel("ADMIN ACCOUNT", 15);
+        TitleLabel = createLabel("CREATE ACCOUNT", 20);
+        userNameLabel = createLabel("USER NAME", 15);
+        passwordLabel = createLabel("PASSWORD", 15);
+        confirmPasswordLabel = createLabel("CONFIRM PASSWORD", 15);
+        isAdminLabel = createLabel("ADMIN ACCOUNT", 15);
         isAdmin = new JCheckBox();
         isAdmin.setBackground(BACKGROUND_COLOR);
 

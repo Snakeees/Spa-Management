@@ -47,7 +47,7 @@ public class ChangePassword extends JPanel {
 
 
     private void setupLabelsAndFields() {
-        TitleLabel = InfoPanel.createLabel("CREATE ACCOUNT", 20);
+        TitleLabel = InfoPanel.createLabel("CHANGE PASSWORD", 20);
         oldPasswordLabel = InfoPanel.createLabel("USER NAME", 15);
         newPasswordLabel = InfoPanel.createLabel("PASSWORD", 15);
         confirmPasswordLabel = InfoPanel.createLabel("CONFIRM PASSWORD", 15);

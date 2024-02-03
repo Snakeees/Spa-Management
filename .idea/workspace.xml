@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="color refactoring" />
+    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="image scaling fixed">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AccountPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AccountPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/ChangePassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/ChangePassword.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/Reports.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/ServicePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/ServicePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -333,7 +341,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706789369531</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="image scaling fixed">
+      <option name="closed" value="true" />
+      <created>1706794793315</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1706794793315</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -401,14 +417,15 @@
     <MESSAGE value="AppointmentPanel refactored" />
     <MESSAGE value="fixed init.sql" />
     <MESSAGE value="color refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="color refactoring" />
+    <MESSAGE value="image scaling fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="image scaling fixed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java</url>
-          <line>112</line>
+          <line>113</line>
           <option name="timeStamp" value="108" />
         </line-breakpoint>
       </breakpoints>

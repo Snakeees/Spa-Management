@@ -13,6 +13,7 @@ import java.util.Date;
 
 import static com.spa.SpaManagement.BACKGROUND_COLOR;
 import static com.spa.SpaManagement.SELECTED_BUTTON_COLOR;
+import static com.spa.screens.InfoPanel.createLabel;
 
 public class TherapistPanel extends JPanel {
 
@@ -61,13 +62,13 @@ public class TherapistPanel extends JPanel {
     }
 
     private void setupLabelsAndFields(Boolean isEditable) {
-        TitleLabel = InfoPanel.createLabel("CREATE THERAPIST", 20);
-        therapistNameLabel = InfoPanel.createLabel("THERAPIST NAME", 15);
-        phoneNumberLabel = InfoPanel.createLabel("PHONE NUMBER", 15);
-        addressLabel = InfoPanel.createLabel("ADDRESS", 15);
-        currentActiveLabel = InfoPanel.createLabel("CURRENTLY ACTIVE", 15);
-        resignationDateLabel = InfoPanel.createLabel("RESIGNATION DATE  (DD-MM-YYYY)", 15);
-        attendanceLabel = InfoPanel.createLabel("ATTENDANCE (For past 7 Days)", 15);
+        TitleLabel = createLabel("CREATE THERAPIST", 20);
+        therapistNameLabel = createLabel("THERAPIST NAME", 15);
+        phoneNumberLabel = createLabel("PHONE NUMBER", 15);
+        addressLabel = createLabel("ADDRESS", 15);
+        currentActiveLabel = createLabel("CURRENTLY ACTIVE", 15);
+        resignationDateLabel = createLabel("RESIGNATION DATE  (DD-MM-YYYY)", 15);
+        attendanceLabel = createLabel("ATTENDANCE (For past 7 Days)", 15);
         isActive = new JCheckBox();
         isActive.setBackground(BACKGROUND_COLOR);
 
@@ -193,13 +194,6 @@ public class TherapistPanel extends JPanel {
         }
         return selectedTherapist;
     }
-
-    private JLabel createLabel(String text, Font font) {
-        JLabel label = new JLabel(text);
-        label.setFont(font);
-        return label;
-    }
-
 
     public class AttendancePanel extends JPanel {
 

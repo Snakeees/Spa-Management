@@ -52,7 +52,7 @@ public class Reports extends JPanel {
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.weightx = 0; // Set this back to 0 for the labels
-        JLabel incomeLabel = new JLabel("Monthly Incomes", SwingConstants.CENTER);
+        JLabel incomeLabel = new JLabel("Monthly Income", SwingConstants.CENTER);
         incomeLabel.setFont(new Font("Play", Font.BOLD, 20));
         add(incomeLabel, gbc);
 

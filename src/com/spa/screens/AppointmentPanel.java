@@ -141,7 +141,7 @@ public class AppointmentPanel extends JPanel {
             phoneNumberTxt.setText(appointment.getClientPhoneNumber());
             serviceListSelector.setSelectedIndex(selectedServiceIndex);
             therapistListSelector.setSelectedIndex(selectedTherapistIndex);
-            TitleLabel.setText(isEditable ? "UPDATE SERVICE" : "VIEW SERVICE");
+            TitleLabel.setText(isEditable ? "UPDATE APPOINTMENT" : "VIEW APPOINTMENT");
         }
 
         appointmentDateTxt.setEnabled(isEditable);
