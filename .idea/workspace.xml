@@ -4,20 +4,8 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="text fixed">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="303a5c01-6c04-49e0-9d80-94c6c30833d6" name="Changes" comment="basic code fixes">
       <change beforePath="$PROJECT_DIR$/src/com/spa/SpaManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/SpaManagement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/dto/MyButton.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/dto/MyButton.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/dto/MyTextField.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/dto/MyTextField.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/dto/NoScalingIcon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/dto/NoScalingIcon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/dto/Service.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/dto/Service.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/AppointmentsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/AppointmentsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/ChangePassword.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/ChangePassword.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/Database.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/LoginScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/LoginScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/ScatterPlot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/ScatterPlot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/spa/screens/TherapistsAttendance.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -363,7 +351,15 @@
       <option name="project" value="LOCAL" />
       <updated>1706977896495</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="basic code fixes">
+      <option name="closed" value="true" />
+      <created>1708501391811</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1708501391811</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="UnknownFeatures">
@@ -433,7 +429,8 @@
     <MESSAGE value="color refactoring" />
     <MESSAGE value="image scaling fixed" />
     <MESSAGE value="text fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="text fixed" />
+    <MESSAGE value="basic code fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="basic code fixes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -442,61 +439,6 @@
           <url>file://$PROJECT_DIR$/src/com/spa/screens/TherapistPanel.java</url>
           <line>113</line>
           <option name="timeStamp" value="108" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java</url>
-          <line>246</line>
-          <option name="timeStamp" value="138" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java</url>
-          <line>192</line>
-          <option name="timeStamp" value="139" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java</url>
-          <line>193</line>
-          <option name="timeStamp" value="140" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java</url>
-          <line>194</line>
-          <option name="timeStamp" value="141" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java</url>
-          <line>195</line>
-          <option name="timeStamp" value="142" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java</url>
-          <line>247</line>
-          <option name="timeStamp" value="144" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java</url>
-          <line>248</line>
-          <option name="timeStamp" value="145" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java</url>
-          <line>253</line>
-          <option name="timeStamp" value="146" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java</url>
-          <line>232</line>
-          <option name="timeStamp" value="147" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java</url>
-          <line>251</line>
-          <option name="timeStamp" value="148" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/com/spa/screens/AppointmentPanel.java</url>
-          <line>250</line>
-          <option name="timeStamp" value="149" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
