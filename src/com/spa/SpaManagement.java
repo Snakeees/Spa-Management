@@ -14,7 +14,5 @@ public class SpaManagement {
     public static void main(String[] args) {
         //Launch screen
         new LoginScreen(null).setVisible(true);
-        //new AdminDashboardScreen(1, "admin").setVisible(true);
-        //new NonAdminDashboardScreen(2, "nonadmin").setVisible(true);
     }
 }

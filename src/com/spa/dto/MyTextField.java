@@ -13,10 +13,6 @@ public class MyTextField extends JTextField {
         super(columns);
         setCustomBorder();
     }
-    public MyTextField() {
-        super();
-        setCustomBorder();
-    }
     private void setCustomBorder() {
         this.setBorder(BorderFactory.createLineBorder(TEXTFIELD_BORDER_COLOR, 3));
     }

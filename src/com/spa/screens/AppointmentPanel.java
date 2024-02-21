@@ -9,6 +9,7 @@ import javax.swing.text.DefaultFormatterFactory;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,19 +28,18 @@ public class AppointmentPanel extends JPanel {
     ArrayList<Service> allServices;
     ArrayList<Therapist> allTherapist;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     private JLabel TitleLabel;
     private JLabel appointmentDateLabel;
-    private com.toedter.calendar.JDateChooser appointmentDateTxt;
+    private JDateChooser appointmentDateTxt;
     private JLabel appointmentTimeLabel;
     private JSpinner appointmentTimeTxt;
-    private MyButton backLabel;
     private JLabel clientNameLabel;
     private MyTextField clientNameTxt;
     private JLabel phoneNumberLabel;
     private MyTextField phoneNumberTxt;
     private JLabel serviceLabel;
     private JComboBox<Service> serviceListSelector;
-    private MyButton submitLabel;
     private JLabel therapistLabel;
     private JComboBox<Therapist> therapistListSelector;
 
@@ -93,6 +93,8 @@ public class AppointmentPanel extends JPanel {
         serviceListSelector.setFont(SelectorFont);
         therapistListSelector.setFont(SelectorFont);
 
+        therapistListSelector.addItem(new Therapist(0, "Select"));
+        serviceListSelector.addItem(new Service(0, "Select"));
 
         boolean foundTherapist = false;
         for (int i = 0; i < allTherapist.size(); i++) {
@@ -124,8 +126,14 @@ public class AppointmentPanel extends JPanel {
         appointmentDateTxt = new JDateChooser();
         appointmentDateTxt.setDateFormatString("dd-MM-yyyy");
 
-        Date date = new Date();
-        SpinnerDateModel sm = new SpinnerDateModel(date, null, null, Calendar.HOUR_OF_DAY);
+        Calendar calendar = Calendar.getInstance();
+        int minutes = calendar.get(Calendar.MINUTE);
+        int diff = 15 - (minutes % 15); // Difference to the next multiple of 15
+        calendar.add(Calendar.MINUTE, diff); // Adjust to the next multiple of 15 minutes
+
+        Date roundedDate = calendar.getTime(); // This is the next multiple of 15 minutes
+
+        SpinnerDateModel sm = new SpinnerDateModel(roundedDate, null, null, Calendar.HOUR_OF_DAY);
         appointmentTimeTxt = new JSpinner(sm);
         JSpinner.DateEditor de = new JSpinner.DateEditor(appointmentTimeTxt, "HH:mm");
         appointmentTimeTxt.setEditor(de);
@@ -165,63 +173,112 @@ public class AppointmentPanel extends JPanel {
     // This method get execute when submit button is clicked while updating and creating appointment details
     private void handleSubmitAction() {
         Database db = new Database();
-        if (appointment == null) {
-            if (clientNameTxt.getText() != null && !clientNameTxt.getText().trim().equals("") && phoneNumberTxt.getText() != null && appointmentDateTxt.getDate() != null && !phoneNumberTxt.getText().trim().equals("") && serviceListSelector.getSelectedItem() != null && therapistListSelector.getSelectedItem() != null) {
+
+        if (!validateInputFields()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all required fields correctly.");
+            return;
+        }
+
+        Date appointmentDate = appointmentDateTxt.getDate();
+        Date appointmentTime = (Date) appointmentTimeTxt.getValue(); // Ensure this returns a Date object correctly
+        String modifiedDate = dateFormat.format(appointmentDate);
+        String modifiedTime = timeFormat.format(appointmentTime);
+
+        int therapistId = ((Therapist) therapistListSelector.getSelectedItem()).getId();
+        int serviceId = ((Service) serviceListSelector.getSelectedItem()).getId();
+        String clientName = clientNameTxt.getText().trim();
+        String phoneNumber = phoneNumberTxt.getText().trim();
+
+        if (appointment == null) { // For new appointments
+            if (isTherapistAvailable(db, modifiedDate, modifiedTime, therapistId, serviceId, null)) {
                 try {
-                    String modifiedDate = dateFormat.format(appointmentDateTxt.getDate().getTime());
-                    db.executeUpdate("INSERT INTO Appointment ( ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime,TherapistID, ServiceID) VALUES(?,?,?,?,?,?)", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate, appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(), ((Service) serviceListSelector.getSelectedItem()).getId());
+                    db.executeUpdate("INSERT INTO Appointment (ClientName, ClientPhoneNumber, AppointmentDate, AppointmentTime, TherapistID, ServiceID) VALUES (?, ?, ?, ?, ?, ?)",
+                            clientName, phoneNumber, modifiedDate, modifiedTime, therapistId, serviceId);
                     JViewport container = (JViewport) getParent();
                     container.setView(new AppointmentsPanel());
                     container.validate();
                     container.repaint();
+
                     JOptionPane.showMessageDialog(this, "Appointment created successfully!");
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(this, "Failed to create Appointment");
+                    JOptionPane.showMessageDialog(this, "Failed to create appointment. Error: " + e.getMessage());
                     e.printStackTrace();
                 }
+            } else {
+                JOptionPane.showMessageDialog(this, "The therapist is already booked for the selected time.");
             }
-            else {
-                JOptionPane.showMessageDialog(this, "All fields are required");
-            }
-        }
-        else {
-            if (clientNameTxt.getText() != null && !clientNameTxt.getText().trim().equals("") && phoneNumberTxt.getText() != null && appointmentDateTxt.getDate() != null && !phoneNumberTxt.getText().trim().equals("") && serviceListSelector.getSelectedItem() != null && therapistListSelector.getSelectedItem() != null) {
-                int result = JOptionPane.showOptionDialog(
-                        getParent(),
-                        "Do you want to update the Appointment Details?",
-                        "UPDATE ALERT",
-                        JOptionPane.OK_CANCEL_OPTION,
-                        JOptionPane.INFORMATION_MESSAGE,
-                        null,
-                        new Object[]{"YES", "NO"},
-                        "YES");
+        } else { // For updating appointments
+            if (isTherapistAvailable(db, modifiedDate, modifiedTime, therapistId, serviceId, appointment.getId())) {
+                try {
+                    db.executeUpdate("UPDATE Appointment SET ClientName=?, ClientPhoneNumber=?, AppointmentDate=?, AppointmentTime=?, TherapistID=?, ServiceID=? WHERE ID=?",
+                            clientName, phoneNumber, modifiedDate, modifiedTime, therapistId, serviceId, appointment.getId());
 
-                // Check which button was clicked
-                if (result == JOptionPane.OK_OPTION) {
-                    try {
-                        String modifiedDate = dateFormat.format(appointmentDateTxt.getDate().getTime());
-                        db.executeUpdate("update Appointment set ClientName=?, ClientPhoneNumber=?, AppointmentDate=?, AppointmentTime=?,TherapistID=?, ServiceID=? where ID=? ;", clientNameTxt.getText(), phoneNumberTxt.getText(), modifiedDate, appointmentTimeTxt.getValue(), ((Therapist) therapistListSelector.getSelectedItem()).getId(), ((Service) serviceListSelector.getSelectedItem()).getId(), appointment.getId());
-                        JViewport container = (JViewport) getParent();
-                        container.setView(new AppointmentsPanel());
-                        container.validate();
-                        container.repaint();
-                        JOptionPane.showMessageDialog(this, "Appointment details updated successfully!");
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        JOptionPane.showMessageDialog(this, "Failed to update Appointment details");
-                    }
-                }
-                else if (result == JOptionPane.CANCEL_OPTION) {
                     JViewport container = (JViewport) getParent();
                     container.setView(new AppointmentsPanel());
                     container.validate();
+                    container.repaint();
+                    JOptionPane.showMessageDialog(this, "Appointment details updated successfully!");
+                    // Additional code to refresh the UI or close the dialog
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Failed to update appointment details. Error: " + e.getMessage());
+                    e.printStackTrace();
                 }
-            }
-            else {
-                JOptionPane.showMessageDialog(this, "Required details can not be empty.");
+            } else {
+                JOptionPane.showMessageDialog(this, "The therapist is already booked for the selected time.");
             }
         }
     }
+
+    public boolean isTherapistAvailable(Database db, String appointmentDate, String appointmentTime, int therapistId, int serviceId, Integer updatingAppointmentId) {
+        String sql = "SELECT NOT EXISTS (" +
+                "  SELECT 1" +
+                "  FROM appointment a" +
+                "  JOIN Service s ON a.ServiceID = s.ID" +
+                "  WHERE a.TherapistID = ? AND a.AppointmentDate = ?" +
+                "    AND (" +
+                "      a.AppointmentTime BETWEEN ? AND ADDTIME(?, (SELECT Duration FROM Service WHERE ID = ?))" +
+                "      OR" +
+                "      ADDTIME(a.AppointmentTime, s.Duration) BETWEEN ? AND ADDTIME(?, (SELECT Duration FROM Service WHERE ID = ?))" +
+                "    )" +
+                "    AND (? IS NULL OR a.ID != ?)" +
+                ") AS availability";
+
+        try {
+            ResultSet rs = db.executeQuery(sql, therapistId, appointmentDate, appointmentTime, appointmentTime, serviceId, appointmentTime, appointmentTime, serviceId, updatingAppointmentId, updatingAppointmentId);
+            if (rs.next()) {
+                return rs.getBoolean("availability");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
+    private boolean validateInputFields() {
+        if (clientNameTxt.getText() == null || clientNameTxt.getText().trim().isEmpty()) {
+            return false;
+        }
+        if (phoneNumberTxt.getText() == null || phoneNumberTxt.getText().trim().isEmpty()) {
+            return false;
+        }
+        if (appointmentDateTxt.getDate() == null) {
+            return false;
+        }
+        if (appointmentTimeTxt.getValue() == null) {
+            return false;
+        }
+        Object serviceItem = serviceListSelector.getSelectedItem();
+        if (serviceItem == null || serviceItem.toString().equals("Select")) {
+            return false;
+        }
+        Object therapistItem = therapistListSelector.getSelectedItem();
+        if (therapistItem == null || therapistItem.toString().equals("Select")) {
+            return false;
+        }
+        return true;
+    }
+
+
     // fetching active Therapists and Services details
     private void updateDropdownDetails() {
         try {

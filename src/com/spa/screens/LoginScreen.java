@@ -7,6 +7,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.sql.*;
+import java.util.AbstractMap;
 import java.util.Objects;
 
 import static com.spa.SpaManagement.*;
@@ -114,29 +115,29 @@ public class LoginScreen extends JFrame {
         submitButton.addActionListener(action -> {
             String username = userField.getText();
             String password = new String(passField.getPassword());
-            if (!Objects.equals(username, "") && !password.isEmpty()) {
-                String role = validateCredentials(username, password);
-                int userId = getUserId(username);
-                if ("admin".equals(role)) {
-                    AdminDashboardScreen adminDashboardScreen = new AdminDashboardScreen(userId, username);
-                    adminDashboardScreen.setVisible(true);
-                    dispose();
-                }
-                else if ("nonadmin".equals(role)) {
-                    NonAdminDashboardScreen nonAdminDashboardScreen = new NonAdminDashboardScreen(userId, username);
-                    nonAdminDashboardScreen.setVisible(true);
-                    dispose();
-                }
-                else {
-                    JOptionPane.showMessageDialog(LoginScreen.this,
-                            "Invalid username or password", "Login Error",
-                            JOptionPane.ERROR_MESSAGE);
-                }
-            }
-            else {
+            if (username.isEmpty() || password.isEmpty()) {
                 JOptionPane.showMessageDialog(LoginScreen.this,
                         "Empty username or password field", "Login Error",
                         JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            AbstractMap.SimpleEntry<Integer, String> userInfo = validateUserAndGetId(username, password);
+            if (userInfo.getKey() == -1) {
+                JOptionPane.showMessageDialog(LoginScreen.this,
+                        "Invalid username or password", "Login Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            if ("admin".equals(userInfo.getValue())) {
+                AdminDashboardScreen adminDashboardScreen = new AdminDashboardScreen(userInfo.getKey(), username);
+                adminDashboardScreen.setVisible(true);
+                dispose();
+            } else if ("nonadmin".equals(userInfo.getValue())) {
+                NonAdminDashboardScreen nonAdminDashboardScreen = new NonAdminDashboardScreen(userInfo.getKey(), username);
+                nonAdminDashboardScreen.setVisible(true);
+                dispose();
             }
         });
 
@@ -145,45 +146,26 @@ public class LoginScreen extends JFrame {
         return submitPanel;
     }
 
-    public int getUserId(String username) {
-        Database db = new Database();
-        try {
-            ResultSet rs = db.executeQuery("SELECT ID FROM UserLogin WHERE LoginName = ? limit 1", username);
-
-            if (rs.next()) {
-                int userId = rs.getInt("ID");
-                db.disconnect();
-                return userId;
-            }
-            else {
-                db.disconnect();
-                return 0;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return 0;
-        }
-    }
-
-    private String validateCredentials(String username, String password) {
+    public AbstractMap.SimpleEntry<Integer, String> validateUserAndGetId(String username, String password) {
         Database db = new Database();
         try {
             String hashedPassword = HashPassword.hashPassword(password);
-            ResultSet rs = db.executeQuery("SELECT IsAdmin FROM UserLogin WHERE LoginName = ? AND Password = ? limit 1", username, hashedPassword);
+            ResultSet rs = db.executeQuery(
+                    "SELECT ID, IsAdmin FROM UserLogin WHERE LoginName = ? AND Password = ? limit 1",
+                    username, hashedPassword);
 
             if (rs.next()) {
+                int userId = rs.getInt("ID");
                 boolean isAdmin = rs.getBoolean("IsAdmin");
-                db.disconnect();
-                return isAdmin ? "admin" : "nonadmin";
-            }
-            else {
-                db.disconnect();
-                return null;
+                String role = isAdmin ? "admin" : "nonadmin";
+
+                return new AbstractMap.SimpleEntry<>(userId, role);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        return new AbstractMap.SimpleEntry<>(-1, null);
     }
+
 }
 

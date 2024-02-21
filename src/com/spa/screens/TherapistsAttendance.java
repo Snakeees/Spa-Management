@@ -23,7 +23,6 @@ public class TherapistsAttendance extends JPanel {
     private Integer selectedTherapistAttendanceId = null;
     private JLabel TitleLabel, therpaistNameLabel, checkInLabel, checkOutLabel;
     private JCheckBox checkInTime, checkOutTime;
-    private MyButton submit;
     private JComboBox<Therapist> therapistNameList;
 
     public TherapistsAttendance() {

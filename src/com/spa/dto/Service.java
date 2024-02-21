@@ -19,15 +19,6 @@ public class Service {
         this.serviceName = serviceName;
     }
 
-//    public Service(int id, String serviceName, int duration, int cost, boolean isActive, Date serviceLastDate) {
-//        this.id = id;
-//        this.serviceName = serviceName;
-//        this.duration = duration;
-//        this.cost = cost;
-//        this.isActive = isActive;
-//        this.serviceLastDate = serviceLastDate;
-//    }
-
     // Getters
     public int getId() {
         return id;

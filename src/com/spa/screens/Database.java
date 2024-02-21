@@ -1,24 +1,26 @@
 package com.spa.screens;
 
 import java.sql.*;
-import java.util.logging.Logger;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Database {
 
+    private static final AtomicInteger connectionCount = new AtomicInteger(0);
     private final String url = "jdbc:mysql://localhost:3306/spa?useSSL=true";
     private final String username = "root";
     private final String password = "root";
     private Connection connection;
+    private int connectionId;
 
     public Database() {
+        this.connectionId = connectionCount.incrementAndGet();
     }
 
     public void connect() throws SQLException {
         if (connection == null || connection.isClosed()) {
             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
                 connection = DriverManager.getConnection(url, username, password);
-                System.out.println("Connected to the database successfully.");
+                System.out.println("Connected to the database successfully. Connection ID: " + this.connectionId);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -26,14 +28,19 @@ public class Database {
     }
 
     public void disconnect() {
-        if (connection != null) {
+        new Thread(() -> {
             try {
-                connection.close();
-                System.out.println("Disconnected from the database.");
+                Thread.sleep(60000); //60000ms or 1min
+                if (connection != null) {
+                    connection.close();
+                    System.out.println("Disconnected from the database. Connection ID: " + this.connectionId);
+                }
+            } catch (InterruptedException e) {
+                System.out.println("Disconnection thread was interrupted. Connection ID: " + this.connectionId);
             } catch (SQLException e) {
-                System.out.println("Could not disconnect from the database");
+                System.out.println("Could not disconnect from the database. Connection ID: " + this.connectionId);
             }
-        }
+        }).start();
     }
 
     public ResultSet executeQuery(String query, Object... params) {
@@ -46,6 +53,8 @@ public class Database {
             return statement.executeQuery();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            disconnect();
         }
     }
 
@@ -59,6 +68,8 @@ public class Database {
             return statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            disconnect();
         }
     }
 }

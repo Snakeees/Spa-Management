@@ -11,45 +11,9 @@ public class NoScalingIcon implements Icon
 {
     private Icon icon;
 
-
-    public NoScalingIcon(URL location)
-    {
+    public NoScalingIcon(URL location, int iconWidth, int iconHeight) {
         this.icon = new ImageIcon(location);
-    }
-
-    public NoScalingIcon(Image image)
-    {
-        this.icon = new ImageIcon(image);
-    }
-
-    public NoScalingIcon(Image image, int iconWidth, int iconHeight)
-    {
-        this.icon = new ImageIcon(image);
         scalePix(iconWidth, iconHeight);
-    }
-
-    public NoScalingIcon(ImageIcon imageIcon)
-    {
-        this.icon = imageIcon;
-    }
-
-    public NoScalingIcon(ImageIcon imageIcon, int iconWidth, int iconHeight)
-    {
-        this.icon = imageIcon;
-        scalePix(iconWidth, iconHeight);
-    }
-
-    public NoScalingIcon(URL location, int iconWidth, int iconHeight)
-    {
-        this.icon = new ImageIcon(location);
-        //scalePix(x,y);
-        scalePix(iconWidth, iconHeight);
-    }
-
-    public void Scale(double Scale) {
-        Image image = getImage();
-        Image scaledImage = image.getScaledInstance((int) (getIconWidth()*Scale), (int) (getIconHeight()*Scale),  java.awt.Image.SCALE_SMOOTH);
-        setImage(scaledImage);
     }
 
     public void scalePix(int iconWidth, int iconHeight) {
@@ -108,6 +72,5 @@ public class NoScalingIcon implements Icon
         }
 
         g2d.dispose();
-
     }
 }

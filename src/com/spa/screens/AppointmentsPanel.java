@@ -241,9 +241,9 @@ public class AppointmentsPanel extends JPanel {
         ResultSet rs;
         List<Object> parameters = new ArrayList<>();
         StringBuilder query = new StringBuilder("select a.ID,a.ClientName as clientName, s.ServiceName as service,t.FirstName as therapist,a.AppointmentDate as date,a.AppointmentTime as time from Appointment a, Therapist t, Service s where t.ID=a.TherapistID and a.ServiceID=s.ID ");
-        Date date = dateSelectorTxt.getDate();
-        if (date != null) {
-            parameters.add(new java.sql.Date(date.getYear(), date.getMonth(), date.getDate()));
+        long date = dateSelectorTxt.getDate().getTime();
+        if (date != 0L) {
+            parameters.add(new java.sql.Date(date));
             query.append("and a.AppointmentDate=? ");
         }
         Therapist therapist = (Therapist) therapistNameList.getSelectedItem();
